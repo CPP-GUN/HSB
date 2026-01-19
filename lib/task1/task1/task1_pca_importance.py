@@ -14,7 +14,9 @@ task1_pca_importance.py
 import os
 from task1_utils import load_data, run_pca, select_m, factor_importance
 
-os.makedirs("outputs", exist_ok=True)
+DATADIR = os.path.dirname(os.path.abspath(__file__))
+
+os.makedirs(os.path.join(DATADIR, "outputs"), exist_ok=True)
 
 
 def main():
@@ -23,11 +25,11 @@ def main():
     Z, variance_df, loadings = run_pca(X, indicators)
     m = select_m(variance_df)
 
-    variance_df.to_csv("outputs/pca_variance.csv")
-    loadings.to_csv("outputs/pca_loadings.csv")
+    variance_df.to_csv(os.path.join(DATADIR, "outputs", "pca_variance.csv"))
+    loadings.to_csv(os.path.join(DATADIR, "outputs", "pca_loadings.csv"))
 
     importance = factor_importance(loadings, variance_df, m)
-    importance.to_csv("outputs/factor_importance.csv")
+    importance.to_csv(os.path.join(DATADIR, "outputs", "factor_importance.csv"))
 
     print("PCA & factor importance completed.")
     print(f"Selected principal components: {m}")

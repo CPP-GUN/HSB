@@ -22,6 +22,9 @@ from data_loader import load_all_data, default_indicator_specs, COUNTRIES_CN
 from forecast_models import forecast_one_series
 from evaluation_models import load_weights, topsis_score, rank_desc
 
+import os
+
+DATADIR = os.path.dirname(os.path.abspath(__file__))
 
 def ensure_outputs_dir(base_dir: Path) -> Path:
     out = base_dir / "outputs"

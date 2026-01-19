@@ -6,12 +6,14 @@
 # =====================================================
 
 from evaluation_pipeline import run_task2_evaluation
+import os
 
+DATADIR = os.path.dirname(os.path.abspath(__file__))
 
 if __name__ == "__main__":
     results = run_task2_evaluation(
-        data_path="data_raw_indicators.csv",
-        output_dir="outputs",
+        data_path=os.path.join(DATADIR, "data_raw_indicators.csv"),
+        output_dir=os.path.join(DATADIR, "outputs"),
         rho_grey=0.5
     )
 

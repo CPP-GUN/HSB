@@ -15,14 +15,16 @@ task1_utils.py
 -------------------------------------------------
 """
 
+import os
 import numpy as np
 import pandas as pd
 from sklearn.decomposition import PCA
 from scipy.cluster.hierarchy import linkage
 from scipy.spatial.distance import squareform
 
+DATADIR = os.path.dirname(os.path.abspath(__file__))
 
-def load_data(path="data_standardized.csv"):
+def load_data(path=os.path.join(DATADIR, "data_standardized.csv")):
     df = pd.read_csv(path)
     countries = df.iloc[:, 0]
     indicators = df.columns[1:]

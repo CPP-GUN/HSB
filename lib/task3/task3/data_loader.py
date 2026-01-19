@@ -20,7 +20,9 @@ from pathlib import Path
 from typing import Dict, List, Tuple, Optional
 
 import pandas as pd
+import os
 
+DATADIR = os.path.dirname(os.path.abspath(__file__))
 
 # 固定国家顺序（与题目/数据一致）
 COUNTRIES_CN: List[str] = ["美国", "中国", "英国",

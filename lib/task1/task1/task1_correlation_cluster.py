@@ -16,22 +16,24 @@ import pandas as pd
 from task1_utils import load_data, pearson_correlation, strong_correlations, hierarchical_clustering
 
 
-os.makedirs("outputs", exist_ok=True)
+DATADIR = os.path.dirname(os.path.abspath(__file__))
+
+os.makedirs(os.path.join(DATADIR, "outputs"), exist_ok=True)
 
 
 def main():
     countries, indicators, X = load_data()
 
     R = pearson_correlation(X, indicators)
-    R.to_csv("outputs/correlation_matrix.csv")
+    R.to_csv(os.path.join(DATADIR, "outputs", "correlation_matrix.csv"))
 
     strong = strong_correlations(R)
-    strong.to_csv("outputs/strong_correlations.csv", index=False)
+    strong.to_csv(os.path.join(DATADIR, "outputs", "strong_correlations.csv"), index=False)
 
     D, Z = hierarchical_clustering(R)
-    D.to_csv("outputs/cluster_distance_matrix.csv")
+    D.to_csv(os.path.join(DATADIR, "outputs", "cluster_distance_matrix.csv"))
 
-    pd.DataFrame(Z).to_csv("outputs/cluster_linkage.csv", index=False)
+    pd.DataFrame(Z).to_csv(os.path.join(DATADIR, "outputs", "cluster_linkage.csv"), index=False)
 
     print("Correlation & clustering completed.")
     print(f"Strong correlation pairs: {len(strong)}")

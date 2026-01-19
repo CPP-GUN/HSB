@@ -26,6 +26,7 @@ from model_utils import (
     rank_desc
 )
 
+DATADIR = os.path.dirname(os.path.abspath(__file__))
 
 # ------------------------------
 # 1) Spearman秩相关（含p值）
@@ -209,7 +210,7 @@ def sensitivity_analysis(
 # ------------------------------
 def run_task2_evaluation(
     data_path: str,
-    output_dir: str = "outputs",
+    output_dir: str = os.path.join(DATADIR, "outputs"),
     rho_grey: float = 0.5
 ):
     # 读取数据（与代码同目录）

@@ -14,7 +14,9 @@ task1_evaluation.py
 import os
 from task1_utils import load_data, run_pca, select_m, comprehensive_score
 
-os.makedirs("outputs", exist_ok=True)
+DATADIR = os.path.dirname(os.path.abspath(__file__))
+
+os.makedirs(os.path.join(DATADIR, "outputs"), exist_ok=True)
 
 
 def main():
@@ -23,8 +25,7 @@ def main():
     m = select_m(variance_df)
 
     result = comprehensive_score(Z, variance_df, m, countries)
-    result.to_csv("outputs/comprehensive_evaluation.csv", index=False)
-
+    result.to_csv(os.path.join(DATADIR, "outputs", "comprehensive_evaluation.csv"), index=False)
     print("Comprehensive evaluation completed.")
     print(result)
 
