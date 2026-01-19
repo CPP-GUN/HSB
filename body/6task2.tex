@@ -1,0 +1,127 @@
+\section{Task 2: AI Development Capability Evaluation and 2025 Ranking}
+
+\subsection{Model Overview}
+
+Based on the 24 indicators identified in Task 1, let the normalized indicator matrix be
+\begin{equation}
+X'=\left(x'_{ij}\right)_{n\times p},\quad n=10,\;p=24,
+\end{equation}
+where $x'_{ij}$ denotes the normalized value of indicator $j$ for country $i$.
+All indicators have been unified as benefit-type (larger values indicate stronger AI development capability)
+and normalized prior to this task.
+
+The objective of Task 2 is to construct an \textit{objective and reproducible} evaluation model
+to quantify national AI development capability and determine the 2025 competitiveness ranking
+of ten countries.
+
+To reduce subjective bias and enhance robustness, an integrated evaluation framework combining
+the Entropy Weight Method (EWM), TOPSIS, and Grey Relational Analysis (GRA) is adopted.
+
+\subsection{Entropy-Based Weighting}
+
+The entropy weight method is derived from information theory and assigns indicator weights
+according to their dispersion across countries. Indicators with higher variability contain
+more effective information for discrimination and thus receive larger weights.
+
+Define
+\begin{equation}
+p_{ij}=\frac{x'_{ij}}{\sum_{i=1}^{n}x'_{ij}},\qquad 0\ln 0 := 0,
+\end{equation}
+where $p_{ij}$ represents the proportion of indicator $j$ contributed by country $i$.
+The information entropy of indicator $j$ is computed as
+\begin{equation}
+e_j=-k\sum_{i=1}^{n}p_{ij}\ln p_{ij}, \quad k=\frac{1}{\ln n}.
+\end{equation}
+The corresponding entropy weight is given by
+\begin{equation}
+w_j=\frac{1-e_j}{\sum_{j=1}^{p}(1-e_j)}.
+\end{equation}
+If $\sum_{i=1}^{n}x'_{ij}=0$ for some indicator $j$, its weight is set to zero and the remaining
+weights are renormalized.
+
+\textit{(Result observation and interpretation to be added here.)}
+
+\subsection{TOPSIS-Based Comprehensive Evaluation}
+
+TOPSIS aggregates weighted indicators into a single competitiveness score by comparing each
+country with an ideal reference. The method assumes that the optimal country should be closest
+to the positive ideal solution and farthest from the negative ideal solution.
+
+The weighted decision matrix is defined as
+\begin{equation}
+v_{ij}=w_j x'_{ij}.
+\end{equation}
+For each indicator $j$, the positive and negative ideal components are defined as
+\begin{equation}
+A_j^+=\max_{i} v_{ij},\quad A_j^-=\min_{i} v_{ij}, \qquad j=1,\dots,p,
+\end{equation}
+yielding the ideal vectors $A^+=(A_1^+,\dots,A_p^+)$ and $A^-=(A_1^-,\dots,A_p^-)$.
+
+The distances from country $i$ to the ideal solutions are computed as
+\begin{equation}
+D_i^\pm=\sqrt{\sum_{j=1}^{p}(v_{ij}-A_j^\pm)^2},
+\end{equation}
+and the comprehensive competitiveness score is defined as
+\begin{equation}
+C_i=\frac{D_i^-}{D_i^++D_i^-}.
+\end{equation}
+
+\textit{(Result observation and interpretation to be added here.)}
+
+\subsection{Structural Validation by Grey Relational Analysis}
+
+Grey Relational Analysis is suitable for small-sample and partially known systems.
+It evaluates the similarity of development patterns by comparing the geometric proximity
+of indicator sequences.
+
+Let the reference sequence be the ideal profile
+\begin{equation}
+v_{0j}=\max_{i} v_{ij}, \qquad j=1,\dots,p.
+\end{equation}
+Define the absolute deviation
+\begin{equation}
+\Delta_{ij}=|v_{0j}-v_{ij}|,
+\end{equation}
+and let
+\begin{equation}
+\Delta_{\min}=\min_{i,j}\Delta_{ij},\qquad
+\Delta_{\max}=\max_{i,j}\Delta_{ij}.
+\end{equation}
+The grey relational coefficient is defined as
+\begin{equation}
+\xi_{ij}=\frac{\Delta_{\min}+\rho\Delta_{\max}}{\Delta_{ij}+\rho\Delta_{\max}}, \quad \rho=0.5,
+\end{equation}
+and the grey relational degree of country $i$ is calculated as
+\begin{equation}
+\gamma_i=\frac{1}{p}\sum_{j=1}^{p}\xi_{ij}.
+\end{equation}
+
+\textit{(Result observation and interpretation to be added here.)}
+
+\subsection{Fusion Ranking and Reliability Framework}
+
+To integrate distance-based performance and structural similarity, an equal-weight fusion score
+is defined as
+\begin{equation}
+S_i=\frac{C_i+\gamma_i}{2}.
+\end{equation}
+The fusion score $S_i$ is used to determine the final AI competitiveness ranking for 2025.
+
+Ranking consistency is quantified using Spearman's rank correlation coefficient
+\begin{equation}
+\rho_s = 1-\frac{6\sum_{i=1}^{n} d_i^2}{n(n^2-1)},
+\end{equation}
+where $d_i$ denotes the rank difference of country $i$ between two ranking methods.
+Robustness is further assessed by perturbing a single indicator weight $w_j$ by $\pm\alpha$
+(e.g., $\alpha=30\%$), followed by weight renormalization and re-ranking.
+
+\textit{(Final ranking results and reliability analysis to be added here.)}
+
+\subsection{Overall Summary of Task 2}
+
+Task 2 establishes a comprehensive evaluation framework for national AI development capability
+by integrating objective weighting, distance-based evaluation, and structural validation.
+The framework provides a consistent and reproducible basis for generating the 2025 competitiveness
+ranking, which serves as the benchmark for subsequent analysis.
+
+\textit{(Overall result summary and interpretation to be added here.)}

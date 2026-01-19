@@ -1,0 +1,127 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% MCM/ICM LaTeX Template %%
+%% 2026 MCM/ICM           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{geometry}
+\geometry{left=1in,right=0.75in,top=1in,bottom=1in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.9}
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\floatpagefraction}{0.8}
+
+\newcommand{\Problem}{B}
+\newcommand{\Team}{MI2601258}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{newtxtext}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{newtxmath}
+\usepackage{lipsum}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{indentfirst}
+\usepackage{longtable}
+\usepackage{needspace}
+
+\usepackage{CJKutf8}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{xcolor}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{tocloft}
+\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
+\usepackage[hidelinks]{hyperref}
+\lhead{Team \Team}
+\rhead{}
+\cfoot{}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}{Definition}
+
+\fancypagestyle{plain}{
+	\fancyhf{}
+	\lhead{Team \Team}
+	\rhead{Page \thepage~of \pageref{LastPage}}
+	\cfoot{}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{CJK}{UTF8}{gbsn}
+
+\graphicspath{{.}}
+\DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
+\thispagestyle{empty}
+\vspace*{-16ex}
+\centerline{\begin{tabular}{*3{c}}
+		\parbox[t]{0.3\linewidth}{\begin{center}\textbf{Problem Chosen}\\ \Large \textcolor{red}{\Problem}\end{center}}
+		 & \parbox[t]{0.3\linewidth}{\begin{center}\textbf{2026HSB\\ MCM/ICM\\ Summary Sheet}\end{center}}
+		 & \parbox[t]{0.3\linewidth}{\begin{center}\textbf{Team  Number}\\ \Large \textcolor{red}{\Team}\end{center}} \\
+		\hline
+	\end{tabular}}
+
+%%%%%%%%%%% Begin Summary %%%%%%%%%%%
+\begin{center}
+	%标题
+	\begin{center}w
+		\Huge {This Is Title}
+		\vspace{0.4cm}
+
+		\normalsize\textbf{Summary}
+	\end{center}
+	\vspace{0.2cm}
+
+\end{center}
+
+%摘要
+Here is the summary of paper.
+
+Please replace this text with your own summary. This summary should briefly describe the problem you are addressing, the methods you used, and the key results or conclusions you reached. Make sure to keep it concise and informative.
+
+
+%关键词
+\vspace{0.4cm}
+\noindent \textbf{Keywords:} KFC \quad V50 \quad Chicken
+%%%%%%%%%%% End Summary %%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\pagestyle{fancy}
+\newpage
+\setcounter{page}{1}
+\rhead{Page \thepage~of \pageref{LastPage}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%目录
+\tableofcontents
+\newpage
+
+%正文
+\input{body/1Introduction.tex}
+\input{body/2Basic_Assumption.tex}
+\input{body/3Symbols.tex}
+\input{body/4Data_Explanation.tex}
+\input{body/5task1.tex}
+\input{body/6task2.tex}
+\input{body/7task3.tex}
+\input{body/8task4.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+\pagestyle{fancy}
+\thispagestyle{fancy}
+
+\end{CJK}
+\end{document}
+\end
