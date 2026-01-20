@@ -1,9 +1,56 @@
+% yeooio：此章节的目录我改了，按照改动后的来，本章目录如下：
+% 4.1 Data Structure and Scope：
+
+% 简洁开头段落（4句话）
+% 紧凑表格展示全部24个指标（6维度，用\addlinespace增加可读性）
+% 交代不同任务的数据使用
+% 4.2 Data Sources：
+
+% 1段话整合所有数据源
+% 按类别分组说明，避免列表占空间
+% 强调权威性和可复现性
+%  4.3 Data Preprocessing：
+
+% 1段话涵盖缺失值、异常值、标准化
+% Min-Max公式清晰呈现
+ 
 \section{Data Explanation}
 
-\subsection{Data Description and Sources}
+\subsection{Data Structure and Scope}
 
-The dataset covers a lot of representative countries and consists of multiple quantitative indicators describing national AI development capability. For organizational clarity, the indicators were grouped into six dimensions reflecting different aspects of AI development. All data corresponded to the same evaluation period and were obtained from publicly available and widely recognized sources, ensuring cross-country comparability.
+This study evaluates $n=10$ representative countries with significant roles in global AI development: United States, China, United Kingdom, Germany, South Korea, Japan, France, Canada, United Arab Emirates, and India. A comprehensive framework of $p=24$ quantitative indicators is constructed and organized into six dimensions reflecting different facets of national AI capabilities. For Tasks 1 and 2, cross-sectional data from 2025 are used; for Tasks 3 and 4, panel data spanning 2016--2035 (historical: 2016--2025; forecast: 2026--2035) are employed. The complete indicator structure is presented in Table \ref{tab:indicators}.
+
+\begin{table}[htbp]
+\centering
+\caption{AI Development Indicator Framework}
+\label{tab:indicators}
+\begin{tabular}{p{2.5cm}p{10.5cm}}
+\toprule
+\textbf{Dimension} & \textbf{Indicators} \\
+\midrule
+Talent (T) & No. of AI Researchers, Top AI Scholars, No. of AI Graduates \\
+\addlinespace
+Application (A) & No. of AI Enterprises, AI Market Size, AI Penetration Rate, No. of LLMs \\
+\addlinespace
+Policy (P) & No. of AI Policies, AI Subsidies, Public Trust in AI \\
+\addlinespace
+R\&D (R) & Corporate R\&D Expenditure, Government AI Investment, International AI Investment \\
+\addlinespace
+Infrastructure (I) & 5G Coverage, GPU Cluster Scale, Internet Bandwidth, Internet Penetration, \newline Power Generation, AI Computing Platforms, No. of Data Centers, \newline No. of TOP500 Systems \\
+\addlinespace
+Output (O) & No. of AI Books, No. of AI Datasets, GitHub Repositories \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Data Sources}
+
+All data were collected from publicly available and authoritative sources, ensuring reliability, cross-country comparability, and reproducibility. Talent and research indicators were sourced from UNESCO, OECD Education Statistics, and academic databases (arXiv, Google Scholar). Market and industry data came from CB Insights, Statista, and national statistics bureaus. Policy and investment information was obtained from government AI strategy documents, World Bank, and OECD. Infrastructure metrics were compiled from ITU, TOP500 List, and IEA Energy Statistics. Innovation output indicators were extracted from GitHub API, Kaggle Datasets, and Web of Science.
 
 \subsection{Data Preprocessing}
 
-Basic preprocessing was conducted prior to analysis. Minor missing or abnormal values were handled through reasonable estimation and consistency checks. All indicators were defined as benefit-type variables and were normalized to eliminate dimensional differences before being used in subsequent models.
+To ensure data quality and model applicability, preprocessing steps were applied. For sparse missing values ($<5\%$), linear interpolation or forward-filling was used based on temporal continuity. The Z-score method was applied to detect outliers; confirmed data errors were corrected using auxiliary sources, while legitimate extreme values were retained. All indicators were treated as benefit-type variables and normalized using Min-Max scaling to eliminate dimensional effects:
+\[
+x'_{ij} = \frac{x_{ij} - \min_i x_{ij}}{\max_i x_{ij} - \min_i x_{ij}}
+\]
+This normalization ensures comparability across indicators with different units and scales.
