@@ -39,7 +39,46 @@ w_j=\frac{1-e_j}{\sum_{j=1}^{p}(1-e_j)}.
 If $\sum_{i=1}^{n}x'_{ij}=0$ for some indicator $j$, its weight is set to zero and the remaining
 weights are renormalized.
 
-\textit{(Result observation and interpretation to be added here.)}
+\paragraph{Result interpretation.}
+The entropy-based weighting results indicate a clear concentration of information contribution among a limited subset of indicators.
+Specifically, frontier capability and high-level output indicators receive substantially larger weights than basic penetration metrics.
+The largest weights are assigned to \textit{Large Models} ($w=0.0946$), \textit{International AI Investment} ($w=0.0859$),
+\textit{Top AI Scholars} ($w=0.0699$), and \textit{AI Market Size} ($w=0.0698$), implying that cross-country differences are most strongly
+distinguished by cutting-edge innovation capacity, global resource linkage, and market maturity.
+In contrast, \textit{Internet Penetration} ($w=0.0063$), \textit{AI Penetration} ($w=0.0084$), and \textit{5G Coverage} ($w=0.0087$)
+carry relatively small weights, suggesting that foundational digital access has partially converged among major economies and is less
+decisive in differentiating AI competitiveness at the current stage.
+
+Overall, the weight structure is consistent with the structural findings in Task~1: a small set of dominant factors explain most of the
+cross-country variance, while low-weight indicators provide complementary but limited marginal discrimination.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.86\textwidth]{figure/task2/fig1_en_Indicator_Weights_Distribution.pdf}
+  \caption{Indicator Weights Distribution (Entropy Weight Method)}
+  \label{fig:Indicator_Weights_Distribution}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Entropy Weights of Representative Indicators (Top and Bottom)}
+\label{tab:entropy_weights_top_bottom}
+\begin{tabular}{lccc}
+\toprule
+Indicator & Entropy $e_j$ & Redundancy $(1-e_j)$ & Weight $w_j$ \\
+\midrule
+Large Models & 0.2144 & 0.7856 & 0.0946 \\
+International AI Investment & 0.2862 & 0.7138 & 0.0859 \\
+Top AI Scholars & 0.4192 & 0.5808 & 0.0699 \\
+AI Market Size & 0.4201 & 0.5799 & 0.0698 \\
+AI Policies & 0.4444 & 0.5556 & 0.0669 \\
+\midrule
+AI Penetration & 0.9300 & 0.0700 & 0.0084 \\
+5G Coverage & 0.9275 & 0.0725 & 0.0087 \\
+Internet Penetration & 0.9478 & 0.0522 & 0.0063 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{TOPSIS-Based Comprehensive Evaluation}
 
@@ -55,7 +94,7 @@ For each indicator $j$, the positive and negative ideal components are defined a
 \begin{equation}
 A_j^+=\max_{i} v_{ij},\quad A_j^-=\min_{i} v_{ij}, \qquad j=1,\dots,p,
 \end{equation}
-yielding the ideal vectors $A^+=(A_1^+,\dots,A_p^+)$ and $A^-=(A_1^-,\dots,A_p^-)$.
+yielding the ideal vectors $A^+=(A_1^+,\dots,A_p^+)$ and $A^-=(A_1^-,\dots,A_p^-)$. \\
 
 The distances from country $i$ to the ideal solutions are computed as
 \begin{equation}
@@ -66,7 +105,45 @@ and the comprehensive competitiveness score is defined as
 C_i=\frac{D_i^-}{D_i^++D_i^-}.
 \end{equation}
 
-\textit{(Result observation and interpretation to be added here.)}
+\paragraph{Result interpretation.}
+The entropy-weighted TOPSIS results demonstrate strong heterogeneity in national AI development capability in 2025.
+The United States ranks first with $C=0.6407$, followed by China with $C=0.5104$,
+forming a clear leading tier.
+India ($C=0.2098$) and the UAE ($C=0.1836$ constitute the next tier, while the United Kingdom, South Korea, France, Japan,
+and Germany cluster in a compact mid-lower band ($C\approx 0.062$--$0.100$).
+Canada ranks last with $C=0.0414$.
+
+This ``head--middle--tail'' pattern indicates that top countries outperform others simultaneously across multiple high-weight indicators,
+while the separation among mid-ranked countries is relatively small and therefore sensitive to structural emphasis across dimensions.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.86\textwidth]{figure/task2/fig2_en_AI_Competitiveness_Ranking_2025.pdf}
+  \caption{AI Competitiveness Ranking in 2025 (TOPSIS Score)}
+  \label{fig:AI_Competitiveness_Ranking_2025}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{TOPSIS Comprehensive Evaluation Results (2025)}
+\label{tab:topsis_results_2025}
+\begin{tabular}{lcccc}
+\toprule
+Country & $D_i^+$ & $D_i^-$ & TOPSIS Score $C_i$ & Rank \\
+\midrule
+United States & 0.0978 & 0.1744 & 0.6407 & 1 \\
+China & 0.1320 & 0.1377 & 0.5104 & 2 \\
+India & 0.2006 & 0.0533 & 0.2098 & 3 \\
+UAE & 0.1998 & 0.0449 & 0.1836 & 4 \\
+United Kingdom & 0.2040 & 0.0225 & 0.0995 & 5 \\
+South Korea & 0.2063 & 0.0165 & 0.0740 & 6 \\
+France & 0.2065 & 0.0153 & 0.0688 & 7 \\
+Japan & 0.2064 & 0.0141 & 0.0640 & 8 \\
+Germany & 0.2063 & 0.0138 & 0.0625 & 9 \\
+Canada & 0.2091 & 0.0090 & 0.0414 & 10 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Structural Validation by Grey Relational Analysis}
 
@@ -96,7 +173,38 @@ and the grey relational degree of country $i$ is calculated as
 \gamma_i=\frac{1}{p}\sum_{j=1}^{p}\xi_{ij}.
 \end{equation}
 
-\textit{(Result observation and interpretation to be added here.)}
+\paragraph{Result interpretation.}
+GRA is employed as an independent structural validation of the TOPSIS-based ranking.
+The resulting grey relational degrees preserve the same leading pair as TOPSIS:
+the United States ranks first ($\gamma=0.7793$) and China ranks second ($\gamma=0.6440$).
+India ($\gamma=0.4170$) and the UAE ($\gamma=0.4052$) remain in the upper-middle group.
+Within the mid-ranked countries, slight differences emerge (e.g., South Korea ranks above the United Kingdom in GRA),
+indicating that some countries may have more coherent indicator structures even when their absolute TOPSIS scores are close.
+
+Overall, the close alignment between TOPSIS and GRA supports that the ranking is not an artifact of a single evaluation logic,
+but reflects stable and systematic capability differences across countries.
+
+\begin{table}[htbp]
+\centering
+\caption{Grey Relational Degrees and Rankings}
+\label{tab:gra_results_2025}
+\begin{tabular}{lcc}
+\toprule
+Country & Grey Relational Degree $\gamma_i$ & Rank \\
+\midrule
+United States & 0.7793 & 1 \\
+China & 0.6440 & 2 \\
+India & 0.4170 & 3 \\
+UAE & 0.4052 & 4 \\
+South Korea & 0.3703 & 5 \\
+United Kingdom & 0.3686 & 6 \\
+Japan & 0.3623 & 7 \\
+France & 0.3612 & 8 \\
+Germany & 0.3567 & 9 \\
+Canada & 0.3506 & 10 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Fusion Ranking and Reliability Framework}
 
@@ -115,13 +223,93 @@ where $d_i$ denotes the rank difference of country $i$ between two ranking metho
 Robustness is further assessed by perturbing a single indicator weight $w_j$ by $\pm\alpha$
 (e.g., $\alpha=30\%$), followed by weight renormalization and re-ranking.
 
-\textit{(Final ranking results and reliability analysis to be added here.)}
+\paragraph{Final ranking and reliability analysis.}
+The equal-weight fusion of TOPSIS and GRA produces the final 2025 competitiveness ranking.
+The top two countries (United States and China) remain unchanged, and most mid-ranked countries
+show only minor rank adjustments, indicating a stable ordering.
+Method consistency is extremely high: the rank correlation between TOPSIS scores and grey relational degrees
+achieves Spearman $\rho_s=0.9758$ with statistical significance ($p<0.001$), confirming that the evaluation outcome
+is robust to the choice of ranking mechanism.
+Sensitivity results further indicate limited rank volatility under weight perturbations: most countries exhibit
+rank ranges of 0--1, and only a few countries show moderate variation (e.g., France with range 3), suggesting
+overall model stability.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.86\textwidth]{figure/task2/fig7_en_Validation_Analysis.pdf}
+  \caption{Validation and Robustness Analysis (Method Consistency and Sensitivity)}
+  \label{fig:Validation_Analysis}
+\end{figure}
+
+\begin{table}[htbp]
+\centering
+\caption{Final AI Competitiveness Ranking (2025) by Fusion Score}
+\label{tab:final_ranking_2025}
+\begin{tabular}{lcccccc}
+\toprule
+Country & TOPSIS Rank & GRA Rank & TOPSIS $C_i$ & GRA $\gamma_i$ & Fusion Score $S_i$ & Grade \\
+\midrule
+United States & 1 & 1 & 0.6407 & 0.7793 & 0.7100 & A+ \\
+China & 2 & 2 & 0.5104 & 0.6440 & 0.5772 & A \\
+India & 3 & 3 & 0.2098 & 0.4170 & 0.3134 & A \\
+UAE & 4 & 4 & 0.1836 & 0.4052 & 0.2944 & B \\
+United Kingdom & 5 & 6 & 0.0995 & 0.3686 & 0.2341 & C \\
+South Korea & 6 & 5 & 0.0740 & 0.3703 & 0.2221 & C \\
+France & 7 & 8 & 0.0688 & 0.3612 & 0.2150 & C \\
+Japan & 8 & 7 & 0.0640 & 0.3623 & 0.2131 & C \\
+Germany & 9 & 9 & 0.0625 & 0.3567 & 0.2096 & C \\
+Canada & 10 & 10 & 0.0414 & 0.3506 & 0.1960 & C \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Ranking Sensitivity under Weight Perturbation (Rank Range)}
+\label{tab:sensitivity_range}
+\begin{tabular}{lc}
+\toprule
+Country & Rank Range \\
+\midrule
+United States & 0 \\
+China & 0 \\
+India & 0 \\
+UAE & 0 \\
+United Kingdom & 0 \\
+Canada & 0 \\
+Germany & 1 \\
+South Korea & 1 \\
+Japan & 2 \\
+France & 3 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{Structural explanation by six dimensions (optional).}
+To interpret why top-ranked countries outperform others, the six-dimensional scores provide a compact decomposition.
+The United States exhibits strong advantages in \textit{R\&D} ($0.8307$) and \textit{Infrastructure} ($0.8714$),
+while China shows prominent strengths in \textit{Application} ($0.7344$) and \textit{Policy} ($0.7980$).
+India displays relatively high \textit{Output} ($0.5889$) and moderate \textit{Application} ($0.4011$),
+whereas the UAE relies more on \textit{Infrastructure} ($0.6453$) and policy-related support.
+These complementary structures help explain why the leading tier remains stable while mid-ranked countries cluster closely.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.80\textwidth]{figure/task2/fig4_en_Six_Dimensional_Capability_Radar.pdf}
+  \caption{Six-Dimensional Capability Profiles of Representative Countries}
+  \label{fig:Six_Dimensional_Radar}
+\end{figure}
 
 \subsection{Overall Summary of Task 2}
 
 Task 2 establishes a comprehensive evaluation framework for national AI development capability
 by integrating objective weighting, distance-based evaluation, and structural validation.
-The framework provides a consistent and reproducible basis for generating the 2025 competitiveness
-ranking, which serves as the benchmark for subsequent analysis.
+Using entropy-based weights, the TOPSIS model yields a clear 2025 competitiveness hierarchy,
+with the United States and China forming the leading tier, followed by India and the UAE,
+and a compact cluster of mid-ranked countries.
 
-\textit{(Overall result summary and interpretation to be added here.)}
+The GRA results provide an independent validation of the TOPSIS ordering, and the extremely high
+rank correlation (Spearman $\rho_s=0.9758$, $p<0.001$) confirms strong methodological consistency.
+Sensitivity analysis further indicates that rankings remain stable under reasonable perturbations of indicator weights.
+Overall, the final fusion ranking offers a transparent and reproducible benchmark for 2025 AI competitiveness,
+serving as the baseline for forecasting and policy analysis in subsequent tasks.
