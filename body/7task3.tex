@@ -1,41 +1,59 @@
+% =========================
+% body/7task3.tex
+% =========================
 \section{Task 3: Forecasting AI Competitiveness (2026--2035)}
 
-Building on the indicator system identified in Task~1 and the objective evaluation framework established in Task~2, Task~3 extends the analysis from a static assessment to a dynamic forecasting perspective. The central purpose of this task is to examine how national AI competitiveness may evolve over the period 2026--2035 if historical development trajectories continue, without introducing any additional policy shocks or subjective assumptions.
-
-The forecasting strategy follows a unified logic: future competitiveness is inferred indirectly through the predicted evolution of underlying indicators, while the evaluation mechanism itself remains unchanged. In this way, any variation in future rankings can be attributed solely to data-driven indicator dynamics.
+Task~3 extends the 2025 evaluation to a dynamic horizon.
+The key rule is consistency: \emph{the evaluation mechanism (weights and TOPSIS) is fixed},
+and only the indicator trajectories evolve. Therefore, any ranking change during 2026--2035
+can be attributed to data-driven indicator dynamics rather than altered standards.
 
 \subsection{Indicator-Level Trend Prediction}
 
-Let $x_{i,j,t}$ denote the observed value of indicator $j$ for country $i$ in year $t$. The dataset forms a balanced panel with $n=10$ countries and $p=24$ indicators over the historical period 2016--2025. For each country--indicator pair, future values $\hat{x}_{i,j,t}$ for $t=2026,\dots,2035$ are predicted independently.
+Let $x_{i,j,t}$ be indicator $j$ of country $i$ in year $t$.
+For each country--indicator series over 2016--2025, we forecast $\hat{x}_{i,j,t}$ for $t=2026,\dots,2035$ independently.
 
-Given the limited length of historical sequences, the Grey Forecasting Model GM(1,1) is adopted as the primary prediction tool. For a fixed sequence
-\[
-X^{(0)}=\bigl(x^{(0)}(1),x^{(0)}(2),\dots,x^{(0)}(T)\bigr), \quad T=10,
-\]
-the model applies first-order accumulated generation (AGO), estimates the corresponding differential equation, and recovers the predicted original series through inverse transformation. GM(1,1) is particularly suitable in this context due to its robustness under small-sample conditions and its ability to capture long-term monotonic trends.
-
-To ensure numerical stability and realistic forecasts across heterogeneous indicators, several unified engineering treatments are applied. Near-zero or sparse series are translated to maintain non-negativity, forecast values are truncated according to indicator-specific bounds, and logarithmic scaling is used when necessary for indicators with large magnitude dispersion. Importantly, all treatments are rule-based, reversible, and applied consistently across countries.
-
-Model reliability is examined through one-step-ahead backtesting. Using data from 2016--2024, the year 2025 is predicted and evaluated using the mean absolute percentage error (MAPE). For sequences where GM(1,1) performs poorly, a linear trend model under identical constraints is adopted as a fallback. Across all $240$ country--indicator sequences, GM(1,1) is used for $44.17\%$ of cases, while the fallback model is activated for $55.83\%$. The overall error distribution remains well controlled, with a median MAPE of $0.1035$. A compact diagnostic summary of forecasting accuracy and model usage is presented in Fig.~\ref{fig:task3_diag_panel}.
+Given short sequences ($T=10$), GM(1,1) is used as the primary model.
+When GM(1,1) backtesting is unsatisfactory, a constrained linear trend model is used as a fallback under the same
+non-negativity and truncation rules. One-step-ahead validation (train 2016--2024, predict 2025) uses MAPE as the main metric.
+In our pipeline, GM(1,1) covers $44.17\%$ of the $240$ country--indicator series, while the fallback is used for $55.83\%$,
+with a median MAPE of $0.1035$.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.95\linewidth]{figure/task3/fig5_en_Forecast_Diagnostics_Panel.pdf}
-\caption{Forecast diagnostics panel for the indicator-level prediction stage.}
-\label{fig:task3_diag_panel}
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figure/task3/fig2_optimized_en_Score_Gap_Dynamics.pdf}}
+  \caption{Score gaps (2026--2035).}
+  \label{fig:task3_score_gap}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figure/task3/fig4_optimized_en_Slope_Chart_2025_2035.pdf}}
+  \caption{2025 vs.\ 2035 slope chart.}
+  \label{fig:task3_baseline_forecast}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.32\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figure/task3/fig5_optimized_en_Diagnostics_Panel.pdf}}
+  \caption{Forecast diagnostics panel.}
+  \label{fig:task3_diag_panel}
+\end{subfigure}
+\caption{Forecasting and evaluation diagnostics for Task~3.}
+\label{fig:task3_diag_stack}
 \end{figure}
 
 \subsection{Annual Evaluation and Score Evolution}
 
-Once indicator-level forecasts are obtained, national AI competitiveness is evaluated on a yearly basis using the same methodology as in Task~2. Let $W=(w_1,\dots,w_p)$ denote the entropy-based indicator weights derived previously. These weights are held fixed throughout the forecasting horizon to ensure temporal comparability.
-
-For each forecast year $t$, the predicted indicator matrix
+After forecasting, we construct the predicted indicator matrix for each year $t$:
 \[
-\hat{X}_t=\bigl(\hat{x}_{i,j,t}\bigr)_{n\times p}
+\hat{X}_t=\bigl(\hat{x}_{i,j,t}\bigr)_{n\times p}.
 \]
-is normalized and evaluated using the TOPSIS method, yielding the relative closeness score $C_{i,t}\in[0,1]$ for each country.
+We keep the entropy weights from Task~2 fixed as $W=(w_1,\dots,w_p)$, and apply the same TOPSIS procedure
+to obtain the annual closeness scores $C_{i,t}\in[0,1]$.
 
-Table~\ref{tab:task3_scores_selected} reports TOPSIS scores for three representative years (2026, 2030, and 2035). To illustrate the dynamic evolution of competitiveness more intuitively, Fig.~\ref{fig:task3_score_gap} visualizes the score trajectories and inter-country gaps over the entire forecast horizon.
+Table~\ref{tab:task3_scores_selected} reports the TOPSIS scores for representative years (2026, 2030, 2035),
+while Fig.~\ref{fig:task3_score_gap} visualizes the score convergence and the evolution of cross-country gaps.
 
 \begin{table}[htbp]
 \centering
@@ -60,73 +78,61 @@ Japan & 0.054 & 0.060 & 0.093 \\
 \end{tabular}
 \end{table}
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.95\linewidth]{figure/task3/fig2_en_Score_Gap_Dynamics_2026_2035.pdf}
-\caption{Score gap dynamics of TOPSIS closeness scores (2026--2035).}
-\label{fig:task3_score_gap}
-\end{figure}
-
-Two score-level patterns emerge clearly. First, the leading position remains stable, although the score gap between the top two countries narrows slightly over time. Second, the overall dispersion of scores decreases, indicating gradual convergence in comprehensive AI competitiveness.
-
 \subsection{Ranking Evolution and Stability}
 
-For each year, countries are ranked in descending order of $C_{i,t}$. The resulting ranking trajectories are shown in Fig.~\ref{fig:task3_rank_bump}, while overall rank stability is summarized in Fig.~\ref{fig:task3_rank_heatmap}.
+Countries are ranked annually by $C_{i,t}$.
+Fig.~\ref{fig:task3_rank_pair} shows both the ranking trajectories (bump chart) and the stability heatmap.
+The top tier remains stable, while rank swaps occur mainly among closely competing mid-/lower-tier countries.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.95\linewidth]{figure/task3/fig1_en_Rank_Evolution_Bump_Chart_2026_2035.pdf}
-\caption{Ranking evolution (bump chart) from 2026 to 2035.}
-\label{fig:task3_rank_bump}
+\begin{subfigure}[t]{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figure/task3/fig1_optimized_en_Rank_Evolution_Bump_Chart.pdf}}
+  \caption{Bump chart (2026--2035).}
+  \label{fig:task3_rank_bump}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figure/task3/fig3_optimized_en_Rank_Stability_Heatmap.pdf}}
+  \caption{Rank stability heatmap.}
+  \label{fig:task3_rank_heatmap}
+\end{subfigure}
+\caption{Ranking evolution and stability over the forecast horizon.}
+\label{fig:task3_rank_pair}
 \end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.95\linewidth]{figure/task3/fig3_en_Rank_Stability_Heatmap_2026_2035.pdf}
-\caption{Rank stability heatmap over the forecast horizon.}
-\label{fig:task3_rank_heatmap}
-\end{figure}
-
-The forecast indicates a highly stable top tier, with the United States, China, India, and the United Arab Emirates consistently occupying the first four positions throughout the period. Rank changes occur primarily among mid- and lower-tier countries, where score differences are comparatively small.
-
-Quantitative rank stability statistics are reported in Table~\ref{tab:task3_rank_stats}. These results confirm that observed rank fluctuations are generally limited to one-position changes and do not reflect structural reversals.
 
 \begin{table}[htbp]
 \centering
-\caption{Rank stability statistics over 2026--2035.}
+\caption{Rank stability summary (2026--2035).}
 \label{tab:task3_rank_stats}
 \small
-\begin{tabular}{lrrrrrr}
+\begin{tabular}{lrrrr}
 \toprule
-Country & AvgRank & StdRank & BestRank & WorstRank & MaxRise & MaxFall \\
+Country & AvgRank & StdRank & BestRank & WorstRank \\
 \midrule
-United States & 1.00 & 0.00 & 1 & 1 & 0 & 0 \\
-China & 2.00 & 0.00 & 2 & 2 & 0 & 0 \\
-India & 3.00 & 0.00 & 3 & 3 & 0 & 0 \\
-United Arab Emirates & 4.00 & 0.00 & 4 & 4 & 0 & 0 \\
-Germany & 5.20 & 0.40 & 5 & 6 & 0 & 1 \\
-France & 5.90 & 0.54 & 5 & 7 & 1 & 0 \\
-United Kingdom & 7.10 & 0.54 & 6 & 8 & 1 & 1 \\
-South Korea & 8.40 & 0.49 & 8 & 9 & 0 & 1 \\
-Canada & 8.90 & 1.22 & 7 & 10 & 1 & 1 \\
-Japan & 9.50 & 0.50 & 9 & 10 & 0 & 1 \\
+United States & 1.00 & 0.00 & 1 & 1 \\
+China & 2.00 & 0.00 & 2 & 2 \\
+India & 3.00 & 0.00 & 3 & 3 \\
+United Arab Emirates & 4.00 & 0.00 & 4 & 4 \\
+Germany & 5.20 & 0.40 & 5 & 6 \\
+France & 5.90 & 0.54 & 5 & 7 \\
+United Kingdom & 7.10 & 0.54 & 6 & 8 \\
+South Korea & 8.40 & 0.49 & 8 & 9 \\
+Canada & 8.90 & 1.22 & 7 & 10 \\
+Japan & 9.50 & 0.50 & 9 & 10 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Interpretation and Robustness}
 
-Because both the indicator weights and the evaluation procedure are fixed, all ranking changes arise solely from predicted indicator trajectories. For mid-tier countries, ranking swaps reflect the accumulation of small advantages across several high-weight indicators rather than abrupt changes in any single metric. This structural interpretation is consistent with the observed score convergence shown in Fig.~\ref{fig:task3_score_gap}.
-
-Overall robustness is supported by the forecasting diagnostics (Fig.~\ref{fig:task3_diag_panel}) and by the clear separation between top-tier and mid-tier score levels. A baseline-to-forecast comparison is provided in Fig.~\ref{fig:task3_baseline_forecast}, illustrating that most rank adjustments occur locally among closely competing countries.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.95\linewidth]{figure/task3/fig4_en_Baseline_vs_Forecast_Slope_Chart_2025_2035.pdf}
-\caption{Comparison between 2025 baseline and 2035 forecasted rankings.}
-\label{fig:task3_baseline_forecast}
-\end{figure}
+Because weights and evaluation rules are fixed, ranking changes come solely from predicted indicator trajectories.
+Observed swaps are local (small score gaps) rather than structural reversals, consistent with the convergence pattern in Fig.~\ref{fig:task3_score_gap}.
+Forecast reliability is supported by the diagnostics in Fig.~\ref{fig:task3_diag_panel}.
 
 \subsection{Summary}
 
-Task~3 integrates indicator-level time series forecasting with a fixed and validated evaluation framework to project the future evolution of national AI competitiveness. The results suggest a stable global leadership structure, gradual convergence among developing competitors, and limited, interpretable ranking changes concentrated in the middle tier. This dynamic assessment provides a coherent quantitative basis for the investment optimization analysis conducted in Task~4.
+Task~3 couples indicator-level forecasting with the fixed Task~2 evaluation to project 2026--2035 competitiveness.
+The results suggest stable global leadership, gradual score convergence, and limited, interpretable mid-tier rank changes,
+providing the scenario baseline required by Task~4.

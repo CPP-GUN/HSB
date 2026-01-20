@@ -1,120 +1,126 @@
+% =========================
+% body/5task1.tex
+% =========================
 \section{Task 1: Analysis of AI Development Factors}
 
-The objective of Task~1 is to uncover the internal structure of national AI development capability from a data-driven perspective. Instead of imposing predefined theoretical relationships, this task examines how multiple AI-related indicators co-evolve across countries and interact to jointly shape overall competitiveness. The analysis provides a structural foundation for the evaluation and forecasting tasks that follow.
+Task~1 aims to \emph{reveal the internal structure} of national AI capability from the 24-indicator system.
+Rather than prespecifying causal links, we use cross-country co-movement to identify (i) tightly coupled factor groups,
+(ii) dominant low-dimensional directions, and (iii) a small set of high-leverage indicators.
+These structural outputs support Task~2 (objective evaluation) and inform Task~4 (synergy-aware constraints).
 
 \subsection{Quantification of Key Indicators}
 
-National AI development capability is represented by a standardized indicator matrix
+Let the min--max normalized indicator matrix be
 \begin{equation}
-X = [x_{ij}] \in \mathbb{R}^{n \times p},
+X=[x_{ij}] \in \mathbb{R}^{n\times p},\qquad n=10,\; p=24,
 \end{equation}
-where $x_{ij}$ denotes the normalized value of indicator $j$ for country $i$, with $n=10$ countries and $p=24$ indicators.
-
-To ensure comparability among indicators with heterogeneous scales, min--max normalization is applied:
+where $x_{ij}$ is the normalized value of indicator $j$ for country $i$.
+To remove scale effects across heterogeneous indicators, we apply
 \begin{equation}
-x_{ij} = \frac{x_{ij}^{\text{raw}}-\min(x_j)}{\max(x_j)-\min(x_j)} \in [0,1].
+x_{ij}=\frac{x_{ij}^{\mathrm{raw}}-\min(x_j)}{\max(x_j)-\min(x_j)}\in[0,1].
 \end{equation}
-The resulting matrix $X$ provides a unified quantitative description of AI development factors and serves as the common input for all analyses in Task~1.
+Matrix $X$ is the common input for correlation, clustering, and PCA in this task.
 
 \subsection{Correlation Structure and Interaction Mechanism}
 
-\paragraph{Overall correlation patterns.}
-Based on the standardized data, Pearson correlation analysis is first employed to examine linear associations among AI development indicators. The correlation coefficient between indicator $j$ and $k$ is defined as
+\paragraph{Correlation map and strong-link set.}
+We quantify linear association by Pearson correlation:
 \begin{equation}
 r_{jk}=
 \frac{\sum_{i=1}^{n}(x_{ij}-\bar{x}_j)(x_{ik}-\bar{x}_k)}
-{\sqrt{\sum_{i=1}^{n}(x_{ij}-\bar{x}_j)^2
-\sum_{i=1}^{n}(x_{ik}-\bar{x}_k)^2}},
+{\sqrt{\sum_{i=1}^{n}(x_{ij}-\bar{x}_j)^2}\sqrt{\sum_{i=1}^{n}(x_{ik}-\bar{x}_k)^2}},
+\qquad
+R=[r_{jk}] \in \mathbb{R}^{p\times p}.
 \end{equation}
-forming the correlation matrix
+To focus on interpretable dependencies, we define the strong-correlation edge set
 \begin{equation}
-R=[r_{jk}] \in \mathbb{R}^{p \times p}.
+\mathcal{E}=\{(j,k)\mid |r_{jk}|>\tau,\; j<k\},
 \end{equation}
+where $\tau$ is a fixed threshold (used consistently in Task~4 to impose synergy constraints).
+The heatmap in Fig.~\ref{fig:task1_corr_cluster}\subref{fig:task1_corr} shows a dense positive-correlation backbone,
+suggesting that talent, R\&D investment, market scale, and compute infrastructure often advance jointly.
 
-To focus on meaningful interactions, strong correlations are identified by
+\paragraph{Hierarchical clustering (group-level structure).}
+To move beyond pairwise links, we cluster indicators using correlation distance
 \begin{equation}
-\mathcal{E}=\{(j,k)\mid |r_{jk}|>\tau,\ j<k\},
+d_{jk}=1-|r_{jk}|,
 \end{equation}
-where $\tau$ denotes a predefined threshold.
-
-The correlation results reveal a densely connected structure among AI development factors. Many indicators exhibit strong positive correlations, indicating that progress in one aspect of AI capability is often accompanied by simultaneous improvement in others. In particular, talent-related indicators, R\&D investment measures, market scale variables, and computing infrastructure show pronounced co-movement, reflecting coordinated national development strategies rather than isolated factor growth.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.75\textwidth]{figure/task1/fig1_en_Correlation Heatmap of AI Development Factors.pdf}
-  \caption{Correlation Heatmap of AI Development Factors}
-  \label{fig:task1_corr}
-\end{figure}
-
-\paragraph{Structural grouping of indicators.}
-While pairwise correlations describe local relationships, they do not directly reveal higher-level organization. To uncover such structure, hierarchical clustering is applied using correlation-based distances:
-\begin{equation}
-d_{jk}=1-|r_{jk}|.
-\end{equation}
-The distance between clusters is computed using the average linkage criterion:
+and average linkage between clusters $C_a$ and $C_b$:
 \begin{equation}
 D(C_a,C_b)=\frac{1}{|C_a||C_b|}\sum_{j\in C_a}\sum_{k\in C_b} d_{jk}.
 \end{equation}
-
-The resulting dendrogram reveals several coherent clusters that align with intuitive dimensions of AI development. Indicators related to investment intensity and market outcomes form a tightly connected group, computing infrastructure indicators cluster together and remain closely linked to investment-related factors, while talent and knowledge production indicators constitute another distinct cluster. These results confirm that AI development factors form a multi-dimensional yet internally coordinated system.
+The dendrogram in Fig.~\ref{fig:task1_corr_cluster}\subref{fig:task1_cluster} recovers coherent modules,
+typically separating (i) \emph{investment--market--infrastructure} factors from (ii) \emph{talent--knowledge production} factors.
+This validates that the indicator system is multidimensional but internally coordinated.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.75\textwidth]{figure/task1/fig2_en_Hierarchical Clustering Dendrogram of AI Development Factors.pdf}
-  \caption{Hierarchical Clustering of AI Development Factors}
-  \label{fig:task1_cluster}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figure/task1/fig1_en_Correlation Heatmap of AI Development Factors.pdf}}
+    \caption{Correlation heatmap of 24 indicators.}
+    \label{fig:task1_corr}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figure/task1/fig2_en_Hierarchical Clustering Dendrogram of AI Development Factors.pdf}}
+    \caption{Hierarchical clustering dendrogram.}
+    \label{fig:task1_cluster}
+  \end{subfigure}
+  \caption{Pairwise association and group structure of AI development factors.}
+  \label{fig:task1_corr_cluster}
 \end{figure}
 
-\paragraph{Principal component structure.}
-The strong correlations and clustering patterns suggest substantial redundancy among indicators. To extract the dominant structural dimensions of AI development, principal component analysis (PCA) is conducted. Let
+\paragraph{Principal component structure (dominant dimensions).}
+High correlations imply redundancy, so we use PCA to extract dominant directions.
+Let
 \begin{equation}
-\tilde{X}=X-\mathbf{1}\bar{X}^T,
-\qquad
-C=\frac{1}{n-1}\tilde{X}^T\tilde{X}
+\tilde{X}=X-\mathbf{1}\bar{X}^T,\qquad
+C=\frac{1}{n-1}\tilde{X}^T\tilde{X},
 \end{equation}
-denote the centered data matrix and its covariance matrix. Eigen-decomposition yields
+and eigen-decompose
 \begin{equation}
-C=V\Lambda V^T,
+C=V\Lambda V^T.
 \end{equation}
-where $\Lambda$ is the diagonal matrix of eigenvalues.
+We retain the smallest $m$ components that explain a high share of variance (in our results, the first four PCs explain $>90\%$;
+see Fig.~\ref{fig:task1_pca_stack}\subref{fig:task1_pca}).
+This indicates that cross-country AI capability differences can be summarized by a low-dimensional latent structure.
 
-The number of retained components $m$ is determined by the cumulative variance criterion
+\paragraph{Factor importance and interaction network.}
+We quantify indicator importance by combining squared loadings and explained variance:
 \begin{equation}
-\sum_{k=1}^{m}\frac{\lambda_k}{\sum_{j=1}^{p}\lambda_j}\ge \eta.
+I_j=\sum_{k=1}^{m} v_{jk}^2\cdot\frac{\lambda_k}{\sum_{\ell=1}^{p}\lambda_\ell}.
 \end{equation}
-
-The PCA results indicate that variance is highly concentrated in the leading components. More than 90\% of the total variance is explained by the first four principal components, suggesting that national AI development capability can be effectively characterized by a low-dimensional structure driven by a common underlying dimension.
+Fig.~\ref{fig:task1_pca_stack}\subref{fig:task1_importance} shows that a limited subset (typically talent, frontier R\&D,
+and high-end compute) contributes most to the explained variation.
+Finally, the strong-link network induced by $\mathcal{E}$ visualizes system-level coupling:
+hub indicators (often infrastructure and investment) connect multiple modules, consistent with a coordinated development mechanism
+(Fig.~\ref{fig:task1_pca_stack}\subref{fig:task1_network}).
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.75\textwidth]{figure/task1/fig3_en_Variance Explained Plot for Principal Components.pdf}
-  \caption{Variance Explained by Principal Components}
-  \label{fig:task1_pca}
-\end{figure}
-
-\paragraph{Factor importance and system-level interactions.}
-Building on the PCA results, the relative importance of each indicator is quantified by combining component loadings and variance contributions:
-\begin{equation}
-I_j=\sum_{k=1}^{m} v_{jk}^2\cdot\frac{\lambda_k}{\sum_{l=1}^{p}\lambda_l}.
-\end{equation}
-
-The importance ranking shows that explanatory power is concentrated in a limited number of indicators. Factors related to human capital, research output, investment scale, and advanced computing infrastructure consistently exhibit higher importance scores, highlighting their dominant role in shaping cross-country differences in AI capability.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.75\textwidth]{figure/task1/fig4_en_Factor Importance Ranking Bar Chart.pdf}
-  \caption{Factor Importance Ranking Bar Chart}
-  \label{fig:task1_importance}
-\end{figure}
-
-From a system-level perspective, a strong-correlation network further illustrates the interaction mechanism among indicators. Investment- and infrastructure-related factors occupy central positions in the network, acting as hubs that connect multiple dimensions, while peripheral indicators exhibit weaker coupling. This structure indicates that AI development emerges from coordinated interactions among a core set of drivers rather than independent contributions.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.75\textwidth]{figure/task1/fig5_en_Strong-Correlation Network or Chord Diagram.pdf}
-  \caption{Interaction Network of AI Development Factors}
-  \label{fig:task1_network}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figure/task1/fig3_en_Variance Explained Plot for Principal Components.pdf}}
+    \caption{Variance explained by PCs.}
+    \label{fig:task1_pca}
+  \end{subfigure}\hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figure/task1/fig4_en_Factor Importance Ranking Bar Chart.pdf}}
+    \caption{Importance ranking $I_j$.}
+    \label{fig:task1_importance}
+  \end{subfigure}\\[2pt]
+  \begin{subfigure}[t]{0.95\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{\detokenize{figure/task1/fig5_en_Strong-Correlation Network or Chord Diagram.pdf}}
+    \caption{Strong-correlation interaction network.}
+    \label{fig:task1_network}
+  \end{subfigure}
+  \caption{Low-dimensional structure and key drivers of AI development capability.}
+  \label{fig:task1_pca_stack}
 \end{figure}
 
 \paragraph{Summary of Task~1.}
-Through correlation analysis, hierarchical clustering, dimensionality reduction, and interaction exploration, Task~1 reveals that AI development factors form a highly interconnected and structured system. A small number of dominant dimensions and key indicators drive most cross-country variation, while remaining factors play supporting roles. These findings provide a concise and rigorous structural basis for the comprehensive evaluation in Task~2 and the forecasting analysis in Task~3.
+Task~1 identifies a dense correlation backbone, coherent indicator modules, and a low-dimensional dominant structure.
+These findings motivate (i) objective aggregation in Task~2 and (ii) synergy-aware design in Task~4 using $\mathcal{E}$.
