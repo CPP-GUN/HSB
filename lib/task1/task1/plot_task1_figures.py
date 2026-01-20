@@ -168,7 +168,7 @@ def fig1_correlation_heatmap(outputs_dir: Path, out_dir: Path) -> Path:
 
 
 def fig2_hierarchical_dendrogram(outputs_dir: Path, out_dir: Path) -> Path:
-    """Fig2：层次聚类树状图（数据：correlation_matrix.csv；d=1-|r|；average linkage）"""
+    """Fig2：层次聚类树状图（优化版：分组颜色+阈值线+簇标注）"""
     R = pd.read_csv(outputs_dir / "correlation_matrix.csv", index_col=0)
 
     D = 1 - np.abs(R.values)
@@ -182,38 +182,50 @@ def fig2_hierarchical_dendrogram(outputs_dir: Path, out_dir: Path) -> Path:
 
     fig, ax = plt.subplots(figsize=(12, 6.6))
 
-    # Nature/Science风格：专业蓝色系
-    link_color = "#3182bd"
-    dendrogram(
+    # 优化1：使用颜色阈值自动分组（设置为0.3，约85%相似度）
+    threshold = 0.3
+    
+    # 使用专业配色方案
+    cluster_colors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#a65628']
+    
+    dend = dendrogram(
         Z,
         labels=labels,
         leaf_rotation=60,
         leaf_font_size=7,
         ax=ax,
-        color_threshold=0,
-        above_threshold_color=link_color,
-        link_color_func=lambda _: link_color,
+        color_threshold=threshold,
+        above_threshold_color='#999999'
     )
 
-    # 细化线条（dendrogram 会生成多条 Line2D）
-    for line in ax.get_lines():
-        line.set_linewidth(1.2)
-        line.set_alpha(0.85)
+    # 优化2：添加阈值参考线
+    ax.axhline(y=threshold, color='#e74c3c', linestyle='--', linewidth=1.8, 
+              alpha=0.7, label=f'Threshold (d={threshold:.2f})')
 
-    ax.set_ylabel("Distance (1 - |r|)", fontsize=10)
+    ax.set_ylabel("Distance (1 - |r|)", fontsize=10, weight='bold')
 
-    # 轻量 y 轴网格：帮助读距离，不抢视觉焦点
-    ax.grid(axis="y", linestyle="--", linewidth=0.5, alpha=0.25)
+    # 轻量 y 轴网格
+    ax.grid(axis="y", linestyle=":", linewidth=0.5, alpha=0.3)
 
-    # 清理边框与刻度：更接近论文版式
+    # 清理边框
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_linewidth(0.6)
-    ax.spines["bottom"].set_linewidth(0.6)
+    ax.spines["left"].set_linewidth(0.8)
+    ax.spines["bottom"].set_linewidth(0.8)
     ax.tick_params(axis="x", which="major", width=0.3, length=0, pad=2)
-    ax.tick_params(axis="y", which="major", labelsize=9, width=0.3, length=2)
+    ax.tick_params(axis="y", which="major", labelsize=9, width=0.3, length=3)
 
-    # 为长标签留足底部空间
+    # 优化3：添加图例
+    ax.legend(loc='upper right', fontsize=9, frameon=True, 
+             edgecolor='#d0d0d0', framealpha=0.9)
+
+    # 优化4：添加洞察文本框
+    n_clusters = len(set([c for c in dend['color_list'] if c != '#999999']))
+    ax.text(0.02, 0.96, f'{n_clusters} clusters identified\nat threshold {threshold:.2f}',
+            transform=ax.transAxes, fontsize=9, va='top',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#e3f2fd',
+                     edgecolor='#3498db', linewidth=1.5, alpha=0.9))
+
     fig.subplots_adjust(left=0.06, right=0.99, top=0.92, bottom=0.38)
 
     out_path = out_dir / "fig2_en_Hierarchical Clustering Dendrogram of AI Development Factors.pdf"
@@ -222,7 +234,7 @@ def fig2_hierarchical_dendrogram(outputs_dir: Path, out_dir: Path) -> Path:
 
 
 def fig3_variance_explained(outputs_dir: Path, out_dir: Path) -> Path:
-    """Fig3：PCA 方差贡献率（柱状图 + 累积折线）。"""
+    """Fig3：PCA 方差贡献率（优化版：阈值线+突出前3PC+数值标签+洞察）"""
     df = pd.read_csv(outputs_dir / "pca_variance.csv", index_col=0)
 
     pcs = list(df.index)
@@ -231,25 +243,62 @@ def fig3_variance_explained(outputs_dir: Path, out_dir: Path) -> Path:
 
     x = np.arange(len(pcs))
 
-    fig, ax = plt.subplots(figsize=(10, 5))
-    # Nature蓝色柱状图
-    ax.bar(x, var, color="#3182bd", alpha=0.88, label="Variance Explained (%)", edgecolor="white", linewidth=0.5)
-    # 深橙色累积线
-    ax.plot(x, cum, color="#d6604d", marker="o", markersize=5, linewidth=1.8, label="Cumulative (%)", alpha=0.95)
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    
+    # 优化1：前3个PC用深色，其他用浅色
+    colors = ['#2c7bb6' if i < 3 else '#abd9e9' for i in range(len(pcs))]
+    
+    # 绘制柱状图
+    bars = ax.bar(x, var, color=colors, alpha=0.9, label="Variance Explained (%)", 
+                  edgecolor="white", linewidth=0.8)
+    
+    # 优化2：添加数值标签（只在前5个PC上显示）
+    for i, (bar, v) in enumerate(zip(bars, var)):
+        if i < 5:
+            ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1,
+                   f'{v:.1f}%', ha='center', va='bottom', fontsize=8, weight='bold')
+    
+    # 绘制累积折线
+    line = ax.plot(x, cum, color='#d6604d', marker='o', markersize=6, 
+                   linewidth=2.2, label="Cumulative (%)", alpha=0.95, zorder=10)
+
+    # 优化3：添加85%阈值线
+    threshold_85 = 85
+    ax.axhline(y=threshold_85, color='#e74c3c', linestyle='--', linewidth=2, 
+              alpha=0.7, label='85% Threshold', zorder=5)
+    
+    # 找到累积方差超过85%的第一个PC
+    pc_85_idx = np.argmax(cum >= threshold_85)
+    ax.axvline(x=pc_85_idx, color='#e74c3c', linestyle=':', linewidth=1.5, 
+              alpha=0.5, zorder=5)
+    
+    # 标注交点
+    ax.scatter(pc_85_idx, cum[pc_85_idx], s=120, color='#e74c3c', 
+              edgecolor='white', linewidth=2, zorder=15)
+    ax.text(pc_85_idx + 0.3, cum[pc_85_idx] + 2, 
+           f'PC{pc_85_idx+1}\n{cum[pc_85_idx]:.1f}%',
+           fontsize=9, weight='bold', color='#e74c3c')
 
     ax.set_xticks(x)
     ax.set_xticklabels(pcs, rotation=0, fontsize=9)
-    ax.set_ylim(0, max(100, float(np.max(cum)) + 5))
-    ax.set_ylabel("Percentage (%)", fontsize=10)
-    ax.grid(axis="y", linestyle="--", linewidth=0.5, alpha=0.25)
-    ax.legend(loc="best", fontsize=9, frameon=True, edgecolor="#d0d0d0", framealpha=0.9)
+    ax.set_ylim(0, 105)
+    ax.set_ylabel("Percentage (%)", fontsize=11, weight='bold')
+    ax.grid(axis="y", linestyle=":", linewidth=0.5, alpha=0.3)
+    ax.legend(loc="upper right", fontsize=9, frameon=True, 
+             edgecolor='#d0d0d0', framealpha=0.95)
     
     # 清理边框
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_linewidth(0.6)
-    ax.spines["bottom"].set_linewidth(0.6)
+    ax.spines["left"].set_linewidth(0.8)
+    ax.spines["bottom"].set_linewidth(0.8)
     ax.tick_params(axis="both", which="major", labelsize=9, width=0.3, length=3)
+
+    # 优化4：添加洞察文本框
+    ax.text(0.02, 0.96, f'First 3 PCs explain\n{cum[2]:.2f}% of variance',
+            transform=ax.transAxes, fontsize=10, va='top', weight='bold',
+            bbox=dict(boxstyle='round,pad=0.5', facecolor='#d5f4e6',
+                     edgecolor='#27ae60', linewidth=1.5, alpha=0.9))
 
     out_path = out_dir / "fig3_en_Variance Explained Plot for Principal Components.pdf"
     _save_pdf(fig, out_path)

@@ -119,7 +119,7 @@ def get_paths():
 def plot_fig1_donut_chart(data_dir, output_dir):
     """
     Fig1: 环形图 - 六大维度投资分布
-    中心显示总投资额10000亿
+    优化版：更好的配色、清晰的标签、显示金额和百分比
     """
     print("\n[Fig1] 绘制六大维度投资分布环形图...")
     
@@ -129,49 +129,82 @@ def plot_fig1_donut_chart(data_dir, output_dir):
     df = df.sort_values('占比_%', ascending=False)
     
     # 创建图表
-    fig, ax = plt.subplots(figsize=(10, 8))
+    fig, ax = plt.subplots(figsize=(12, 9))
     
-    # 颜色
-    colors = [DIMENSION_COLORS.get(d, '#95a5a6') for d in df['维度']]
+    # 优化配色方案 - 使用更协调的渐变色
+    colors = ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D', '#6A994E', '#BC4B51']
     
-    # 突出最大扇形
-    explode = [0.05 if i == 0 else 0 for i in range(len(df))]
+    # 突出最大扇形（基础设施）
+    explode = [0.08 if i == 0 else 0.02 for i in range(len(df))]
     
-    # 绘制饼图
+    # 绘制饼图 - 自定义标签格式
+    def make_autopct(values):
+        def my_autopct(pct):
+            total = sum(values)
+            val = int(round(pct*total/100.0))
+            return f'{pct:.1f}%\n{val}B¥'
+        return my_autopct
+    
     wedges, texts, autotexts = ax.pie(
         df['投资额_亿元'],
-        labels=df['dimension_en'],
-        autopct='%1.1f%%',
+        labels=None,  # 不在扇形上显示维度名
+        autopct=make_autopct(df['投资额_亿元']),
         startangle=90,
         colors=colors,
         explode=explode,
-        wedgeprops=dict(width=0.4, edgecolor='white', linewidth=2),
-        textprops={'fontsize': 11, 'weight': 'bold'}
+        wedgeprops=dict(width=0.35, edgecolor='white', linewidth=3),
+        pctdistance=0.75
     )
     
-    # 优化百分比标签
+    # 优化百分比和金额标签
     for autotext in autotexts:
         autotext.set_color('white')
-        autotext.set_fontsize(10)
+        autotext.set_fontsize(11)
         autotext.set_weight('bold')
+        autotext.set_ha('center')
     
     # 中心圆显示总额
-    centre_circle = Circle((0, 0), 0.70, fc='white', linewidth=2, edgecolor='#34495e')
+    centre_circle = Circle((0, 0), 0.65, fc='white', linewidth=3, edgecolor='#2c3e50')
     ax.add_artist(centre_circle)
     
-    ax.text(0, 0, 'Total\n10,000B¥', ha='center', va='center',
-            fontsize=18, weight='bold', color='#2c3e50')
+    ax.text(0, 0.05, 'Total Investment', ha='center', va='center',
+            fontsize=14, weight='bold', color='#34495e')
+    ax.text(0, -0.15, '10,000', ha='center', va='center',
+            fontsize=28, weight='bold', color='#2c3e50')
+    ax.text(0, -0.35, 'Billion RMB', ha='center', va='center',
+            fontsize=12, color='#34495e')
     
-    # 图例
-    legend_labels = [f"{row['dimension_en']}: {row['投资额_亿元']:.0f}B¥" 
-                     for _, row in df.iterrows()]
-    ax.legend(legend_labels, loc='upper left', bbox_to_anchor=(1, 1),
-              frameon=True, fontsize=10, title='Investment Breakdown',
-              title_fontsize=11)
+    # 优化图例 - 显示维度名、金额、百分比
+    legend_labels = []
+    for _, row in df.iterrows():
+        label = f"{row['dimension_en']}: {row['投资额_亿元']:.0f}B¥ ({row['占比_%']:.1f}%)"
+        legend_labels.append(label)
+    
+    legend = ax.legend(
+        legend_labels,
+        loc='center left',
+        bbox_to_anchor=(1.05, 0.5),
+        frameon=True,
+        fontsize=11,
+        title='Investment Breakdown',
+        title_fontsize=13,
+        framealpha=0.95,
+        edgecolor='#34495e',
+        fancybox=True,
+        shadow=True
+    )
+    
+    # 为图例添加颜色标记
+    for i, (text, color) in enumerate(zip(legend.get_texts(), colors)):
+        text.set_weight('500')
+    
+    # 添加标题
+    ax.set_title('Investment Distribution Across Six AI Dimensions',
+                fontsize=15, weight='bold', pad=20, color='#2c3e50')
     
     # 保存
     output_path = output_dir / "fig1_dimension_investment_donut.pdf"
-    plt.savefig(output_path, format='pdf', bbox_inches='tight', pad_inches=0.2)
+    plt.savefig(output_path, format='pdf', bbox_inches='tight', pad_inches=0.3)
     plt.close()
     print(f"✓ 保存: {output_path}")
     return output_path
@@ -249,7 +282,7 @@ def plot_fig2_top10_lollipop(data_dir, output_dir):
     
     # 累计占比标注
     cumsum = df.head(10)['占比_%'].sum()
-    ax.text(0.98, 0.96, f'Top 10: {cumsum:.1f}% of Total',
+    ax.text(1.045, 0.97, f'Top 10: {cumsum:.1f}% of Total',
             transform=ax.transAxes, fontsize=10, va='top', ha='right',
             bbox=dict(boxstyle='round,pad=0.5', facecolor='#3498db',
                      edgecolor='white', linewidth=1.5, alpha=0.9),
