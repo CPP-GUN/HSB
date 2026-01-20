@@ -1,90 +1,58 @@
-% =========================================================
-% 7 Task 4: Optimization of AI Development Investment Strategy
-% (Directory-aligned version: only 7.1 / 7.2 appear in ToC;
-% all finer parts are embedded as bold mini-headings.)
-% =========================================================
-
+% =========================
+% body/8task4.tex
+% =========================
 \section{Task 4: Optimization of AI Development Investment Strategy}
 
-Tasks~1--3 have established a unified and internally consistent analytical framework
-for evaluating national AI development capability.
-Specifically, Task~1 constructed a 24-indicator system and identified key structural
-correlations among indicators; Task~2 determined objective indicator weights and fixed
-the TOPSIS-based evaluation scheme; Task~3 provided both baseline and forecasted
-indicator trajectories for all countries up to 2035.
+Tasks~1--3 establish a consistent pipeline: indicators $\rightarrow$ objective weights $\rightarrow$ TOPSIS scores $\rightarrow$ multi-year scenario.
+Task~4 turns this pipeline into a decision problem. Starting in 2026, China allocates an additional \emph{1 trillion RMB}
+special fund, and the goal is to maximize China’s \emph{2035} comprehensive AI competitiveness under the \emph{same}
+evaluation standard and comparison set.
 
-Building upon these results, Task~4 considers a policy-oriented optimization problem.
-Assuming that China allocates an additional 1 trillion RMB in special funds starting
-from 2026, the objective of this task is to determine an optimal investment allocation
-strategy that maximizes China’s comprehensive AI competitiveness in 2035, while
-strictly preserving the evaluation standard and comparison environment established
-in the previous tasks.
-
-% =========================================================
 \subsection{Model Formulation and Constraints}
 
-\textbf{Problem formulation.}
-Let $\mathbf{I} = (I_1, I_2, \ldots, I_p)^\top$ denote the investment allocation vector
-over the $p=24$ indicators, where $I_j$ represents the investment (in billion RMB)
-allocated to indicator $j$.
-The optimization objective is defined as
+\textbf{Decision variables and budget.}
+Let $\mathbf{I}=(I_1,\dots,I_p)^\top$ be the allocation across $p=24$ indicators.
+To match the policy budget and the numerical outputs, we measure investment in \emph{hundred-million RMB} (亿元).
+Thus, the total budget is
 \begin{equation}
-\mathbf{I}^* = \arg\max_{\mathbf{I}} \; S_{\mathrm{CN}}\!\left(X^{2035}(\mathbf{I}); \mathbf{w}\right),
+\sum_{j=1}^{p} I_j = B,\qquad B=10000\ \text{(亿元)}.
+\label{eq:t4_budget}
 \end{equation}
-subject to the total budget constraint
-\begin{equation}
-\sum_{j=1}^{p} I_j = B, \qquad B = 10000.
-\end{equation}
-Here, $S_{\mathrm{CN}}(\cdot)$ denotes China’s TOPSIS closeness coefficient under the
-fixed weight vector $\mathbf{w}$ obtained in Task~2, and
-$X^{2035}(\mathbf{I})$ represents the 2035 indicator matrix in which only China’s
-indicator values are affected by the investment decision.
 
-\textbf{Symbols and data interfaces.}
-To ensure full comparability with the previous tasks, all structural, weighting, and
-forecasting information is treated as exogenous input:
+\textbf{Objective (fixed evaluation standard).}
+Let $S_{\mathrm{CN}}(\cdot)$ denote China’s TOPSIS closeness coefficient under the fixed weight vector $\mathbf{w}$
+obtained in Task~2. The optimization objective is
+\begin{equation}
+\mathbf{I}^*=\arg\max_{\mathbf{I}}\; S_{\mathrm{CN}}\!\left(X^{2035}(\mathbf{I});\mathbf{w}\right),
+\label{eq:t4_obj}
+\end{equation}
+where $X^{2035}(\mathbf{I})$ is the 2035 evaluation matrix: all non-China rows are fixed at the Task~3 scenario values,
+and only China’s row is updated by the investment response.
+
+\textbf{Inputs from previous tasks.}
 \begin{align}
-\mathbf{w} &\leftarrow \text{Task~2 (Entropy Weight Method)},\\
-\mathbf{x}^{\mathrm{base}}_{\mathrm{CN}} &\leftarrow \text{Task~3 (China baseline, 2026)},\\
-X^{\mathrm{scen}}_{2035} &\leftarrow \text{Task~3 (2035 forecast scenario)},\\
+\mathbf{w} &\leftarrow \text{Task~2 (EWM weights)},\\
+\mathbf{x}^{\mathrm{base}}_{\mathrm{CN}} &\leftarrow \text{Task~3 (China baseline trajectory)},\\
+X^{\mathrm{scen}}_{2035} &\leftarrow \text{Task~3 (2035 scenario for all countries)},\\
 \mathcal{E} &\leftarrow \text{Task~1 (strong correlation structure)}.
 \end{align}
 
-For each indicator $j$, the following parameters are introduced:
-\begin{itemize}
-\item $C_j$: unit investment cost required to increase indicator $j$ by one unit;
-\item $\gamma_j$: time-lag discount factor reflecting realization speed;
-\item $L_j$: upper bound representing saturation or feasible growth limits;
-\item $I_{\min}, I_{\max}$: lower and upper bounds on single-indicator investment.
-\end{itemize}
-
-\textbf{Investment--indicator response function.}
-Considering diminishing marginal returns and heterogeneous realization horizons
-across indicator types, the incremental change of indicator $j$ induced by investment
-$I_j$ is modeled as
+\textbf{Investment--indicator response (diminishing returns \& time lag).}
+For indicator $j$, introduce: unit cost $C_j$, time-lag discount $\gamma_j$, and saturation upper bound $L_j$.
+The investment-induced increment is modeled by
 \begin{equation}
-\Delta x_j(\mathbf{I}) = \frac{I_j}{C_j}
-\left(1 - \frac{x^{\mathrm{base}}_j}{L_j}\right)\gamma_j,
-\qquad j = 1, \ldots, p.
+\Delta x_j(\mathbf{I})
+=\frac{I_j}{C_j}\left(1-\frac{x^{\mathrm{base}}_j}{L_j}\right)\gamma_j,
+\qquad j=1,\dots,p,
+\label{eq:t4_response}
 \end{equation}
-
-Accordingly, China’s indicator value in 2035 after investment is given by
+and the post-investment level is truncated by feasibility:
 \begin{equation}
 x^{2035}_{\mathrm{CN},j}(\mathbf{I})
-= \min\left\{x^{\mathrm{base}}_j + \Delta x_j(\mathbf{I}), \; L_j\right\}.
+=\min\left\{x^{\mathrm{base}}_j+\Delta x_j(\mathbf{I}),\; L_j\right\}.
+\label{eq:t4_post}
 \end{equation}
-
-In vector form,
-\begin{equation}
-\Delta \mathbf{x}(\mathbf{I})
-= \left(\boldsymbol{\gamma} \oslash \mathbf{C}\right)
-\odot \left(\mathbf{1} - \mathbf{x}^{\mathrm{base}} \oslash \mathbf{L}\right)
-\odot \mathbf{I},
-\end{equation}
-where $\odot$ and $\oslash$ denote element-wise multiplication and division, respectively.
-
-\textbf{Upper bounds and time-lag settings.}
-Indicator upper bounds are determined according to a relative competitiveness rule:
+Upper bounds follow a relative-competitiveness rule:
 \begin{equation}
 L_j =
 \begin{cases}
@@ -94,81 +62,54 @@ L_j =
 & x^{\mathrm{CN}}_{j,2025} < x^{\mathrm{US}}_{j,2025},
 \end{cases}
 \qquad
-L_j \le 100 \;\; \text{(ratio-type indicators)}.
+L_j \le 100\ \text{(ratio-type indicators)}.
 \end{equation}
+Time-lag discounts are grouped as $\gamma_j\in\{1.0,0.8,0.6\}$ for short-/medium-/long-horizon effects.
 
-Time-lag discount factors are grouped by indicator characteristics:
+\textbf{TOPSIS evaluation (same as Task~2).}
+Let $X=X^{2035}(\mathbf{I})$. Using vector normalization,
 \begin{equation}
-\gamma_j \in \{1.0,\; 0.8,\; 0.6\},
-\end{equation}
-corresponding respectively to short-term (e.g., infrastructure), medium-term (e.g., R\&D and applications),
-and long-term (e.g., talent cultivation) effects.
-
-\textbf{Evaluation matrix construction.}
-The 2035 evaluation matrix $X^{2035}(\mathbf{I}) \in \mathbb{R}^{n \times p}$ is constructed as follows:
-all non-China rows are fixed at their forecasted values from Task~3, while China’s row is replaced by
-$\mathbf{x}^{2035}_{\mathrm{CN}}(\mathbf{I})$.
-This design guarantees that the comparison set and evaluation standard remain unchanged.
-
-\textbf{TOPSIS-based objective function.}
-Let $X = X^{2035}(\mathbf{I})$. The TOPSIS procedure follows exactly the formulation in Task~2:
-\begin{equation}
-\tilde{X} = X D^{-1},
-\quad
-D = \mathrm{diag}\left(\lVert X_{:,1}\rVert_2, \ldots, \lVert X_{:,p}\rVert_2\right),
+\tilde{X}=XD^{-1},\quad
+D=\mathrm{diag}\!\left(\|X_{:,1}\|_2,\dots,\|X_{:,p}\|_2\right),
 \end{equation}
 \begin{equation}
-V = \tilde{X} \, \mathrm{diag}(\mathbf{w}),
-\quad
-\mathbf{v}^+ = \max_i V_{i,:},
-\quad
-\mathbf{v}^- = \min_i V_{i,:},
+V=\tilde{X}\,\mathrm{diag}(\mathbf{w}),\quad
+\mathbf{v}^+=\max_i V_{i,:},\quad
+\mathbf{v}^-=\min_i V_{i,:},
 \end{equation}
 \begin{equation}
-D_i^{\pm} = \lVert V_{i,:} - \mathbf{v}^{\pm} \rVert_2,
+D_i^{\pm}=\|V_{i,:}-\mathbf{v}^{\pm}\|_2,
 \qquad
-S_i = \frac{D_i^-}{D_i^+ + D_i^-}.
+S_i=\frac{D_i^-}{D_i^+ + D_i^-}.
 \end{equation}
-The optimization objective is to maximize $S_{\mathrm{CN}}$.
+The objective \eqref{eq:t4_obj} maximizes $S_{\mathrm{CN}}$.
 
 \textbf{Constraints.}
-\textbf{(1) Budget and bound constraints:}
+\textbf{(1) Budget and bounds:}
 \begin{equation}
-\sum_{j=1}^{p} I_j = B,
-\qquad
-I_{\min} \le I_j \le I_{\max}.
+\sum_{j=1}^{p} I_j=B,\qquad I_{\min}\le I_j\le I_{\max}.
 \end{equation}
-
-\textbf{(2) Synergy constraints:}
-To prevent structural imbalance caused by isolated investment surges,
-synergy constraints are imposed based on strong correlations identified in Task~1:
+\textbf{(2) Synergy constraints (from Task~1 strong links).}
+To avoid structurally imbalanced growth, we impose ratio-type coupling constraints:
 \begin{align}
-x_{\text{Large Models}} &\le 200 \, x_{\text{GPU}},\\
-x_{\text{Top AI Scholars}} &\le 5.0 \, x_{\text{Researchers}},\\
-x_{\text{AI Publications}} &\le 0.24 \, x_{\text{Researchers}},\\
-x_{\text{AI Enterprises}} &\le 78 \, x_{\text{AI Market}},\\
-x_{\text{AI Datasets}} &\le 0.75 \, x_{\text{Enterprise R\&D}}.
+x_{\text{Large Models}} &\le 200 \, x_{\text{GPU}},\nonumber\\
+x_{\text{Top AI Scholars}} &\le 5.0 \, x_{\text{Researchers}},\nonumber\\
+x_{\text{AI Publications}} &\le 0.24 \, x_{\text{Researchers}},\nonumber\\
+x_{\text{AI Enterprises}} &\le 78 \, x_{\text{AI Market}},\nonumber\\
+x_{\text{AI Datasets}} &\le 0.75 \, x_{\text{Enterprise R\&D}}.\label{eq:t4_synergy}
 \end{align}
 
 \textbf{Solution method.}
-The resulting optimization problem is a nonlinear constrained programming problem.
-It is solved using the Sequential Least Squares Programming (SLSQP) algorithm,
-with an equal-allocation initialization $I_j = B/p$,
-a maximum of 500 iterations, and a convergence tolerance of $10^{-6}$.
+The nonlinear constrained program is solved by SLSQP with equal-allocation initialization $I_j=B/p$,
+maximum 500 iterations, and tolerance $10^{-6}$.
 
-This formulation yields a reproducible investment allocation strategy fully consistent
-with the structural insights, evaluation methodology, and forecast scenarios established in Tasks~1--3.
-
-% =========================================================
 \subsection{Optimal Allocation Results and Insights}
 
-This subsection reports the optimization outputs produced by Task~4 and interprets them under the
-fixed evaluation standard of Tasks~1--3. All investment amounts are in \emph{billion RMB}.
+All allocations below are in \emph{亿元}.
 
 \textbf{Overall allocation pattern.}
-The optimized plan exhibits a clear \emph{infrastructure--policy--market} priority, with a secondary focus on
-enterprise R\&D and high-end talent. The total allocation over the six TAPRIO dimensions is summarized in
-Table~\ref{tab:dim_dist}. The distribution is also visualized in Fig.~\ref{fig:dim_donut}.
+The optimized plan prioritizes \emph{infrastructure--policy--market}, with secondary emphasis on enterprise R\&D and high-end talent.
+Table~\ref{tab:dim_dist} and Fig.~\ref{fig:dim_donut} summarize the TAPRIO dimension distribution.
 
 \begin{table}[htbp]
 \centering
@@ -176,7 +117,7 @@ Table~\ref{tab:dim_dist}. The distribution is also visualized in Fig.~\ref{fig:d
 \label{tab:dim_dist}
 \begin{tabular}{lrr}
 \toprule
-Dimension & Investment (billion RMB) & Share (\%) \\
+Dimension & Investment (亿元) & Share (\%) \\
 \midrule
 Infrastructure (I) & 3232.64 & 32.33 \\
 Talent (T)         & 1739.28 & 17.39 \\
@@ -190,14 +131,14 @@ Output (O)         &  511.84 &  5.12 \\
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.62\textwidth]{figure/task4/fig1_dimension_investment_donut.pdf}
+\includegraphics[width=0.62\textwidth]{\detokenize{figure/task4/fig1_dimension_investment_donut.pdf}}
 \caption{Dimension-level investment distribution (donut chart).}
 \label{fig:dim_donut}
 \end{figure}
 
-\textbf{Indicator-level investment priorities.}
-Table~\ref{tab:top10_invest} lists the top-10 indicators receiving the largest allocations, which jointly account for
-approximately two-thirds of the total budget. Fig.~\ref{fig:top10_lollipop} provides a ranked visualization.
+\textbf{Indicator-level priorities.}
+Top-10 funded indicators account for the majority of the budget (Table~\ref{tab:top10_invest}),
+and Fig.~\ref{fig:top10_lollipop} visualizes the allocation rank.
 
 \begin{table}[htbp]
 \centering
@@ -205,7 +146,7 @@ approximately two-thirds of the total budget. Fig.~\ref{fig:top10_lollipop} prov
 \label{tab:top10_invest}
 \begin{tabular}{rlrr}
 \toprule
-Rank & Indicator & Investment (billion RMB) & Share (\%) \\
+Rank & Indicator & Investment (亿元) & Share (\%) \\
 \midrule
 1  & GPU cluster scale                & 1500.00 & 15.00 \\
 2  & Number of AI policies            & 1474.23 & 14.74 \\
@@ -223,22 +164,21 @@ Rank & Indicator & Investment (billion RMB) & Share (\%) \\
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.78\textwidth]{figure/task4/fig2_top10_investment_lollipop.pdf}
+\includegraphics[width=0.78\textwidth]{\detokenize{figure/task4/fig2_top10_investment_lollipop.pdf}}
 \caption{Top-10 indicator investments (lollipop chart).}
 \label{fig:top10_lollipop}
 \end{figure}
 
-\textbf{Full 24-indicator allocation.}
-For completeness and reproducibility, Table~\ref{tab:all24_invest} reports the full 24-indicator allocation.
-
+\textbf{Full 24-indicator allocation (reproducibility).}
 \begin{table}[htbp]
 \centering
 \caption{Full investment allocation across all 24 indicators.}
 \label{tab:all24_invest}
-\small
+\scriptsize
+\renewcommand{\arraystretch}{0.95}
 \begin{tabular}{rlrr}
 \toprule
-Rank & Indicator & Investment (billion RMB) & Share (\%) \\
+Rank & Indicator & Investment (亿元) & Share (\%) \\
 \midrule
 1  & GPU cluster scale                & 1500.000 & 15.000 \\
 2  & Number of AI policies            & 1474.225 & 14.742 \\
@@ -270,9 +210,9 @@ Rank & Indicator & Investment (billion RMB) & Share (\%) \\
 \end{table}
 
 \textbf{Indicator improvements under the response function.}
-Using the response function in Eq.~(8)--(10), we compute China’s post-investment indicator levels in 2035.
-Table~\ref{tab:before_after} reports the baseline (2026) and the corresponding post-investment (2035) values
-generated by the Task~4 pipeline. Fig.~\ref{fig:growth_lollipop} visualizes the growth rates on a log scale.
+Using Eqs.~\eqref{eq:t4_response}--\eqref{eq:t4_post}, we compute China’s post-investment indicator levels in 2035.
+Table~\ref{tab:before_after} reports selected indicators (baseline vs.\ post-investment), and Fig.~\ref{fig:growth_lollipop}
+visualizes growth rates (log-scale).
 
 \begin{table}[htbp]
 \centering
@@ -283,16 +223,16 @@ generated by the Task~4 pipeline. Fig.~\ref{fig:growth_lollipop} visualizes the 
 \toprule
 Indicator & Baseline 2026 & Post-invest 2035 & Increment & Growth (\%) \\
 \midrule
-GitHub AI-related projects & 5094.574 & 99000.000 & 234374.899 & 4600.481 \\
-AI graduates              &   70.000 &    97.500 &   1716.970 & 2452.803 \\
-GPU cluster scale         &    3.967 &    32.968 &     29.001 &  731.113 \\
-Internet bandwidth        &    1.607 &     6.201 &      4.594 &  285.955 \\
-Number of AI policies     &   72.933 &   270.580 &    197.647 &  270.996 \\
-AI researchers            &  279.342 &   900.000 &    676.024 &  242.006 \\
-TOP500 supercomputer cnt  &   83.200 &   205.780 &    122.580 &  147.332 \\
-AI market size            &  138.000 &   295.159 &    157.159 &  113.883 \\
-AI enterprises            & 5901.133 & 11830.887 &   5929.754 &  100.485 \\
-Enterprise R\&D exp.      &  665.333 &  1172.337 &    507.003 &   76.203 \\
+GitHub AI-related projects & 5094.574 & 99000.000 & 93905.426 & 1843.244 \\
+AI graduates              &   70.000 &    97.500 &    27.500 &   39.286 \\
+GPU cluster scale         &    3.967 &    32.968 &    29.001 &  731.056 \\
+Internet bandwidth        &    1.607 &     6.201 &     4.594 &  285.874 \\
+Number of AI policies     &   72.933 &   270.580 &   197.647 &  270.998 \\
+AI researchers            &  279.342 &   900.000 &   620.658 &  222.186 \\
+TOP500 supercomputer cnt  &   83.200 &   205.780 &   122.580 &  147.332 \\
+AI market size            &  138.000 &   295.159 &   157.159 &  113.883 \\
+AI enterprises            & 5901.133 & 11830.887 &  5929.754 &  100.485 \\
+Enterprise R\&D exp.      &  665.333 &  1172.337 &   507.004 &   76.203 \\
 \bottomrule
 \end{tabular}
 \normalsize
@@ -300,73 +240,47 @@ Enterprise R\&D exp.      &  665.333 &  1172.337 &    507.003 &   76.203 \\
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.82\textwidth]{figure/task4/fig3_growth_rate_lollipop_log.pdf}
+\includegraphics[width=0.82\textwidth]{\detokenize{figure/task4/fig3_growth_rate_lollipop_log.pdf}}
 \caption{Indicator growth rates under the optimized investment (log-scale lollipop).}
 \label{fig:growth_lollipop}
 \end{figure}
 
-Two practical patterns emerge from the computed responses:
-\begin{itemize}
-\item \textbf{Large, scalable digital-production indicators} (e.g., GitHub projects) exhibit the highest percentage growth,
-consistent with a strong ``capacity expansion'' effect once infrastructure and R\&D are funded.
-\item \textbf{Saturated ratio-type indicators} (e.g., 5G coverage) show limited or zero increments, reflecting the upper-bound
-and diminishing-return mechanisms embedded in $L_j$ and the factor $\left(1-\frac{x^{\mathrm{base}}_j}{L_j}\right)$.
-\end{itemize}
-
-\textbf{Impact on 2035 TOPSIS competitiveness.}
-Under the fixed TOPSIS evaluation procedure (Task~2) and the 2035 comparison set (Task~3 scenario),
-China’s closeness coefficient after optimization is
+\textbf{Impact on 2035 TOPSIS competitiveness (within-year comparison).}
+Under the fixed TOPSIS procedure (Task~2) and the 2035 comparison set (Task~3 scenario),
+China’s post-investment closeness coefficient is
 \begin{equation}
-S_{\mathrm{CN}}^{2035,\;\mathrm{post}} = 0.54717.
+S_{\mathrm{CN}}^{2035,\mathrm{post}}=0.54717.
 \end{equation}
-For reference, the pipeline reports China’s baseline score as $S_{\mathrm{CN}}^{2026}=0.592821$,
-yielding a net change of $-0.045651$ (i.e., $-7.70\%$) when comparing \emph{2026 baseline} with \emph{2035 post-investment}.
-This does \emph{not} contradict the optimization goal: the objective maximizes $S_{\mathrm{CN}}$ \emph{within the 2035 scenario},
-while the cross-year decline indicates that the global benchmark (other countries’ forecasted 2035 levels) becomes more demanding.
-In other words, even with additional funding, China’s relative position in 2035 is evaluated against a
-more advanced global frontier.
+From Task~3 (no additional investment), China’s 2035 baseline score is $C_{\mathrm{CN},2035}=0.507$ (Table~\ref{tab:task3_scores_selected}),
+so the optimized plan yields an improvement of approximately $+0.040$ under the same 2035 benchmark environment.
 
-\textbf{Cross-dimension comparison and efficiency diagnostics.}
-To better interpret \emph{why} the optimized plan concentrates on certain dimensions and indicators,
-we provide two complementary diagnostics.
-
-\textbf{(1) Unified dimension comparison.}
-Fig.~\ref{fig:dim_compare} summarizes China’s dimension-level changes under the unified TAPRIO grouping,
-which is consistent with the dimension aggregation used throughout Tasks~1--3.
+\textbf{Complementary diagnostics and policy translation.}
+Fig.~\ref{fig:t4_diag_pair} links the optimized allocation to (i) dimension-level changes and (ii) investment efficiency patterns.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.82\textwidth]{figure/task4/fig4_unified_dimension_comparison.pdf}
-\caption{Unified TAPRIO dimension comparison before vs.\ after investment (2035).}
-\label{fig:dim_compare}
-\end{figure}
-
-\textbf{(2) Investment efficiency quadrant.}
-Fig.~\ref{fig:eff_quadrant} plots indicators in an efficiency space (bubble chart),
-supporting a qualitative classification into:
-(i) ``high investment--high return'' levers (typically infrastructure and key inputs),
-(ii) ``low investment--high return'' quick wins (usually near-unsaturated digital indicators),
-and (iii) ``high investment--low return'' saturated or lagged indicators,
-which are naturally down-weighted by the optimization under diminishing returns and time-lag discounts.
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.82\textwidth]{figure/task4/fig5_bubble_efficiency_quadrant.pdf}
-\caption{Efficiency quadrant for indicator investments (bubble chart).}
-\label{fig:eff_quadrant}
+\begin{subfigure}[t]{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figure/task4/fig4_unified_dimension_comparison.pdf}}
+  \caption{TAPRIO dimension comparison (2035).}
+  \label{fig:dim_compare}
+\end{subfigure}\hfill
+\begin{subfigure}[t]{0.49\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{\detokenize{figure/task4/fig5_bubble_efficiency_quadrant.pdf}}
+  \caption{Efficiency quadrant (bubble chart).}
+  \label{fig:eff_quadrant}
+\end{subfigure}
+\caption{Interpretation tools for the optimized investment plan.}
+\label{fig:t4_diag_pair}
 \end{figure}
 
 \textbf{Actionable recommendations.}
-Finally, to translate the optimized vector $\mathbf{I}^*$ into implementable policy directions,
-we summarize the plan into three tiers:
 \begin{enumerate}
-\item \textbf{Strategic capacity foundation (I \& P)}: prioritize GPU clusters, TOP500 capacity, data centers, and
-a coherent policy package to avoid bottlenecks in compute and governance.
-\item \textbf{Innovation production engine (A \& R)}: expand AI market and enterprise R\&D to convert infrastructure
-into scalable industrial output and application diffusion.
-\item \textbf{Talent upgrading (T)}: target high-end researchers and top scholars as the ``multiplier'' for the R\&D--application loop,
-consistent with the synergy constraints in Task~1.
+\item \textbf{Strategic capacity foundation (I \& P):} prioritize GPU clusters, TOP500 capacity, data centers, and a coherent policy package to avoid compute and governance bottlenecks.
+\item \textbf{Innovation production engine (A \& R):} expand AI market size and enterprise R\&D to convert funded capacity into scalable applications and industrial output.
+\item \textbf{Talent upgrading (T):} target high-end researchers and top scholars as multipliers, consistent with the synergy constraints in \eqref{eq:t4_synergy}.
 \end{enumerate}
 
-All results above are generated strictly under the Task~4 response function, constraints, and the fixed
-Task~2 TOPSIS evaluation scheme, ensuring full model consistency and reproducibility.
+All results above are generated under the fixed Task~2 evaluation scheme and the Task~3 2035 scenario,
+ensuring model consistency and reproducibility.
