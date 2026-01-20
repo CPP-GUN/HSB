@@ -41,7 +41,7 @@ where $\tau$ is a fixed threshold (used consistently in Task~4 to impose synergy
 The heatmap in Fig.~\ref{fig:task1_corr_cluster}\subref{fig:task1_corr} shows a dense positive-correlation backbone,
 suggesting that talent, R\&D investment, market scale, and compute infrastructure often advance jointly.
 
-\paragraph{Hierarchical clustering (group-level structure).}
+\paragraph{Hierarchical clustering (group-level structure)\cite{Ward1963}.}
 To move beyond pairwise links, we cluster indicators using correlation distance
 \begin{equation}
 d_{jk}=1-|r_{jk}|,
@@ -72,7 +72,7 @@ This validates that the indicator system is multidimensional but internally coor
   \label{fig:task1_corr_cluster}
 \end{figure}
 
-\paragraph{Principal component structure (dominant dimensions).}
+\paragraph{Principal component structure (dominant dimensions)\cite{Hotelling1933}.}
 High correlations imply redundancy, so we use PCA to extract dominant directions.
 Let
 \begin{equation}

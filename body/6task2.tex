@@ -31,7 +31,7 @@ X'=\bigl(x'_{ij}\bigr)_{n\times p},\qquad n=10,\; p=24,
 \end{equation}
 where all indicators are treated as benefit-type (larger is better).
 
-\textbf{(1) Entropy weight method (EWM).}
+\textbf{(1) Entropy weight method (EWM)\cite{Shannon1948}.}
 Define
 \begin{equation}
 p_{ij}=\frac{x'_{ij}}{\sum_{i=1}^{n}x'_{ij}},\qquad 0\ln 0:=0,
@@ -45,7 +45,7 @@ w_j=\frac{1-e_j}{\sum_{j=1}^{p}(1-e_j)}.
 \end{equation}
 Indicators with higher cross-country dispersion obtain larger weights.
 
-\textbf{(2) TOPSIS aggregation.}
+\textbf{(2) TOPSIS aggregation\cite{Hwang1981}.}
 Construct the weighted matrix
 \begin{equation}
 v_{ij}=w_j x'_{ij},
@@ -63,7 +63,7 @@ and the closeness score is
 C_i=\frac{D_i^-}{D_i^++D_i^-}\in[0,1].
 \end{equation}
 
-\textbf{(3) Grey relational analysis (GRA) validation and fusion.}
+\textbf{(3) Grey relational analysis (GRA) validation and fusion\cite{Deng1982}.}
 Let the ideal profile be $v_{0j}=\max_i v_{ij}$ and define
 \begin{equation}
 \Delta_{ij}=|v_{0j}-v_{ij}|,\quad \Delta_{\min}=\min_{i,j}\Delta_{ij},\quad \Delta_{\max}=\max_{i,j}\Delta_{ij}.

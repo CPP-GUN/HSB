@@ -14,7 +14,7 @@
 Fig.~\ref{fig:task4_framework} summarizes the end-to-end optimization pipeline of Task~4.
 Starting from the baseline trajectories obtained in Task~3 and a fixed total budget,
 an investment--response model with diminishing returns and time-lag effects is constructed.
-The resulting nonlinear constrained problem is solved using SLSQP,
+The resulting nonlinear constrained problem is solved using SLSQP\cite{Kraft1988,Nocedal2006,Virtanen2020},
 and the optimized allocation is evaluated under the same TOPSIS framework as in Task~2,
 yielding allocation patterns, competitiveness gains, and policy insights.
 
@@ -115,8 +115,9 @@ x_{\text{AI Datasets}} &\le 0.75 \, x_{\text{Enterprise R\&D}}.\label{eq:t4_syne
 \end{align}
 
 \textbf{Solution method.}
-The nonlinear constrained program is solved by SLSQP with equal-allocation initialization $I_j=B/p$,
+The nonlinear constrained program is solved by SLSQP\cite{Kraft1988,Nocedal2006,Virtanen2020} with equal-allocation initialization $I_j=B/p$,
 maximum 500 iterations, and tolerance $10^{-6}$.
+All computations are implemented in Python using NumPy, pandas, SciPy, and Matplotlib\cite{Harris2020,McKinney2010,Virtanen2020,Hunter2007}.
 
 \subsection{Optimal Allocation Results and Insights}
 
