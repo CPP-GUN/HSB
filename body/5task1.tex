@@ -12,11 +12,11 @@ To eliminate scale effects and ensure cross-country comparability, min--max norm
 \begin{equation}
 x_{ij} = \frac{x_{ij}^{\text{raw}}-\min(x_j)}{\max(x_j)-\min(x_j)} \in [0,1].
 \end{equation}
-The standardized matrix $X$ serves as the common input for all subsequent structural analyses.
+The standardized matrix $X$ serves as the common input for all subsequent structural analyses, ensuring internal consistency throughout Task~1.
 
 \subsection{Correlation Structure among AI Development Factors}
 
-To explore linear associations among AI development factors, Pearson correlation coefficients are employed to quantify statistical dependence between indicators.
+Based on the standardized indicator matrix, correlation analysis is first conducted to explore linear associations among AI development factors. Pearson correlation coefficients are employed to quantify statistical dependence between indicators.
 
 The correlation coefficient between factor $j$ and factor $k$ is defined as
 \begin{equation}
@@ -30,28 +30,30 @@ forming the correlation matrix
 R=[r_{jk}] \in \mathbb{R}^{p \times p}.
 \end{equation}
 
-To emphasize statistically significant relationships, a strong-correlation edge set is defined as
+To focus on statistically meaningful relationships, a strong-correlation edge set is defined as
 \begin{equation}
 \mathcal{E}=\{(j,k)\mid |r_{jk}|>\tau,\ j<k\},
 \end{equation}
 where $\tau$ denotes a predefined threshold.
 
-The correlation results reveal a highly interconnected structure among AI development factors, with many indicator pairs exceeding the predefined threshold. This indicates pronounced co-movement rather than independent variation across dimensions.
+The correlation results indicate a highly interconnected structure among AI development factors, with many indicator pairs exceeding the predefined threshold. This pattern suggests pronounced co-movement across dimensions rather than independent variation of individual indicators.
 
-As illustrated in the correlation heatmap, strong positive correlations form several contiguous blocks. Indicators related to government support, market scale, and investment intensity are closely linked with computing infrastructure and data-related factors, suggesting coordinated national development patterns. Talent-related indicators, including AI researchers, top AI scholars, and AI graduates, also exhibit strong mutual correlations and are closely associated with research output and enterprise activity.
+As illustrated in the correlation heatmap, strong positive correlations form several contiguous blocks. Indicators related to government support, market scale, and investment intensity are closely linked with computing infrastructure and data-related factors, reflecting coordinated national development patterns. Talent-related indicators, including AI researchers, top AI scholars, and AI graduates, also exhibit strong mutual correlations and close associations with research output and enterprise activity.
 
-By contrast, basic infrastructure penetration indicators display weaker correlations with advanced AI capability measures, implying that foundational infrastructure alone does not fully explain cross-country differences. Overall, the dense correlation structure highlights system-level coupling across multiple dimensions and suggests potential redundancy among indicators, motivating further structural analysis.
+In contrast, basic infrastructure penetration indicators display comparatively weaker correlations with advanced AI capability measures. Overall, the dense correlation structure highlights system-level coupling across multiple dimensions and suggests potential redundancy among indicators, motivating further structural exploration.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{figure/task1/fig1_en_Correlation Heatmap of AI Development Factors.pdf}
+  \includegraphics[width=0.75\textwidth]{figure/task1/fig1_en_Correlation Heatmap of AI Development Factors.pdf}
   \caption{Correlation Heatmap of AI Development Factors}
   \label{fig:Correlation Heatmap of AI Development Factors}
 \end{figure}
 
 \subsection{Structural Grouping via Hierarchical Clustering}
 
-To uncover higher-level structural organization beyond pairwise correlations, hierarchical clustering is conducted based on correlation-derived distances. The distance between factor $j$ and factor $k$ is defined as
+Building on the observed correlation structure, hierarchical clustering is applied to uncover higher-level organization among AI development factors. Correlation-derived distances are used to quantify similarity between indicators.
+
+The distance between factor $j$ and factor $k$ is defined as
 \begin{equation}
 d_{jk}=1-|r_{jk}|,
 \end{equation}
@@ -62,22 +64,22 @@ Using the average linkage criterion, the distance between clusters $C_a$ and $C_
 D(C_a,C_b)=\frac{1}{|C_a||C_b|}\sum_{j\in C_a}\sum_{k\in C_b} d_{jk}.
 \end{equation}
 
-The hierarchical clustering dendrogram reveals several coherent groups of AI development factors. Rather than being randomly aggregated, indicators are organized into structurally meaningful clusters reflecting consistent cross-country behavior.
+The hierarchical clustering dendrogram reveals several coherent groups of AI development factors. Rather than being randomly aggregated, indicators are organized into structurally meaningful clusters that reflect consistent cross-country behavior.
 
-One cluster primarily captures investment scale and market outcomes, including government and international AI investment, AI market size, and corporate R\&D expenditure. Another cluster centers on computational capacity and infrastructure, grouping indicators such as GPU cluster scale, internet bandwidth, and data center availability. Talent- and knowledge-related indicators form a distinct cluster, reflecting strong alignment among human capital and research output factors.
+One cluster primarily captures investment scale and market outcomes, including government and international AI investment, AI market size, and corporate R\&D expenditure. Another cluster centers on computational capacity and infrastructure, grouping indicators such as GPU cluster scale, internet bandwidth, and data center availability. Talent- and knowledge-related indicators form a distinct cluster, indicating strong alignment among human capital and research output factors.
 
-In contrast, basic digital penetration indicators merge with other clusters at higher distance levels, indicating weaker direct association with advanced AI capability drivers. These results confirm that AI development factors form a multi-dimensional yet internally coordinated system.
+In contrast, basic digital penetration indicators merge with other clusters at higher distance levels, suggesting weaker direct association with advanced AI capability drivers. These results confirm that AI development factors form a multi-dimensional yet internally coordinated system.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{figure/task1/fig2_en_Hierarchical Clustering Dendrogram of AI Development Factors.pdf}
+  \includegraphics[width=0.75\textwidth]{figure/task1/fig2_en_Hierarchical Clustering Dendrogram of AI Development Factors.pdf}
   \caption{Hierarchical Clustering Dendrogram of AI Development Factors}
   \label{fig:Hierarchical Clustering Dendrogram of AI Development Factors}
 \end{figure}
 
 \subsection{Principal Component Analysis of Factor Structure}
 
-Given the high dimensionality of the indicator set, principal component analysis (PCA) is applied to extract a reduced set of comprehensive components while preserving dominant structural information.
+Given the high dimensionality and apparent redundancy among indicators, principal component analysis (PCA) is employed to extract a reduced set of comprehensive components while preserving dominant structural information.
 
 The centered data matrix is
 \begin{equation}
@@ -103,38 +105,40 @@ These findings demonstrate substantial redundancy in the original indicator set 
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{figure/task1/fig3_en_Variance Explained Plot for Principal Components.pdf}
+  \includegraphics[width=0.75\textwidth]{figure/task1/fig3_en_Variance Explained Plot for Principal Components.pdf}
   \caption{Variance Explained Plot for Principal Components}
   \label{fig:Variance Explained Plot for Principal Components}
 \end{figure}
 
 \subsection{Relative Importance of AI Development Factors}
 
-Building on the reduced PCA representation, the relative importance of each indicator is quantified by integrating component loadings and variance contributions. The importance of factor $j$ is defined as
+Based on the reduced PCA representation, the relative importance of each indicator is quantified by integrating component loadings and variance contributions. The importance of factor $j$ is defined as
 \begin{equation}
 I_j=\sum_{k=1}^{m} v_{jk}^2\cdot\frac{\lambda_k}{\sum_{l=1}^{p}\lambda_l}.
 \end{equation}
 
-The importance ranking indicates that explanatory power is concentrated in a limited subset of indicators. Factors related to human capital, research activity, investment intensity, and advanced infrastructure consistently exhibit higher importance scores.
+The importance ranking shows that explanatory power is concentrated in a limited subset of indicators. Factors related to human capital, research activity, investment intensity, and advanced infrastructure consistently exhibit higher importance scores.
 
 High-importance indicators load strongly on the leading principal component, which dominates total variance. In contrast, lower-importance indicators primarily contribute to higher-order components and capture more localized variation. This concentration highlights the dominant drivers of cross-country AI capability differences and supports the use of weighted composite evaluation models.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{figure/task1/fig4_en_Factor Importance Ranking Bar Chart.pdf}
+  \includegraphics[width=0.75\textwidth]{figure/task1/fig4_en_Factor Importance Ranking Bar Chart.pdf}
   \caption{Factor Importance Ranking Bar Chart}
   \label{fig:Factor Importance Ranking Bar Chart}
 \end{figure}
 
 \subsection{Interaction Patterns among AI Development Factors}
 
-The strong-correlation network reveals a centralized and modular interaction structure among AI development factors. Indicators related to investment, computational capacity, and market scale occupy hub positions, linking multiple dimensions of the system.
+To provide a system-level perspective, interaction patterns among AI development factors are summarized using a strong-correlation network.
+
+The network reveals a centralized and modular interaction structure. Indicators related to investment, computational capacity, and market scale occupy hub positions, linking multiple dimensions of the system.
 
 Peripheral indicators, such as social perception and basic penetration measures, exhibit fewer strong connections, indicating weaker coupling with core AI capability drivers. Overall, the network structure confirms that AI development capability emerges from coordinated interactions among a limited set of dominant factors rather than isolated contributions.
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{figure/task1/fig5_en_Strong-Correlation Network or Chord Diagram.pdf}
+  \includegraphics[width=0.75\textwidth]{figure/task1/fig5_en_Strong-Correlation Network or Chord Diagram.pdf}
   \caption{Strong-Correlation Network or Chord Diagram}
   \label{fig:Strong-Correlation Network or Chord Diagram}
 \end{figure}
