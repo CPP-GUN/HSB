@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.8.5)  21 JAN 2026 03:25
+This is XeTeX, Version 3.141592653-2.6-0.999997 (TeX Live 2025) (preloaded format=xelatex 2025.8.5)  21 JAN 2026 03:45
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1149,11 +1149,16 @@ Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]
 LaTeX Font Info:    Font shape `TU/TeXGyreTermesX(0)/m/n' will be
 (Font)              scaled to size 24.88pt on input line 79.
 
+Overfull \hbox (4.75087pt too wide) in paragraph at lines 99--100
+\TU/TeXGyreTermesX(0)/m/n/12 model cross-validation; integrating evaluation, forecasting, and optimization into a closed-loop decision-
+ []
 
-./MI2601258.tex:100: Undefined control sequence.
+
+
+./MI2601258.tex:108: Undefined control sequence.
 \set@color ->\pdfcolorstack 
                             \@pdfcolorstack push{\current@color }\aftergroup...
-l.100 \clearpage
+l.108 \clearpage
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1162,10 +1167,10 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
-./MI2601258.tex:100: Undefined control sequence.
+./MI2601258.tex:108: Undefined control sequence.
 \reset@color ->\pdfcolorstack 
                               \@pdfcolorstack pop\relax 
-l.100 \clearpage
+l.108 \clearpage
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1174,10 +1179,10 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
-./MI2601258.tex:100: Undefined control sequence.
+./MI2601258.tex:108: Undefined control sequence.
 \set@color ->\pdfcolorstack 
                             \@pdfcolorstack push{\current@color }\aftergroup...
-l.100 \clearpage
+l.108 \clearpage
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1186,10 +1191,10 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
-./MI2601258.tex:100: Undefined control sequence.
+./MI2601258.tex:108: Undefined control sequence.
 \reset@color ->\pdfcolorstack 
                               \@pdfcolorstack pop\relax 
-l.100 \clearpage
+l.108 \clearpage
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1202,7 +1207,7 @@ Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]
 
 ]
 LaTeX Font Info:    Font shape `TU/TeXGyreTermesX(0)/b/n' will be
-(Font)              scaled to size 17.28pt on input line 107.
+(Font)              scaled to size 17.28pt on input line 115.
 
 No file MI2601258.toc.
 \tf@toc=\write4
@@ -1210,10 +1215,10 @@ No file MI2601258.toc.
 
 
 
-./MI2601258.tex:108: Undefined control sequence.
+./MI2601258.tex:116: Undefined control sequence.
 \set@color ->\pdfcolorstack 
                             \@pdfcolorstack push{\current@color }\aftergroup...
-l.108 \newpage
+l.116 \newpage
               
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1223,7 +1228,7 @@ and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
 
-LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 108.
+LaTeX Warning: Reference `LastPage' on page 1 undefined on input line 116.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -1232,10 +1237,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-./MI2601258.tex:108: Undefined control sequence.
+./MI2601258.tex:116: Undefined control sequence.
 \reset@color ->\pdfcolorstack 
                               \@pdfcolorstack pop\relax 
-l.108 \newpage
+l.116 \newpage
               
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1244,10 +1249,10 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
-./MI2601258.tex:108: Undefined control sequence.
+./MI2601258.tex:116: Undefined control sequence.
 \set@color ->\pdfcolorstack 
                             \@pdfcolorstack push{\current@color }\aftergroup...
-l.108 \newpage
+l.116 \newpage
               
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -1256,10 +1261,10 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
-./MI2601258.tex:108: Undefined control sequence.
+./MI2601258.tex:116: Undefined control sequence.
 \reset@color ->\pdfcolorstack 
                               \@pdfcolorstack pop\relax 
-l.108 \newpage
+l.116 \newpage
               
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6271,10 +6276,10 @@ Overfull \hbox (14.66956pt too wide) in paragraph at lines 48--49
 
 )
 
-./MI2601258.tex:120: Undefined control sequence.
+./MI2601258.tex:128: Undefined control sequence.
 \set@color ->\pdfcolorstack 
                             \@pdfcolorstack push{\current@color }\aftergroup...
-l.120 
+l.128 
       
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6284,7 +6289,7 @@ and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
 
-LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 120.
+LaTeX Warning: Reference `LastPage' on page 11 undefined on input line 128.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -6293,10 +6298,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-./MI2601258.tex:120: Undefined control sequence.
+./MI2601258.tex:128: Undefined control sequence.
 \reset@color ->\pdfcolorstack 
                               \@pdfcolorstack pop\relax 
-l.120 
+l.128 
       
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6305,10 +6310,10 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
-./MI2601258.tex:120: Undefined control sequence.
+./MI2601258.tex:128: Undefined control sequence.
 \set@color ->\pdfcolorstack 
                             \@pdfcolorstack push{\current@color }\aftergroup...
-l.120 
+l.128 
       
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6317,10 +6322,10 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
-./MI2601258.tex:120: Undefined control sequence.
+./MI2601258.tex:128: Undefined control sequence.
 \reset@color ->\pdfcolorstack 
                               \@pdfcolorstack pop\relax 
-l.120 
+l.128 
       
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6331,10 +6336,10 @@ and I'll forget about whatever was undefined.
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
 [11]
 
-./MI2601258.tex:123: Undefined control sequence.
+./MI2601258.tex:131: Undefined control sequence.
 \set@color ->\pdfcolorstack 
                             \@pdfcolorstack push{\current@color }\aftergroup...
-l.123 \clearpage
+l.131 \clearpage
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6344,7 +6349,7 @@ and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
 
-LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 123.
+LaTeX Warning: Reference `LastPage' on page 12 undefined on input line 131.
 
 
 Package fancyhdr Warning: \headheight is too small (12.0pt): 
@@ -6353,10 +6358,10 @@ Package fancyhdr Warning: \headheight is too small (12.0pt):
 (fancyhdr)                You might also make \topmargin smaller:
 (fancyhdr)                \addtolength{\topmargin}{-2.49998pt}.
 
-./MI2601258.tex:123: Undefined control sequence.
+./MI2601258.tex:131: Undefined control sequence.
 \reset@color ->\pdfcolorstack 
                               \@pdfcolorstack pop\relax 
-l.123 \clearpage
+l.131 \clearpage
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6365,10 +6370,10 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
-./MI2601258.tex:123: Undefined control sequence.
+./MI2601258.tex:131: Undefined control sequence.
 \set@color ->\pdfcolorstack 
                             \@pdfcolorstack push{\current@color }\aftergroup...
-l.123 \clearpage
+l.131 \clearpage
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6377,10 +6382,10 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
-./MI2601258.tex:123: Undefined control sequence.
+./MI2601258.tex:131: Undefined control sequence.
 \reset@color ->\pdfcolorstack 
                               \@pdfcolorstack pop\relax 
-l.123 \clearpage
+l.131 \clearpage
                 
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -6390,10 +6395,10 @@ and I'll forget about whatever was undefined.
 
 Missing character: There is no ^^@ (U+0000) in font [TeXGyreTermesX-Regular.otf]/OT:script=latn;language=dflt;-ss05;+tnum;+lnum;mapping=tex-text;!
 [12]
-./MI2601258.tex:123: Output loop---100 consecutive dead cycles.
+./MI2601258.tex:131: Output loop---100 consecutive dead cycles.
 \clearpage ...rite \m@ne {}\vbox {}\penalty -\@Mi 
                                                   
-l.123 \clearpage
+l.131 \clearpage
                 
 I've concluded that your \output is awry; it never does a
 \shipout, so I'm shipping \box255 out myself. Next time
@@ -6502,10 +6507,10 @@ increase \maxdeadcycles if you want me to be more patient!
 
 
 ]
-./MI2601258.tex:128: Output loop---100 consecutive dead cycles.
+./MI2601258.tex:136: Output loop---100 consecutive dead cycles.
 \clearpage ...rite \m@ne {}\vbox {}\penalty -\@Mi 
                                                   
-l.128 \end{document}
+l.136 \end{document}
                     
 I've concluded that your \output is awry; it never does a
 \shipout, so I'm shipping \box255 out myself. Next time
@@ -6636,7 +6641,7 @@ Package rerunfilecheck Info: Checksums for `MI2601258.out':
 (rerunfilecheck)             Before: <no file>
 (rerunfilecheck)             After:  C6D686F9E63810B7C19D17F4E0DEAB7A;4878.
 
-Package lastpage Warning: Rerun to get the references right on input line 128.
+Package lastpage Warning: Rerun to get the references right on input line 136.
 
  ) 
 Here is how much of TeX's memory you used:

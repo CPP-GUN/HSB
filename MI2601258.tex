@@ -86,9 +86,17 @@
 \end{center}
 
 %摘要
-Here is the summary of paper.
+Artificial intelligence (AI) has become a core driver of national innovation capacity and long-term competitiveness, with countries worldwide prioritizing AI development at the strategic level. However, cross-country assessment remains challenging due to multi-dimensional complexity involving talent, policy, infrastructure, and innovation output. This paper develops a unified mathematical modeling framework to systematically address factor identification, comprehensive evaluation, trend forecasting, and investment optimization of national AI capabilities.
 
-Please replace this text with your own summary. This summary should briefly describe the problem you are addressing, the methods you used, and the key results or conclusions you reached. Make sure to keep it concise and informative.
+\textbf{In Problem 1}, we construct a correlation analysis and dimensionality reduction model based on 24 AI development indicators collected from 10 representative countries. Pearson correlation analysis identifies 86 strongly correlated indicator pairs ($|r|>0.7$), demonstrating tight coupling among dimensions. Principal Component Analysis (PCA) extracts four components explaining 85\% of cumulative variance, revealing infrastructure, talent reserves, and innovation output as key drivers.
+
+\textbf{For Problem 2}, we establish an objective weighting and comprehensive evaluation model. The Entropy Weight Method (EWM) calculates indicator weights to avoid subjective bias, while TOPSIS computes closeness coefficients for ranking. Results show the 2025 AI competitiveness ranking: United States first (TOPSIS score 0.641), China second (0.510), and India third (0.210). Grey Relational Analysis (GRA) cross-validates the ranking with Spearman correlation 0.95, confirming robustness.
+
+\textbf{Problem 3 extends Problem 2's framework} by constructing a grey forecasting model to project 2026--2035 trends. The GM(1,1) model extrapolates all 24 indicators individually, validated through 2016--2020 backtesting (median MAPE $= 10.35\%$). Forecasts indicate that the top three countries will maintain structural advantages over the next decade, while mid-tier countries may experience minor rank exchanges.
+
+\textbf{In Problem 4}, we formulate a budget-constrained optimization model for China's AI investment strategy. Under constraints including a CNY 1 trillion total budget, individual investment bounds, and synergy requirements, Sequential Least Squares Programming (SLSQP) solves for optimal allocation: infrastructure 32.33\% (CNY 323.3 billion), talent cultivation 17.39\%, policy support 17.39\%, R\&D investment 14.66\%, application deployment 10.11\%, and innovation output 8.12\%. Sensitivity analysis confirms stability under $\pm10\%$ weight perturbation.
+
+\textbf{Finally}, multi-layer robustness validation (correlation verification, dual-method comparison, backtest diagnostics, sensitivity analysis) ensures credibility. Core innovations include: establishing a fully reproducible framework ensuring cross-problem consistency; enhancing robustness through multi-model cross-validation; integrating evaluation, forecasting, and optimization into a closed-loop decision-support system. This framework provides transparent, reproducible quantitative tools for policymakers in national AI strategic planning and resource allocation.
 
 
 %关键词
