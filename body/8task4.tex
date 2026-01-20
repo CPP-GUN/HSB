@@ -1,7 +1,22 @@
 % =========================
 % body/8task4.tex
 % =========================
+\FloatBarrier
 \section{Task 4: Optimization of AI Development Investment Strategy}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\textwidth]{figure/task4/lct.png}
+  \caption{Overall decision and optimization framework of Task~4.}
+  \label{fig:task4_framework}
+\end{figure}
+
+Fig.~\ref{fig:task4_framework} summarizes the end-to-end optimization pipeline of Task~4.
+Starting from the baseline trajectories obtained in Task~3 and a fixed total budget,
+an investment--response model with diminishing returns and time-lag effects is constructed.
+The resulting nonlinear constrained problem is solved using SLSQP,
+and the optimized allocation is evaluated under the same TOPSIS framework as in Task~2,
+yielding allocation patterns, competitiveness gains, and policy insights.
 
 Tasks~1--3 establish a consistent pipeline: indicators $\rightarrow$ objective weights $\rightarrow$ TOPSIS scores $\rightarrow$ multi-year scenario.
 Task~4 turns this pipeline into a decision problem. Starting in 2026, China allocates an additional \emph{1 trillion RMB}
@@ -12,10 +27,10 @@ evaluation standard and comparison set.
 
 \textbf{Decision variables and budget.}
 Let $\mathbf{I}=(I_1,\dots,I_p)^\top$ be the allocation across $p=24$ indicators.
-To match the policy budget and the numerical outputs, we measure investment in \emph{hundred-million RMB} (亿元).
+To match the policy budget and the numerical outputs, we measure investment in \emph{hundred-million RMB} (100 million yuan).
 Thus, the total budget is
 \begin{equation}
-\sum_{j=1}^{p} I_j = B,\qquad B=10000\ \text{(亿元)}.
+\sum_{j=1}^{p} I_j = B,\qquad B=10000\ \text{(100 million yuan)}.
 \label{eq:t4_budget}
 \end{equation}
 
@@ -105,7 +120,7 @@ maximum 500 iterations, and tolerance $10^{-6}$.
 
 \subsection{Optimal Allocation Results and Insights}
 
-All allocations below are in \emph{亿元}.
+All allocations below are in \emph{100 million yuan (RMB)}.
 
 \textbf{Overall allocation pattern.}
 The optimized plan prioritizes \emph{infrastructure--policy--market}, with secondary emphasis on enterprise R\&D and high-end talent.
@@ -117,7 +132,7 @@ Table~\ref{tab:dim_dist} and Fig.~\ref{fig:dim_donut} summarize the TAPRIO dimen
 \label{tab:dim_dist}
 \begin{tabular}{lrr}
 \toprule
-Dimension & Investment (亿元) & Share (\%) \\
+Dimension & Investment (100 million yuan) & Share (\%) \\
 \midrule
 Infrastructure (I) & 3232.64 & 32.33 \\
 Talent (T)         & 1739.28 & 17.39 \\
@@ -146,7 +161,7 @@ and Fig.~\ref{fig:top10_lollipop} visualizes the allocation rank.
 \label{tab:top10_invest}
 \begin{tabular}{rlrr}
 \toprule
-Rank & Indicator & Investment (亿元) & Share (\%) \\
+Rank & Indicator & Investment (100 million yuan) & Share (\%) \\
 \midrule
 1  & GPU cluster scale                & 1500.00 & 15.00 \\
 2  & Number of AI policies            & 1474.23 & 14.74 \\
@@ -178,7 +193,7 @@ Rank & Indicator & Investment (亿元) & Share (\%) \\
 \renewcommand{\arraystretch}{0.95}
 \begin{tabular}{rlrr}
 \toprule
-Rank & Indicator & Investment (亿元) & Share (\%) \\
+Rank & Indicator & Investment (100 million yuan) & Share (\%) \\
 \midrule
 1  & GPU cluster scale                & 1500.000 & 15.000 \\
 2  & Number of AI policies            & 1474.225 & 14.742 \\
@@ -284,3 +299,5 @@ Fig.~\ref{fig:t4_diag_pair} links the optimized allocation to (i) dimension-leve
 
 All results above are generated under the fixed Task~2 evaluation scheme and the Task~3 2035 scenario,
 ensuring model consistency and reproducibility.
+
+\FloatBarrier

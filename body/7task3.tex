@@ -1,7 +1,21 @@
 % =========================
 % body/7task3.tex
 % =========================
+\FloatBarrier
 \section{Task 3: Forecasting AI Competitiveness (2026--2035)}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\textwidth]{figure/task3/lct.png}
+  \caption{Overall forecasting and evaluation pipeline of Task~3.}
+  \label{fig:task3_framework}
+\end{figure}
+
+Fig.~\ref{fig:task3_framework} illustrates the integrated three-phase pipeline adopted in Task~3.
+Phase~1 prepares historical indicator sequences and estimates GM(1,1) parameters.
+Phase~2 projects country--indicator trajectories for 2026--2035.
+Phase~3 evaluates annual AI competitiveness by inheriting the fixed weights and TOPSIS framework from Task~2,
+yielding ranking evolution and diagnostic outputs.
 
 Task~3 extends the 2025 evaluation to a dynamic horizon.
 The key rule is consistency: \emph{the evaluation mechanism (weights and TOPSIS) is fixed},
@@ -136,3 +150,5 @@ Forecast reliability is supported by the diagnostics in Fig.~\ref{fig:task3_diag
 Task~3 couples indicator-level forecasting with the fixed Task~2 evaluation to project 2026--2035 competitiveness.
 The results suggest stable global leadership, gradual score convergence, and limited, interpretable mid-tier rank changes,
 providing the scenario baseline required by Task~4.
+
+\FloatBarrier

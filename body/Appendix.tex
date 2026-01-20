@@ -1,0 +1,122 @@
+\appendix
+\section*{Appendix}
+\addcontentsline{toc}{section}{Appendix}
+
+\subsection*{Appendix A. Indicator System (24 Indicators) and Dimension Mapping}
+\addcontentsline{toc}{subsection}{Appendix A. Indicator System (24 Indicators) and Dimension Mapping}
+
+This paper uses a consistent set of $p=24$ benefit-type indicators across Tasks~1--4 (Table~2 in the main text).
+The six-dimension TAPRIO structure is: Talent (T), Application (A), Policy (P), R\&D (R), Infrastructure (I), and Output (O).
+
+\begin{table}[h!]
+\centering
+\caption{A-1. Indicator list and dimension mapping (consistent across Tasks~1--4).}
+\label{tab:app_indicators}
+\begin{tabular}{ll}
+\toprule
+Dimension & Indicator (as used in the main text) \\
+\midrule
+T & No. of AI Researchers \\
+T & Top AI Scholars \\
+T & No. of AI Graduates \\
+\midrule
+A & No. of AI Enterprises \\
+A & AI Market Size \\
+A & AI Penetration Rate \\
+A & No. of LLMs \\
+\midrule
+P & Public Trust in AI \\
+P & No. of AI Policies \\
+P & AI Subsidies \\
+\midrule
+R & Corporate R\&D Expenditure \\
+R & Government AI Investment \\
+R & International AI Investment \\
+\midrule
+I & 5G Coverage \\
+I & GPU Cluster Scale \\
+I & Internet Bandwidth \\
+I & Internet Penetration \\
+I & Power Generation \\
+I & AI Computing Platforms \\
+I & No. of Data Centers \\
+I & No. of TOP500 Systems \\
+\midrule
+O & No. of AI Books \\
+O & No. of AI Datasets \\
+O & GitHub Repositories \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent
+\textbf{Data scope and usage.} The evaluation set includes $n=10$ countries (Section~4.1).
+Tasks~1--2 use the 2025 cross-sectional data, while Tasks~3--4 use the 2016--2025 historical panel and the 2026--2035 forecasts (Section~4.1).
+All indicators are treated as benefit-type variables and normalized using min--max scaling (Section~4.3 and Eq.~(2)).
+
+\subsection*{Appendix B. Evaluation Pipeline Reference (EWM + TOPSIS + Optional GRA)}
+\addcontentsline{toc}{subsection}{Appendix B. Evaluation Pipeline Reference (EWM + TOPSIS + Optional GRA)}
+
+For brevity, the full derivations are not duplicated here.
+The paper follows a fixed evaluation standard across years and tasks:
+\begin{itemize}
+\item \textbf{Entropy Weight Method (EWM)}: Eqs.~(11)--(13) in Section~6.1 define the proportion matrix, entropy, and weights $w_j$.
+\item \textbf{TOPSIS aggregation}: Eqs.~(14)--(17) in Section~6.1 define weighted performance, ideal solutions, distances $D_i^\pm$, and the closeness score $C_i$.
+\item \textbf{Grey Relational Analysis (GRA) cross-check and fusion (optional)}: Eqs.~(18)--(20) in Section~6.1 provide the GRA degree $\gamma_i$ and fusion score $S_i=(C_i+\gamma_i)/2$. The main ranking discussion uses the TOPSIS score and reports GRA consistency as robustness evidence (Section~6.2).
+\end{itemize}
+
+\noindent
+\textbf{Consistency rule used in Task~3/4.}
+Task~3 keeps the weight vector $\mathbf{w}$ fixed from Task~2 and applies the same TOPSIS procedure to annual predicted matrices $\hat{X}_t$ (Section~7.2).
+Task~4 also evaluates the post-investment 2035 matrix $X_{2035}(\mathbf{I})$ using the same fixed weights and TOPSIS standard (Eqs.~(30)--(32)).
+
+\subsection*{Appendix C. Forecasting Implementation Notes (GM(1,1) + Fallback)}
+\addcontentsline{toc}{subsection}{Appendix C. Forecasting Implementation Notes (GM(1,1) + Fallback)}
+
+Task~3 forecasts each country--indicator series independently over 2016--2025 and projects 2026--2035 (Section~7.1).
+Given the short time length ($T=10$), GM(1,1) is used as the primary model, with a constrained linear trend fallback when GM(1,1) backtesting is unsatisfactory.
+One-step-ahead validation (train 2016--2024, predict 2025) uses MAPE as the main accuracy metric (Section~7.1 and Fig.~4c).
+In the reported pipeline, GM(1,1) covers 44.17\% of series and the fallback covers 55.83\%, with a median MAPE of 0.1035.
+
+\subsection*{Appendix D. Task 4 Optimization Settings (Condensed)}
+\addcontentsline{toc}{subsection}{Appendix D. Task 4 Optimization Settings (Condensed)}
+
+\textbf{Decision variables and budget.}
+The allocation vector is $\mathbf{I}=(I_1,\dots,I_p)^\top$ over $p=24$ indicators.
+Investment is measured in 100 million RMB; the total budget is $B=10000$ (Eq.~(21)).
+
+\textbf{Objective.}
+The objective maximizes China's 2035 TOPSIS closeness under the fixed weight vector $\mathbf{w}$ from Task~2:
+\[
+\mathbf{I}^*=\arg\max_{\mathbf{I}} S_{\mathrm{CN}}\!\left(X_{2035}(\mathbf{I});\mathbf{w}\right),
+\]
+as defined in Eq.~(22).
+
+\textbf{Investment--indicator response.}
+Indicator increments follow diminishing returns with saturation and time-lag discount (Eq.~(27)),
+and the post-investment level is truncated by an upper bound (Eq.~(28)).
+Upper bounds follow the relative-competitiveness rule in Eq.~(29), including a cap for ratio-type indicators.
+
+\textbf{Constraints.}
+Budget and per-indicator bounds are given in Eq.~(33).
+Synergy constraints are ratio-type coupling constraints derived from the strong-correlation structure in Task~1 (Eq.~(34)),
+used to avoid structurally imbalanced growth.
+
+\textbf{Solver.}
+The nonlinear constrained program is solved by SLSQP with equal-allocation initialization $I_j=B/p$,
+maximum 500 iterations, and tolerance $10^{-6}$ (end of Section~8.1).
+
+\subsection*{Appendix E. Reproducibility Checklist (Minimal)}
+\addcontentsline{toc}{subsection}{Appendix E. Reproducibility Checklist (Minimal)}
+
+All reported figures and tables are generated from:
+\begin{itemize}
+\item \textbf{Task~1 outputs:} correlation heatmap, clustering dendrogram, PCA variance and importance, and interaction network (Figs.~1--2).
+\item \textbf{Task~2 outputs:} entropy weight distribution, TOPSIS/GRA ranking, and robustness statements (Fig.~3; Tables~3--4).
+\item \textbf{Task~3 outputs:} forecasting diagnostics, representative-year TOPSIS scores, and rank stability summaries (Figs.~4--5; Tables~5--6).
+\item \textbf{Task~4 outputs:} optimized allocation and indicator changes under the response function (Figs.~6--9; Tables~7--10).
+\end{itemize}
+
+\noindent
+The evaluation standard (weights and TOPSIS rules) is fixed once established in Task~2 and is reused without modification in Tasks~3--4,
+ensuring cross-year and cross-scenario comparability (Sections~7.2 and~8.1).

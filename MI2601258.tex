@@ -4,7 +4,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[12pt]{article}
 \usepackage{geometry}
-\geometry{left=1in,right=0.75in,top=1in,bottom=1in}
+\geometry{left=1in,right=1in,top=1in,bottom=1in}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -13,10 +13,17 @@
 \renewcommand{\textfraction}{0.05}
 \renewcommand{\floatpagefraction}{0.8}
 
+\setcounter{topnumber}{5}
+\setcounter{bottomnumber}{5}
+\setcounter{totalnumber}{10}
+
 \newcommand{\Problem}{B}
-\newcommand{\Team}{MI2601258}
+\newcommand{\Team}{2601258}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{placeins}
+\usepackage{float}
 
 \usepackage{newtxtext}
 \usepackage{amsmath,amssymb,amsthm}
@@ -30,8 +37,6 @@
 \usepackage{needspace}
 \usepackage{subcaption}
 
-\usepackage{CJKutf8}
-
 \usepackage[pdftex]{graphicx}
 \usepackage{xcolor}
 \usepackage{fancyhdr}
@@ -39,9 +44,6 @@
 \usepackage{tocloft}
 \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
 \usepackage[hidelinks]{hyperref}
-\lhead{Team \Team}
-\rhead{}
-\cfoot{}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -50,7 +52,7 @@
 
 \fancypagestyle{plain}{
 	\fancyhf{}
-	\lhead{Team \Team}
+	\lhead{Team \# \Team}
 	\rhead{Page \thepage~of \pageref{LastPage}}
 	\cfoot{}
 }
@@ -59,7 +61,7 @@
 
 \begin{document}
 
-\begin{CJK}{UTF8}{gbsn}
+%\begin{CJK}{UTF8}{gbsn}
 
 \graphicspath{{.}}
 \DeclareGraphicsExtensions{.pdf, .jpg, .tif, .png}
@@ -74,34 +76,27 @@
 
 %%%%%%%%%%% Begin Summary %%%%%%%%%%%
 \begin{center}
-	%标题
-	\begin{center}w
-		\Huge {This Is Title}
-		\vspace{0.4cm}
-
-		\normalsize\textbf{Summary}
-	\end{center}
-	\vspace{0.2cm}
-
+	\LARGE {Assessment, Forecasting, and Optimization of National AI Competitiveness}\\
+	\vspace{0.4cm}
+	\normalsize\textbf{Summary}
 \end{center}
 
-%摘要
-Here is the summary of paper.
+Artificial intelligence (AI) is fundamentally reshaping the global economic landscape and the strategic foundations of national competitiveness. From autonomous driving and intelligent manufacturing to medical diagnostics and scientific research, the penetration of AI applications continues to accelerate, establishing AI capability as a core dimension of national innovation capacity and long-term development potential. In this context, major economies have elevated AI development to the level of national strategy, competing for technological dominance through large-scale R\&D investment, policy support, and infrastructure development. However, the scientific assessment and comparison of AI development capabilities across nations, and the provision of quantitative evidence for policy formulation and resource allocation, remains a pressing theoretical and practical challenge.
 
-Please replace this text with your own summary. This summary should briefly describe the problem you are addressing, the methods you used, and the key results or conclusions you reached. Make sure to keep it concise and informative.
+National AI development capability represents a typical multi-dimensional complex system involving the synergistic interaction of talent reserves, R\&D investment, computational infrastructure, policy environment, industrial applications, and innovation outputs. Existing research predominantly focuses on single dimensions or partial indicators, lacking a unified evaluation framework and cross-country comparability. Moreover, decision-making needs related to dynamic evolution and resource optimization have not yet received systematic modeling support. Particularly under real-world constraints of heterogeneous data sources, inconsistent indicator definitions, and incomplete time series, constructing a closed-loop modeling framework capable of both revealing structural patterns and supporting forecasting and optimization presents significant methodological challenges and practical value.
 
+This paper aims to construct a unified and reproducible mathematical modeling framework to systematically address four progressive problems: First, identifying key factors of AI development capability and their interdependent structure to establish a quantifiable indicator system (\textbf{Problem 1}); second, developing an objective comprehensive evaluation model to rank the 2025 AI competitiveness of representative countries (\textbf{Problem 2}); third, forecasting the dynamic evolution of national competitiveness from 2026 to 2035 based on historical data (\textbf{Problem 3}); and finally, designing an optimal AI investment allocation strategy for China under budget constraints to maximize comprehensive competitiveness by 2035 (\textbf{Problem 4}). These problems constitute a complete decision chain of ``factor identification--comprehensive evaluation--trend forecasting--investment optimization,'' providing quantitative tool support for national-level AI strategic planning.
 
-%关键词
+Methodologically, this paper integrates multiple mathematical models into a unified analytical framework. Problem 1 employs Pearson correlation analysis and Principal Component Analysis (PCA) to reveal the intrinsic structure and key drivers among 24 indicators. Problem 2 combines the Entropy Weight Method (EWM) for objective weighting with the TOPSIS approach for comprehensive scoring, validated through Grey Relational Analysis (GRA) to enhance robustness. Problem 3 applies the GM(1,1) grey forecasting model to extrapolate all 24 indicators individually, with forecast accuracy validated through backtest diagnostics. Problem 4 formulates a diminishing-return response function and employs Sequential Least Squares Programming (SLSQP) to solve the nonlinear constrained optimization problem. Core innovations include: (1) establishing a fully reproducible framework from data to decision-making that ensures consistency across problems; (2) enhancing result credibility through multi-model cross-validation and sensitivity analysis; (3) organically integrating evaluation, forecasting, and optimization into a closed-loop decision-support system.
+
 \vspace{0.4cm}
-\noindent \textbf{Keywords:} KFC \quad V50 \quad Chicken
+\noindent \textbf{Keywords:} AI Development Capability, TOPSIS, Grey Forecasting, Entropy Weighting, Investment Optimization, Competitiveness Ranking
 %%%%%%%%%%% End Summary %%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
-\pagestyle{fancy}
+\pagestyle{plain}
 \newpage
 \setcounter{page}{1}
-\rhead{Page \thepage~of \pageref{LastPage}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %目录
 \tableofcontents
@@ -118,12 +113,15 @@ Please replace this text with your own summary. This summary should briefly desc
 \input{body/8task4.tex}
 \input{body/9Conclusions_and_Implications.tex}
 
+\input{body/References.tex}
+
+\input{body/Appendix.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
 \pagestyle{fancy}
 \thispagestyle{fancy}
 
-\end{CJK}
+%\end{CJK}
 \end{document}
 \end

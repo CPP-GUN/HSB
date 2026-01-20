@@ -1,6 +1,7 @@
 % =========================
 % body/6task2.tex
 % =========================
+\FloatBarrier
 \section{Task 2: Evaluation of National AI Competitiveness in 2025}
 
 With the indicator structure established in Task~1, Task~2 produces a \emph{single, comparable competitiveness score}
@@ -9,6 +10,20 @@ entropy weights determine indicator importance from data dispersion, TOPSIS aggr
 and GRA provides a structural cross-check.
 
 \subsection{Comprehensive Evaluation Methodology}
+
+Fig.~\ref{fig:task2_framework} presents the overall evaluation framework adopted in Task~2.
+The procedure consists of two sequential phases.
+In Phase~1, objective indicator weights are determined using the Entropy Weight Method (EWM) after data standardization.
+In Phase~2, the weighted indicators are aggregated through TOPSIS, while Grey Relational Analysis (GRA) provides
+a structural validation and complementary perspective.
+The final competitiveness score is obtained by fusing distance-based and relational measures.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.95\textwidth]{\detokenize{figure/task2/lct.png}}
+  \caption{Overall evaluation framework of Task~2 based on EWM--TOPSIS--GRA integration.}
+  \label{fig:task2_framework}
+\end{figure}
 
 Let the normalized indicator matrix for evaluation be
 \begin{equation}
@@ -134,3 +149,5 @@ Canada & 10 & 10 & 0.0414 & 0.3506 & 0.1960 & C \\
 \textbf{Reliability note.}
 TOPSIS and GRA rankings are highly consistent (Spearman $\rho_s=0.9758$, $p<0.001$).
 Under $\pm30\%$ weight perturbations, most countries vary by at most one rank, indicating stable ordering under moderate uncertainty.
+
+\FloatBarrier
