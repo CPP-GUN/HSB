@@ -1,53 +1,39 @@
-% yeooio：数据已核对&&Conclusions and Implications
-% 第一段：研究总览
-% 本研究构建并实现了一个统一的数据驱动建模框架，用以评估、比较、预测并优化国家层面的人工智能发展能力。框架基于一致的24项指标体系和统一的评价规则，覆盖要素识别（问题一）、综合评价（问题二）、时序预测（问题三）与资源优化（问题四）四个问题，形成闭环分析流程，确保结果在跨国与跨期维度上的可比性与可追溯性。
-
-% 第二段：主要发现（按问题归纳）
-% 问题一：分析表明，国家级AI发展并非由单一因素驱动，而是由基础设施、人才、政策环境与创新产出等要素紧密耦合而成的复杂系统。要素间普遍存在显著正相关（若干指标对的皮尔逊相关系数|r|>0.7），提示协同投入的必要性。
-
-% 问题二：2025年综合评价结果呈现明显分层：美国位列首位（TOPSIS得分0.641），中国位列第二（0.510），印度位列第三（0.210）。TOPSIS与灰色关联两套方法的排名高度一致，增强了排序结论的稳健性，表明分层更多由结构性长期优势驱动而非短期波动。
-
-% 问题三：对2026–2035年的情景预测显示，在结构稳定的前提下，全球AI竞争格局具有较强的惯性，头部国家（美、中、印）在中短期内保持优势，中游国家仅出现有限位次交换。回测诊断表明中位预测误差为10.35%（median MAPE = 0.1035），总体预测精度在可接受范围内。
-
-% 问题四：在假设自2026年起中国获得1万亿元（CNY）的额外预算情境下，优化结果建议优先保障基础设施支出（占比32.33%，约3233亿元），其次为人才培养与制度/政策支持（各占比17.39%）。该配置凸显了算力与基础能力的高边际回报，同时强调制度与人才的配套必要性。
-
-% 第三段：方法学贡献
-% 方法上，本研究融合了客观赋权（熵权法）、多模型交叉验证（TOPSIS与灰色关联）、时间序列预测（GM(1,1)并含回测诊断）与非线性约束优化（SLSQP）等技术手段，形成一套既可解释又可扩展的分析流程。稳健性检验与误差诊断支持了结论的可信度，使得观测到的排名模式更可能反映结构性特征而非方法性伪像。
-
-% 第四段：局限性
-% 本研究亦存在若干局限。首先，所用数据多为公开数据且存在时间滞后，可能无法实时反映最新技术突破或政策突变。其次，预测基于"结构大体稳定"的假设，未对颠覆性事件（如重大政策调整或突破性技术发明）进行专门情景建模。再次，投资响应模型采用了边际递减等简化假设，实际投入产出可能受复杂制度与市场反馈影响。针对以上局限，本文在若干分析中已加入灵敏度检验，且建议未来研究采用更高频的替代指标与冲击情景分析。
-
-% 第五段：政策启示（可操作要点）
-% 基于研究发现，我们向政策制定者提出如下建议：
-
-% 制定长期且系统性的AI发展战略，避免片段化的短期投入；
-% 将算力与基础设施置于优先投资序列（短中期投入占比应显著高于平均水平），以破除制约性瓶颈；
-% 实施人才培养、政策支持与研发投入的协同策略，确保资金、人才与制度互为支撑；
-% 后发国家应制定跨周期的赶超路径，包括规模化投入、制度创新与国际合作，以应对路径依赖带来的趋同性劣势。
-% 第六段：总结与展望
-% 总体而言，本研究提供了一套透明、可复现且可扩展的国家级AI能力评估与优化框架，为政策制定提供了量化且循证的参考。尽管存在数据与模型假设的限制，该框架仍能为理解国家AI能力建设的结构性驱动因素与长期演化路径提供有价值的洞见。未来工作可在提高数据频度、引入冲击场景与强化投资-产出动态建模方面进一步推进。
-
-
-
 \section{Conclusions and Implications}
 
-This study constructs a unified, data-driven modeling framework for evaluating, comparing, forecasting, and optimizing national artificial intelligence (AI) development capability. Built upon a consistent system of 24 indicators and a unified evaluation protocol, the framework encompasses factor identification (Problem 1), comprehensive evaluation (Problem 2), temporal forecasting (Problem 3), and resource optimization (Problem 4), forming a closed-loop analytical pipeline that ensures cross-country and cross-period comparability as well as full result traceability.
+This study develops a \textbf{unified, data-driven} modeling framework for evaluating, comparing, forecasting, and optimizing national artificial intelligence (AI) development capability. Built upon a consistent system of \textbf{24 indicators} and a unified evaluation protocol, the framework integrates factor identification (Problem~1), comprehensive evaluation (Problem~2), temporal forecasting (Problem~3), and resource optimization (Problem~4) into a \textbf{closed-loop analytical pipeline}, ensuring cross-country and cross-period comparability as well as full result traceability.
 
-\textbf{Problem 1} reveals that national AI development emerges from a tightly coupled system of infrastructure, human capital, policy environment, and innovation output rather than isolated factors. Multiple indicator pairs exhibit strong positive Pearson correlations (several with $|r| > 0.7$), highlighting the importance of coordinated investments across dimensions. \textbf{Problem 2} demonstrates clear stratification in 2025: the United States ranks first (TOPSIS $= 0.641$), China second ($0.510$), and India third ($0.210$). High consistency between TOPSIS and Grey Relational Analysis rankings reinforces robustness, suggesting that stratification reflects structural rather than transient drivers. \textbf{Problem 3} extends the analysis to 2026--2035: under structural-stability assumptions, the global AI competitiveness landscape exhibits strong inertia, with leading countries (U.S., China, India) maintaining advantages in the medium term and only limited rank exchanges among mid-tier countries. Backtest diagnostics report a median MAPE $= 0.1035$ (10.35\%), indicating acceptable forecast accuracy. \textbf{Problem 4}, under the scenario of an additional CNY 1 trillion for China from 2026, recommends prioritizing infrastructure investment (32.33\%, $\approx$ CNY 323.3 billion), followed by talent cultivation and policy support (each 17.39\%). This allocation pattern indicates high marginal returns to computational capacity and foundational capabilities and underscores the need for coordinated institutional and human-capital measures.
+\subsection*{$\blacktriangleright$ Key Findings by Problem}
 
-Methodologically, this study integrates entropy-based weighting (Entropy Weight Method, EWM), multi-model cross-validation (TOPSIS and Grey Relational Analysis, GRA), time-series forecasting (Grey model GM(1,1) with backtest diagnostics), and nonlinear constrained optimization (Sequential Least Squares Programming, SLSQP). Robustness checks and error diagnostics support the credibility of the findings, suggesting that observed ranking patterns likely reflect structural characteristics rather than methodological artifacts.
+\subsubsection*{$\blacklozenge$ Problem~1.}
+National AI development is not driven by isolated factors but emerges from a tightly coupled system of infrastructure, human capital, policy environment, and innovation output. Multiple indicator pairs exhibit strong positive Pearson correlations (with several $|r|>0.7$), highlighting the necessity of \textbf{synergistic} investment strategies rather than fragmented interventions.
 
-Several limitations merit acknowledgment. First, the analysis relies on publicly available data that may be lagged and thus not capture the most recent technological breakthroughs or abrupt policy changes. Second, forecasts assume structural stability and do not explicitly model disruptive events (e.g., major policy shifts or breakthrough technologies). Third, the investment-response formulation adopts simplifying assumptions (such as diminishing marginal returns); real-world input-output dynamics may be affected by complex institutional and market feedback. We have incorporated sensitivity analyses where feasible; future work should consider higher-frequency proxy indicators and explicit shock-scenario modeling.
+\subsubsection*{$\blacklozenge$ Problem~2.}
+The 2025 evaluation reveals a clear stratification of AI competitiveness: the United States ranks first (TOPSIS score $=0.641$), China second ($0.510$), and India third ($0.210$). The high consistency between TOPSIS and Grey Relational Analysis rankings confirms the \textbf{robustness} of the results, suggesting that the observed hierarchy is primarily driven by long-term structural advantages rather than short-term fluctuations.
 
-Based on these findings, we offer the following recommendations to policymakers:
+\subsubsection*{$\blacklozenge$ Problem~3.}
+Extending the analysis to 2026--2035, the forecasting results indicate strong inertia in the global AI competitiveness landscape under \textbf{structural-stability assumptions}. Leading countries (the United States, China, and India) maintain their advantages in the medium term, while only limited rank exchanges occur among mid-tier countries. Backtesting diagnostics report a median forecasting error of $\textbf{MAPE}=0.1035$ (10.35\%), indicating acceptable predictive accuracy.
 
+\subsubsection*{$\blacklozenge$ Problem~4.}
+Under the scenario of an additional CNY~1 trillion investment for China starting in 2026, the optimization results recommend prioritizing infrastructure development (32.33\%, approximately CNY~323.3~billion), followed by talent cultivation and policy support (each 17.39\%). This allocation reflects the high marginal returns of \textbf{computational capacity} and foundational capabilities, while underscoring the complementary roles of institutional design and human capital.
+
+\subsection*{$\blacktriangleright$ Methodological Contributions}
+
+Methodologically, the proposed framework integrates \textbf{entropy-based objective weighting (EWM)}, multi-model cross-validation (TOPSIS and Grey Relational Analysis), time-series forecasting (GM(1,1) with backtesting diagnostics), and nonlinear constrained optimization (SLSQP). Robustness checks and error diagnostics support the credibility of the findings, indicating that the observed ranking patterns are more likely to reflect structural characteristics rather than methodological artifacts.
+
+\subsection*{$\blacktriangleright$ Limitations}
+
+Several limitations should be acknowledged. First, the analysis relies primarily on publicly available data, which may be subject to time lags and may not fully capture recent technological breakthroughs or abrupt policy changes. Second, the forecasting framework assumes structural stability and does not explicitly model disruptive shocks. Third, the investment-response mechanism adopts simplifying assumptions (e.g., diminishing marginal returns), whereas real-world input--output dynamics may involve more complex institutional and market feedbacks.
+
+\subsection*{$\blacktriangleright$ Policy Implications}
+
+Based on the findings, the following recommendations are offered:
 \begin{enumerate}
-    \item Adopt long-term, systemic AI development strategies rather than fragmented short-term measures;
-    \item Prioritize computational capacity and infrastructure investment---allocating materially above-average shares in the short to medium term to remove binding bottlenecks;
-    \item Coordinate investments in talent, policy, and R\&D so financial, human, and institutional capacities reinforce one another;
-    \item For latecomer countries, design cross-cycle catch-up strategies combining large-scale investment, institutional innovation, and international cooperation to mitigate path-dependence disadvantages.
+    \item Formulate \textbf{long-term} AI development strategies rather than fragmented short-term interventions;
+    \item Prioritize investment in \textbf{computational infrastructure}, allocating above-average shares in the short to medium term to alleviate binding constraints;
+    \item Coordinate investments in talent, policy support, and R\&D so that financial, human, and institutional capacities reinforce one another;
+    \item For latecomer countries, design catch-up strategies combining large-scale investment, institutional innovation, and international cooperation to mitigate path-dependence effects.
 \end{enumerate}
 
-Overall, this study provides a transparent, reproducible, and extensible framework for assessing and optimizing national AI capability, offering quantitative, evidence-based guidance for policy formulation. Despite data and model limitations, the framework delivers valuable insights into structural drivers and long-term evolution of national AI capacity. Future extensions should increase data frequency, incorporate shock scenarios, and strengthen dynamic investment-to-output modeling.
+\subsection*{$\blacktriangleright$ Overall Conclusion}
 
-Overall, this study provides a transparent, reproducible, and extensible framework for national AI capability assessment and optimization, offering quantitative and evidence-based reference for policy formulation. Despite limitations in data and model assumptions, the framework yields valuable insights into the structural drivers and long-term evolutionary pathways of national AI capacity building. Future work may advance the field by improving data frequency, introducing shock scenarios, and strengthening dynamic investment-output modeling.
+Overall, this study provides a \textbf{transparent and reproducible} framework for national AI capability assessment and optimization, offering quantitative and evidence-based support for policy formulation. Despite limitations in data availability and modeling assumptions, the framework yields meaningful insights into the structural drivers and long-term evolution of national AI development and can be readily extended in future research.
