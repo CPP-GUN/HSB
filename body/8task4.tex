@@ -1,2 +1,150 @@
-\section{Task 4}
+\section{Task 4: Optimization of China’s AI Development Investment (2026--2035)}
 
+In Tasks~1--3, we have established a unified analytical framework for evaluating national AI development capability:
+(i) Task~1 identified a 24-indicator system and revealed key structural correlations among indicators;
+(ii) Task~2 determined objective indicator weights and fixed the TOPSIS evaluation scheme;
+(iii) Task~3 provided baseline and forecasted indicator trajectories for all countries up to 2035.
+
+Under the assumption that China allocates an additional 1 trillion RMB in special funds starting from 2026, 
+Task~4 aims to determine an optimal investment allocation strategy that maximizes China’s comprehensive AI competitiveness in 2035, 
+while maintaining full consistency with the established evaluation framework.
+
+\subsection{Problem Formulation}
+
+Let $\mathbf{I} = (I_1, I_2, \ldots, I_p)^\top$ denote the investment allocation vector over the $p=24$ indicators, 
+where $I_j$ represents the investment (in billion RMB) allocated to indicator $j$.
+The optimization objective is defined as
+\begin{equation}
+\mathbf{I}^* = \arg\max_{\mathbf{I}} \; S_{\mathrm{CN}}\!\left(X^{2035}(\mathbf{I}); \mathbf{w}\right),
+\end{equation}
+subject to the total budget constraint
+\begin{equation}
+\sum_{j=1}^{p} I_j = B, \qquad B = 10000.
+\end{equation}
+Here, $S_{\mathrm{CN}}(\cdot)$ denotes China’s TOPSIS closeness coefficient under the fixed weight vector $\mathbf{w}$ obtained in Task~2,
+and $X^{2035}(\mathbf{I})$ represents the 2035 indicator matrix in which only China’s indicator values are affected by the investment decision.
+
+\subsection{Symbols and Data Interfaces}
+
+To ensure comparability with previous tasks, all structural, weighting, and forecasting information is treated as exogenous input:
+\begin{align}
+\mathbf{w} &\leftarrow \text{Task~2 (Entropy Weight Method)},\\
+\mathbf{x}^{\mathrm{base}}_{\mathrm{CN}} &\leftarrow \text{Task~3 (China baseline, 2026)},\\
+X^{\mathrm{scen}}_{2035} &\leftarrow \text{Task~3 (2035 forecast scenario)},\\
+\mathcal{E} &\leftarrow \text{Task~1 (strong correlation structure)}.
+\end{align}
+
+For each indicator $j$, the following parameters are introduced:
+\begin{itemize}
+\item $C_j$: unit investment cost required to increase indicator $j$ by one unit;
+\item $\gamma_j$: time-lag discount factor reflecting realization speed;
+\item $L_j$: upper bound representing saturation or feasible growth limits;
+\item $I_{\min}, I_{\max}$: lower and upper bounds on single-indicator investment.
+\end{itemize}
+
+\subsection{Investment--Indicator Response Function}
+
+Considering diminishing marginal returns and heterogeneous realization horizons across indicator types,
+the incremental change of indicator $j$ induced by investment $I_j$ is modeled as
+\begin{equation}
+\Delta x_j(\mathbf{I}) = \frac{I_j}{C_j}
+\left(1 - \frac{x^{\mathrm{base}}_j}{L_j}\right)\gamma_j,
+\qquad j = 1, \ldots, p.
+\end{equation}
+
+Accordingly, China’s indicator value in 2035 after investment is given by
+\begin{equation}
+x^{2035}_{\mathrm{CN},j}(\mathbf{I}) 
+= \min\left\{x^{\mathrm{base}}_j + \Delta x_j(\mathbf{I}), \; L_j\right\}.
+\end{equation}
+
+In vector form,
+\begin{equation}
+\Delta \mathbf{x}(\mathbf{I}) 
+= \left(\boldsymbol{\gamma} \oslash \mathbf{C}\right)
+\odot \left(\mathbf{1} - \mathbf{x}^{\mathrm{base}} \oslash \mathbf{L}\right)
+\odot \mathbf{I},
+\end{equation}
+where $\odot$ and $\oslash$ denote element-wise multiplication and division, respectively.
+
+\subsection{Upper Bounds and Time-Lag Settings}
+
+Indicator upper bounds are determined according to a relative competitiveness rule:
+\begin{equation}
+L_j =
+\begin{cases}
+1.5 \, x^{\mathrm{CN}}_{j,2025}, 
+& x^{\mathrm{CN}}_{j,2025} \ge x^{\mathrm{US}}_{j,2025},\\[6pt]
+3.0 \, x^{\mathrm{US}}_{j,2025}, 
+& x^{\mathrm{CN}}_{j,2025} < x^{\mathrm{US}}_{j,2025},
+\end{cases}
+\qquad
+L_j \le 100 \;\; \text{(ratio-type indicators)}.
+\end{equation}
+
+Time-lag discount factors are grouped by indicator characteristics:
+\begin{equation}
+\gamma_j \in \{1.0,\; 0.8,\; 0.6\},
+\end{equation}
+corresponding respectively to short-term (e.g., infrastructure), medium-term (e.g., R\&D and applications),
+and long-term (e.g., talent cultivation) effects.
+
+\subsection{Evaluation Matrix Construction}
+
+The 2035 evaluation matrix $X^{2035}(\mathbf{I}) \in \mathbb{R}^{n \times p}$ is constructed as follows:
+all non-China rows are fixed at their forecasted values from Task~3, while China’s row is replaced by
+$\mathbf{x}^{2035}_{\mathrm{CN}}(\mathbf{I})$.
+This design guarantees that the comparison set and evaluation standard remain unchanged.
+
+\subsection{TOPSIS-Based Objective Function}
+
+Let $X = X^{2035}(\mathbf{I})$. The TOPSIS procedure follows exactly the formulation in Task~2:
+\begin{equation}
+\tilde{X} = X D^{-1}, 
+\quad 
+D = \mathrm{diag}\left(\lVert X_{:,1}\rVert_2, \ldots, \lVert X_{:,p}\rVert_2\right),
+\end{equation}
+\begin{equation}
+V = \tilde{X} \, \mathrm{diag}(\mathbf{w}),
+\quad
+\mathbf{v}^+ = \max_i V_{i,:},
+\quad
+\mathbf{v}^- = \min_i V_{i,:},
+\end{equation}
+\begin{equation}
+D_i^{\pm} = \lVert V_{i,:} - \mathbf{v}^{\pm} \rVert_2,
+\qquad
+S_i = \frac{D_i^-}{D_i^+ + D_i^-}.
+\end{equation}
+
+The optimization objective is to maximize $S_{\mathrm{CN}}$.
+
+\subsection{Constraints}
+
+\paragraph{Budget and Bound Constraints}
+\begin{equation}
+\sum_{j=1}^{p} I_j = B,
+\qquad
+I_{\min} \le I_j \le I_{\max}.
+\end{equation}
+
+\paragraph{Synergy Constraints}
+To prevent structural imbalance caused by isolated investment surges,
+synergy constraints are imposed based on strong correlations identified in Task~1:
+\begin{align}
+x_{\text{Large Models}} &\le 200 \, x_{\text{GPU}},\\
+x_{\text{Top AI Scholars}} &\le 5.0 \, x_{\text{Researchers}},\\
+x_{\text{AI Publications}} &\le 0.24 \, x_{\text{Researchers}},\\
+x_{\text{AI Enterprises}} &\le 78 \, x_{\text{AI Market}},\\
+x_{\text{AI Datasets}} &\le 0.75 \, x_{\text{Enterprise R\&D}}.
+\end{align}
+
+\subsection{Solution Method}
+
+The resulting optimization problem is a nonlinear constrained programming problem.
+It is solved using the Sequential Least Squares Programming (SLSQP) algorithm,
+with an equal-allocation initialization $I_j = B/p$,
+a maximum of 500 iterations, and a convergence tolerance of $10^{-6}$.
+
+This formulation yields a reproducible investment allocation strategy fully consistent
+with the structural insights, evaluation methodology, and forecast scenarios established in Tasks~1--3.

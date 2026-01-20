@@ -1,56 +1,34 @@
-\section{Task 2: AI Development Capability Evaluation and 2025 Ranking}
+\section{Task 2: Evaluation of National AI Competitiveness in 2025}
 
-\subsection{Model Overview}
+\subsection{Comprehensive Evaluation Methodology}
 
-Based on the 24 indicators identified in Task 1, let the normalized indicator matrix be
+Based on the indicator system established in Task~1,
+this task constructs an objective framework to evaluate national AI competitiveness in 2025.
+
+Let the standardized indicator matrix be
 \begin{equation}
-X'=\left(x'_{ij}\right)_{n\times p},\quad n=10,\;p=24,
+X'=\left(x'_{ij}\right)_{n\times p}, \quad n=10,\; p=24,
 \end{equation}
-where $x'_{ij}$ denotes the normalized value of indicator $j$ for country $i$.
-All indicators have been unified as benefit-type (larger values indicate stronger AI development capability)
-and normalized prior to this task.
+where all indicators are benefit-type variables.
+The objective is to synthesize multidimensional information into a single, interpretable competitiveness score.
 
-The objective of Task 2 is to construct an \textit{objective and reproducible} evaluation model
-to quantify national AI development capability and determine the 2025 competitiveness ranking
-of ten countries.
-
-To reduce subjective bias and enhance robustness, an integrated evaluation framework combining
-the Entropy Weight Method (EWM), TOPSIS, and Grey Relational Analysis (GRA) is adopted.
-
-\subsection{Entropy-Based Weighting}
-
-The entropy weight method is derived from information theory and assigns indicator weights
-according to their dispersion across countries. Indicators with higher variability contain
-more effective information for discrimination and thus receive larger weights.
-
-Define
+\textbf{(1) Entropy-based indicator weighting.}
+Indicator importance is determined using the entropy weight method.
+For indicator $j$,
 \begin{equation}
-p_{ij}=\frac{x'_{ij}}{\sum_{i=1}^{n}x'_{ij}},\qquad 0\ln 0 := 0,
+p_{ij}=\frac{x'_{ij}}{\sum_{i=1}^{n}x'_{ij}}, \qquad 0\ln0:=0,
 \end{equation}
-where $p_{ij}$ represents the proportion of indicator $j$ contributed by country $i$.
-The information entropy of indicator $j$ is computed as
 \begin{equation}
-e_j=-k\sum_{i=1}^{n}p_{ij}\ln p_{ij}, \quad k=\frac{1}{\ln n}.
+e_j=-k\sum_{i=1}^{n}p_{ij}\ln p_{ij}, \quad k=\frac{1}{\ln n},
 \end{equation}
-The corresponding entropy weight is given by
+and the entropy weight is
 \begin{equation}
 w_j=\frac{1-e_j}{\sum_{j=1}^{p}(1-e_j)}.
 \end{equation}
-If $\sum_{i=1}^{n}x'_{ij}=0$ for some indicator $j$, its weight is set to zero and the remaining
-weights are renormalized.
+Indicators with greater cross-country dispersion receive higher weights.
 
-\paragraph{Result interpretation.}
-The entropy-based weighting results indicate a clear concentration of information contribution among a limited subset of indicators.
-Specifically, frontier capability and high-level output indicators receive substantially larger weights than basic penetration metrics.
-The largest weights are assigned to \textit{Large Models} ($w=0.0946$), \textit{International AI Investment} ($w=0.0859$),
-\textit{Top AI Scholars} ($w=0.0699$), and \textit{AI Market Size} ($w=0.0698$), implying that cross-country differences are most strongly
-distinguished by cutting-edge innovation capacity, global resource linkage, and market maturity.
-In contrast, \textit{Internet Penetration} ($w=0.0063$), \textit{AI Penetration} ($w=0.0084$), and \textit{5G Coverage} ($w=0.0087$)
-carry relatively small weights, suggesting that foundational digital access has partially converged among major economies and is less
-decisive in differentiating AI competitiveness at the current stage.
-
-Overall, the weight structure is consistent with the structural findings in Task~1: a small set of dominant factors explain most of the
-cross-country variance, while low-weight indicators provide complementary but limited marginal discrimination.
+The resulting weight distribution is shown in Figure~\ref{fig:Indicator_Weights_Distribution},
+with representative indicators summarized in Table~\ref{tab:entropy_weights_top_bottom}.
 
 \begin{figure}[htbp]
   \centering
@@ -80,41 +58,54 @@ Internet Penetration & 0.9478 & 0.0522 & 0.0063 \\
 \end{tabular}
 \end{table}
 
-\subsection{TOPSIS-Based Comprehensive Evaluation}
-
-TOPSIS aggregates weighted indicators into a single competitiveness score by comparing each
-country with an ideal reference. The method assumes that the optimal country should be closest
-to the positive ideal solution and farthest from the negative ideal solution.
-
-The weighted decision matrix is defined as
+\textbf{(2) TOPSIS-based comprehensive evaluation.}
+Using the entropy weights, the weighted decision matrix is
 \begin{equation}
 v_{ij}=w_j x'_{ij}.
 \end{equation}
-For each indicator $j$, the positive and negative ideal components are defined as
+The positive and negative ideal solutions are
 \begin{equation}
-A_j^+=\max_{i} v_{ij},\quad A_j^-=\min_{i} v_{ij}, \qquad j=1,\dots,p,
+A_j^+=\max_i v_{ij}, \quad A_j^-=\min_i v_{ij},
 \end{equation}
-yielding the ideal vectors $A^+=(A_1^+,\dots,A_p^+)$ and $A^-=(A_1^-,\dots,A_p^-)$. \\
-
-The distances from country $i$ to the ideal solutions are computed as
+and the distances to these benchmarks are
 \begin{equation}
-D_i^\pm=\sqrt{\sum_{j=1}^{p}(v_{ij}-A_j^\pm)^2},
+D_i^\pm=\sqrt{\sum_{j=1}^{p}(v_{ij}-A_j^\pm)^2}.
 \end{equation}
-and the comprehensive competitiveness score is defined as
+The TOPSIS score is defined as
 \begin{equation}
 C_i=\frac{D_i^-}{D_i^++D_i^-}.
 \end{equation}
 
-\paragraph{Result interpretation.}
-The entropy-weighted TOPSIS results demonstrate strong heterogeneity in national AI development capability in 2025.
-The United States ranks first with $C=0.6407$, followed by China with $C=0.5104$,
-forming a clear leading tier.
-India ($C=0.2098$) and the UAE ($C=0.1836$ constitute the next tier, while the United Kingdom, South Korea, France, Japan,
-and Germany cluster in a compact mid-lower band ($C\approx 0.062$--$0.100$).
-Canada ranks last with $C=0.0414$.
+\textbf{(3) Structural validation by grey relational analysis.}
+Let the ideal profile be
+\begin{equation}
+v_{0j}=\max_i v_{ij}.
+\end{equation}
+Define
+\begin{equation}
+\Delta_{ij}=|v_{0j}-v_{ij}|,\quad
+\Delta_{\min}=\min_{i,j}\Delta_{ij},\quad
+\Delta_{\max}=\max_{i,j}\Delta_{ij}.
+\end{equation}
+The grey relational coefficient and degree are
+\begin{equation}
+\xi_{ij}=\frac{\Delta_{\min}+0.5\,\Delta_{\max}}{\Delta_{ij}+0.5\,\Delta_{\max}},
+\qquad
+\gamma_i=\frac{1}{p}\sum_{j=1}^{p}\xi_{ij}.
+\end{equation}
 
-This ``head--middle--tail'' pattern indicates that top countries outperform others simultaneously across multiple high-weight indicators,
-while the separation among mid-ranked countries is relatively small and therefore sensitive to structural emphasis across dimensions.
+\subsection{Results and Comparative Analysis}
+
+\textbf{(1) Indicator weight structure.}
+Entropy weights concentrate on frontier and output-oriented indicators,
+indicating that cross-country differences are primarily driven by advanced innovation capacity
+and global resource integration, while basic digital penetration indicators contribute marginally.
+
+\textbf{(2) National competitiveness ranking in 2025.}
+The TOPSIS results are reported in Table~\ref{tab:topsis_results_2025}
+and Figure~\ref{fig:AI_Competitiveness_Ranking_2025}.
+The United States and China form a clear leading tier,
+followed by India and the UAE, while the remaining countries cluster closely.
 
 \begin{figure}[htbp]
   \centering
@@ -145,44 +136,14 @@ Canada & 0.2091 & 0.0090 & 0.0414 & 10 \\
 \end{tabular}
 \end{table}
 
-\subsection{Structural Validation by Grey Relational Analysis}
-
-Grey Relational Analysis is suitable for small-sample and partially known systems.
-It evaluates the similarity of development patterns by comparing the geometric proximity
-of indicator sequences.
-
-Let the reference sequence be the ideal profile
+\textbf{(3) Cross-method validation and fusion ranking.}
+The grey relational results are summarized in Table~\ref{tab:gra_results_2025}.
+To integrate distance-based performance and structural similarity,
+the fusion score is defined as
 \begin{equation}
-v_{0j}=\max_{i} v_{ij}, \qquad j=1,\dots,p.
+S_i=\frac{C_i+\gamma_i}{2}.
 \end{equation}
-Define the absolute deviation
-\begin{equation}
-\Delta_{ij}=|v_{0j}-v_{ij}|,
-\end{equation}
-and let
-\begin{equation}
-\Delta_{\min}=\min_{i,j}\Delta_{ij},\qquad
-\Delta_{\max}=\max_{i,j}\Delta_{ij}.
-\end{equation}
-The grey relational coefficient is defined as
-\begin{equation}
-\xi_{ij}=\frac{\Delta_{\min}+\rho\Delta_{\max}}{\Delta_{ij}+\rho\Delta_{\max}}, \quad \rho=0.5,
-\end{equation}
-and the grey relational degree of country $i$ is calculated as
-\begin{equation}
-\gamma_i=\frac{1}{p}\sum_{j=1}^{p}\xi_{ij}.
-\end{equation}
-
-\paragraph{Result interpretation.}
-GRA is employed as an independent structural validation of the TOPSIS-based ranking.
-The resulting grey relational degrees preserve the same leading pair as TOPSIS:
-the United States ranks first ($\gamma=0.7793$) and China ranks second ($\gamma=0.6440$).
-India ($\gamma=0.4170$) and the UAE ($\gamma=0.4052$) remain in the upper-middle group.
-Within the mid-ranked countries, slight differences emerge (e.g., South Korea ranks above the United Kingdom in GRA),
-indicating that some countries may have more coherent indicator structures even when their absolute TOPSIS scores are close.
-
-Overall, the close alignment between TOPSIS and GRA supports that the ranking is not an artifact of a single evaluation logic,
-but reflects stable and systematic capability differences across countries.
+The final ranking is reported in Table~\ref{tab:final_ranking_2025}.
 
 \begin{table}[htbp]
 \centering
@@ -206,41 +167,6 @@ Canada & 0.3506 & 10 \\
 \end{tabular}
 \end{table}
 
-\subsection{Fusion Ranking and Reliability Framework}
-
-To integrate distance-based performance and structural similarity, an equal-weight fusion score
-is defined as
-\begin{equation}
-S_i=\frac{C_i+\gamma_i}{2}.
-\end{equation}
-The fusion score $S_i$ is used to determine the final AI competitiveness ranking for 2025.
-
-Ranking consistency is quantified using Spearman's rank correlation coefficient
-\begin{equation}
-\rho_s = 1-\frac{6\sum_{i=1}^{n} d_i^2}{n(n^2-1)},
-\end{equation}
-where $d_i$ denotes the rank difference of country $i$ between two ranking methods.
-Robustness is further assessed by perturbing a single indicator weight $w_j$ by $\pm\alpha$
-(e.g., $\alpha=30\%$), followed by weight renormalization and re-ranking.
-
-\paragraph{Final ranking and reliability analysis.}
-The equal-weight fusion of TOPSIS and GRA produces the final 2025 competitiveness ranking.
-The top two countries (United States and China) remain unchanged, and most mid-ranked countries
-show only minor rank adjustments, indicating a stable ordering.
-Method consistency is extremely high: the rank correlation between TOPSIS scores and grey relational degrees
-achieves Spearman $\rho_s=0.9758$ with statistical significance ($p<0.001$), confirming that the evaluation outcome
-is robust to the choice of ranking mechanism.
-Sensitivity results further indicate limited rank volatility under weight perturbations: most countries exhibit
-rank ranges of 0--1, and only a few countries show moderate variation (e.g., France with range 3), suggesting
-overall model stability.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.75\textwidth]{figure/task2/fig7_en_Validation_Analysis.pdf}
-  \caption{Validation and Robustness Analysis (Method Consistency and Sensitivity)}
-  \label{fig:Validation_Analysis}
-\end{figure}
-
 \begin{table}[htbp]
 \centering
 \caption{Final AI Competitiveness Ranking (2025) by Fusion Score}
@@ -263,6 +189,21 @@ Canada & 10 & 10 & 0.0414 & 0.3506 & 0.1960 & C \\
 \end{tabular}
 \end{table}
 
+\textbf{(4) Reliability and robustness assessment.}
+Consistency between TOPSIS and GRA is measured using Spearman’s rank correlation coefficient,
+yielding $\rho_s=0.9758$ ($p<0.001$).
+Sensitivity analysis under $\pm30\%$ weight perturbations confirms that most countries
+exhibit rank variations of at most one position.
+The validation results are illustrated in Figure~\ref{fig:Validation_Analysis}
+and summarized in Table~\ref{tab:sensitivity_range}.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.75\textwidth]{figure/task2/fig7_en_Validation_Analysis.pdf}
+  \caption{Validation and Robustness Analysis (Method Consistency and Sensitivity)}
+  \label{fig:Validation_Analysis}
+\end{figure}
+
 \begin{table}[htbp]
 \centering
 \caption{Ranking Sensitivity under Weight Perturbation (Rank Range)}
@@ -284,32 +225,3 @@ France & 3 \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-\paragraph{Structural explanation by six dimensions (optional).}
-To interpret why top-ranked countries outperform others, the six-dimensional scores provide a compact decomposition.
-The United States exhibits strong advantages in \textit{R\&D} ($0.8307$) and \textit{Infrastructure} ($0.8714$),
-while China shows prominent strengths in \textit{Application} ($0.7344$) and \textit{Policy} ($0.7980$).
-India displays relatively high \textit{Output} ($0.5889$) and moderate \textit{Application} ($0.4011$),
-whereas the UAE relies more on \textit{Infrastructure} ($0.6453$) and policy-related support.
-These complementary structures help explain why the leading tier remains stable while mid-ranked countries cluster closely.
-
-\begin{figure}[htbp]
-  \centering
-  \includegraphics[width=0.80\textwidth]{figure/task2/fig4_en_Six_Dimensional_Capability_Radar.pdf}
-  \caption{Six-Dimensional Capability Profiles of Representative Countries}
-  \label{fig:Six_Dimensional_Radar}
-\end{figure}
-
-\subsection{Overall Summary of Task 2}
-
-Task 2 establishes a comprehensive evaluation framework for national AI development capability
-by integrating objective weighting, distance-based evaluation, and structural validation.
-Using entropy-based weights, the TOPSIS model yields a clear 2025 competitiveness hierarchy,
-with the United States and China forming the leading tier, followed by India and the UAE,
-and a compact cluster of mid-ranked countries.
-
-The GRA results provide an independent validation of the TOPSIS ordering, and the extremely high
-rank correlation (Spearman $\rho_s=0.9758$, $p<0.001$) confirms strong methodological consistency.
-Sensitivity analysis further indicates that rankings remain stable under reasonable perturbations of indicator weights.
-Overall, the final fusion ranking offers a transparent and reproducible benchmark for 2025 AI competitiveness,
-serving as the baseline for forecasting and policy analysis in subsequent tasks.
