@@ -151,6 +151,7 @@ Output (O)         &  511.84 &  5.12 \\
 \label{fig:dim_donut}
 \end{figure}
 
+\FloatBarrier
 \textbf{Indicator-level priorities.}
 Top-10 funded indicators account for the majority of the budget (Table~\ref{tab:top10_invest}),
 and Fig.~\ref{fig:top10_lollipop} visualizes the allocation rank.
@@ -163,16 +164,16 @@ and Fig.~\ref{fig:top10_lollipop} visualizes the allocation rank.
 \toprule
 Rank & Indicator & Investment (100 million yuan) & Share (\%) \\
 \midrule
-1  & GPU cluster scale                & 1500.00 & 15.00 \\
-2  & Number of AI policies            & 1474.23 & 14.74 \\
-3  & AI market size                   & 1121.23 & 11.21 \\
-4  & Enterprise R\&D expenditure      &  927.66 &  9.28 \\
-5  & Top AI scholars                  &  820.92 &  8.21 \\
-6  & AI researchers                   &  816.90 &  8.17 \\
-7  & TOP500 supercomputer count       &  731.54 &  7.32 \\
-8  & GitHub AI-related projects       &  308.86 &  3.09 \\
-9  & Number of data centers           &  281.74 &  2.82 \\
-10 & Internet bandwidth               &  232.86 &  2.33 \\
+1  & GPU cluster scale           & 1500.00 & 15.00 \\
+2  & Number of AI policies       & 1474.23 & 14.74 \\
+3  & AI market size              & 1121.23 & 11.21 \\
+4  & Enterprise R\&D expenditure &  927.66 &  9.28 \\
+5  & Top AI scholars             &  820.92 &  8.21 \\
+6  & AI researchers              &  816.90 &  8.17 \\
+7  & TOP500 supercomputer count  &  731.54 &  7.32 \\
+8  & GitHub AI-related projects  &  308.86 &  3.09 \\
+9  & Number of data centers      &  281.74 &  2.82 \\
+10 & Internet bandwidth          &  232.86 &  2.33 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -183,8 +184,11 @@ Rank & Indicator & Investment (100 million yuan) & Share (\%) \\
 \caption{Top-10 indicator investments (lollipop chart).}
 \label{fig:top10_lollipop}
 \end{figure}
+\FloatBarrier
+
 
 \textbf{Full 24-indicator allocation (reproducibility).}
+
 \begin{table}[htbp]
 \centering
 \caption{Full investment allocation across all 24 indicators.}
@@ -223,11 +227,13 @@ Rank & Indicator & Investment (100 million yuan) & Share (\%) \\
 \end{tabular}
 \normalsize
 \end{table}
+\FloatBarrier
+
 
 \textbf{Indicator improvements under the response function.}
 Using Eqs.~\eqref{eq:t4_response}--\eqref{eq:t4_post}, we compute China’s post-investment indicator levels in 2035.
-Table~\ref{tab:before_after} reports selected indicators (baseline vs.\ post-investment), and Fig.~\ref{fig:growth_lollipop}
-visualizes growth rates (log-scale).
+Table~\ref{tab:before_after} reports selected indicators (baseline vs.\ post-investment), and
+Fig.~\ref{fig:growth_lollipop} visualizes growth rates (log-scale).
 
 \begin{table}[htbp]
 \centering
@@ -259,6 +265,8 @@ Enterprise R\&D exp.      &  665.333 &  1172.337 &   507.004 &   76.203 \\
 \caption{Indicator growth rates under the optimized investment (log-scale lollipop).}
 \label{fig:growth_lollipop}
 \end{figure}
+\FloatBarrier
+
 
 \textbf{Impact on 2035 TOPSIS competitiveness (within-year comparison).}
 Under the fixed TOPSIS procedure (Task~2) and the 2035 comparison set (Task~3 scenario),
@@ -266,8 +274,10 @@ China’s post-investment closeness coefficient is
 \begin{equation}
 S_{\mathrm{CN}}^{2035,\mathrm{post}}=0.54717.
 \end{equation}
-From Task~3 (no additional investment), China’s 2035 baseline score is $C_{\mathrm{CN},2035}=0.507$ (Table~\ref{tab:task3_scores_selected}),
-so the optimized plan yields an improvement of approximately $+0.040$ under the same 2035 benchmark environment.
+From Task~3 (no additional investment), China’s 2035 baseline score is
+$C_{\mathrm{CN},2035}=0.507$ (Table~\ref{tab:task3_scores_selected}),
+so the optimized plan yields an improvement of approximately $+0.040$
+under the same 2035 benchmark environment.
 
 \textbf{Complementary diagnostics and policy translation.}
 Fig.~\ref{fig:t4_diag_pair} links the optimized allocation to (i) dimension-level changes and (ii) investment efficiency patterns.

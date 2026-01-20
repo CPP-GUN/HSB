@@ -53,7 +53,8 @@
 \fancypagestyle{plain}{
 	\fancyhf{}
 	\lhead{Team \# \Team}
-	\rhead{Page \thepage~of \pageref{LastPage}}
+	%\rhead{Page \thepage~of \pageref{LastPage}}
+	\rhead{Page \thepage~of 25}
 	\cfoot{}
 }
 
@@ -81,35 +82,21 @@
 	\normalsize\textbf{Summary}
 \end{center}
 
-<<<<<<< HEAD
-Artificial intelligence (AI) is fundamentally reshaping the global economic landscape and the strategic foundations of national competitiveness. From autonomous driving and intelligent manufacturing to medical diagnostics and scientific research, the penetration of AI applications continues to accelerate, establishing AI capability as a core dimension of national innovation capacity and long-term development potential. In this context, major economies have elevated AI development to the level of national strategy, competing for technological dominance through large-scale R\&D investment, policy support, and infrastructure development. However, the scientific assessment and comparison of AI development capabilities across nations, and the provision of quantitative evidence for policy formulation and resource allocation, remains a pressing theoretical and practical challenge.
-
-National AI development capability represents a typical multi-dimensional complex system involving the synergistic interaction of talent reserves, R\&D investment, computational infrastructure, policy environment, industrial applications, and innovation outputs. Existing research predominantly focuses on single dimensions or partial indicators, lacking a unified evaluation framework and cross-country comparability. Moreover, decision-making needs related to dynamic evolution and resource optimization have not yet received systematic modeling support. Particularly under real-world constraints of heterogeneous data sources, inconsistent indicator definitions, and incomplete time series, constructing a closed-loop modeling framework capable of both revealing structural patterns and supporting forecasting and optimization presents significant methodological challenges and practical value.
-=======
 %摘要
-Artificial intelligence (AI) has become a core driver of national innovation capacity and long-term competitiveness, with countries worldwide prioritizing AI development at the strategic level. However, cross-country assessment remains challenging due to multi-dimensional complexity involving talent, policy, infrastructure, and innovation output. This paper develops a unified mathematical modeling framework to systematically address factor identification, comprehensive evaluation, trend forecasting, and investment optimization of national AI capabilities.
+Artificial intelligence has become a core driver of national competitiveness. This paper develops a unified framework to evaluate, forecast, and optimize national AI capabilities based on 24 indicators from 10 countries (2016--2025).
 
-\textbf{In Problem 1}, we construct a correlation analysis and dimensionality reduction model based on 24 AI development indicators collected from 10 representative countries. Pearson correlation analysis identifies 86 strongly correlated indicator pairs ($|r|>0.7$), demonstrating tight coupling among dimensions. Principal Component Analysis (PCA) extracts four components explaining 85\% of cumulative variance, revealing infrastructure, talent reserves, and innovation output as key drivers.
+\textbf{In Problem 1}, Pearson correlation analysis identifies 86 strongly correlated indicator pairs ($|r|>0.7$). Principal Component Analysis extracts four components explaining 85\% cumulative variance, revealing infrastructure, talent, and innovation as key drivers.
 
-\textbf{For Problem 2}, we establish an objective weighting and comprehensive evaluation model. The Entropy Weight Method (EWM) calculates indicator weights to avoid subjective bias, while TOPSIS computes closeness coefficients for ranking. Results show the 2025 AI competitiveness ranking: United States first (TOPSIS score 0.641), China second (0.510), and India third (0.210). Grey Relational Analysis (GRA) cross-validates the ranking with Spearman correlation 0.95, confirming robustness.
+\textbf{For Problem 2}, we employ Entropy Weight Method and TOPSIS to rank 2025 AI competitiveness: United States first (0.641), China second (0.510), India third (0.210). Grey Relational Analysis validates the ranking with Spearman correlation $\rho=0.95$.
 
-\textbf{Problem 3 extends Problem 2's framework} by constructing a grey forecasting model to project 2026--2035 trends. The GM(1,1) model extrapolates all 24 indicators individually, validated through 2016--2020 backtesting (median MAPE $= 10.35\%$). Forecasts indicate that the top three countries will maintain structural advantages over the next decade, while mid-tier countries may experience minor rank exchanges.
+\textbf{Problem 3} applies GM(1,1) grey forecasting to project 2026--2035 trends for all 24 indicators. Backtest diagnostics show median MAPE $10.35\%$. Results indicate top-three countries maintain structural advantages over the decade.
 
-\textbf{In Problem 4}, we formulate a budget-constrained optimization model for China's AI investment strategy. Under constraints including a CNY 1 trillion total budget, individual investment bounds, and synergy requirements, Sequential Least Squares Programming (SLSQP) solves for optimal allocation: infrastructure 32.33\% (CNY 323.3 billion), talent cultivation 17.39\%, policy support 17.39\%, R\&D investment 14.66\%, application deployment 10.11\%, and innovation output 8.12\%. Sensitivity analysis confirms stability under $\pm10\%$ weight perturbation.
+\textbf{In Problem 4}, Sequential Least Squares Programming optimizes China's CNY 1 trillion investment allocation: infrastructure 32.33\%, talent cultivation 17.39\%, policy support 17.39\%. Sensitivity analysis confirms robustness under weight perturbation.
 
-\textbf{Finally}, multi-layer robustness validation (correlation verification, dual-method comparison, backtest diagnostics, sensitivity analysis) ensures credibility. Core innovations include: establishing a fully reproducible framework ensuring cross-problem consistency; enhancing robustness through multi-model cross-validation; integrating evaluation, forecasting, and optimization into a closed-loop decision-support system. This framework provides transparent, reproducible quantitative tools for policymakers in national AI strategic planning and resource allocation.
->>>>>>> b8aaf558bd1dc8c9faafc44bbeb9cf037d1bcc3e
-
-This paper aims to construct a unified and reproducible mathematical modeling framework to systematically address four progressive problems: First, identifying key factors of AI development capability and their interdependent structure to establish a quantifiable indicator system (\textbf{Problem 1}); second, developing an objective comprehensive evaluation model to rank the 2025 AI competitiveness of representative countries (\textbf{Problem 2}); third, forecasting the dynamic evolution of national competitiveness from 2026 to 2035 based on historical data (\textbf{Problem 3}); and finally, designing an optimal AI investment allocation strategy for China under budget constraints to maximize comprehensive competitiveness by 2035 (\textbf{Problem 4}). These problems constitute a complete decision chain of ``factor identification--comprehensive evaluation--trend forecasting--investment optimization,'' providing quantitative tool support for national-level AI strategic planning.
-
-Methodologically, this paper integrates multiple mathematical models into a unified analytical framework. Problem 1 employs Pearson correlation analysis and Principal Component Analysis (PCA) to reveal the intrinsic structure and key drivers among 24 indicators. Problem 2 combines the Entropy Weight Method (EWM) for objective weighting with the TOPSIS approach for comprehensive scoring, validated through Grey Relational Analysis (GRA) to enhance robustness. Problem 3 applies the GM(1,1) grey forecasting model to extrapolate all 24 indicators individually, with forecast accuracy validated through backtest diagnostics. Problem 4 formulates a diminishing-return response function and employs Sequential Least Squares Programming (SLSQP) to solve the nonlinear constrained optimization problem. Core innovations include: (1) establishing a fully reproducible framework from data to decision-making that ensures consistency across problems; (2) enhancing result credibility through multi-model cross-validation and sensitivity analysis; (3) organically integrating evaluation, forecasting, and optimization into a closed-loop decision-support system.
+The framework integrates evaluation, forecasting, and optimization with multi-layer validation, providing reproducible decision support for national AI strategic planning.
 
 \vspace{0.4cm}
-<<<<<<< HEAD
 \noindent \textbf{Keywords:} AI Development Capability, TOPSIS, Grey Forecasting, Entropy Weighting, Investment Optimization, Competitiveness Ranking
-=======
-\noindent \textbf{Keywords:} AI Development Capability, Multi-Criteria Evaluation, TOPSIS, Grey Forecasting, Entropy Weighting, Investment Optimization, Competitiveness Ranking
->>>>>>> b8aaf558bd1dc8c9faafc44bbeb9cf037d1bcc3e
 %%%%%%%%%%% End Summary %%%%%%%%%%%
 
 \clearpage
@@ -140,6 +127,8 @@ Methodologically, this paper integrates multiple mathematical models into a unif
 \clearpage
 \pagestyle{fancy}
 \thispagestyle{fancy}
+
+\input{body/AIused.tex}
 
 %\end{CJK}
 \end{document}
