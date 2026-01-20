@@ -1,0 +1,28 @@
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
+\contentsline {section}{\numberline {2}Basic Assumption}{3}{section.2}%
+\contentsline {section}{\numberline {3}Symbols}{3}{section.3}%
+\contentsline {section}{\numberline {4}Data Explanation}{3}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Data Structure and Scope}{3}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Data Sources}{3}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Data Preprocessing}{4}{subsection.4.3}%
+\contentsline {section}{\numberline {5}Task 1: Analysis of AI Development Factors}{4}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Quantification of Key Indicators}{4}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Correlation Structure and Interaction Mechanism}{4}{subsection.5.2}%
+\contentsline {paragraph}{Correlation map and strong-link set.}{4}{section*.3}%
+\contentsline {paragraph}{Hierarchical clustering (group-level structure).}{5}{section*.4}%
+\contentsline {paragraph}{Principal component structure (dominant dimensions).}{5}{section*.6}%
+\contentsline {paragraph}{Factor importance and interaction network.}{5}{section*.7}%
+\contentsline {paragraph}{Summary of Task~1.}{5}{section*.9}%
+\contentsline {section}{\numberline {6}Task 2: Evaluation of National AI Competitiveness in 2025}{6}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Comprehensive Evaluation Methodology}{6}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Results and Comparative Analysis}{7}{subsection.6.2}%
+\contentsline {section}{\numberline {7}Task 3: Forecasting AI Competitiveness (2026--2035)}{7}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Indicator-Level Trend Prediction}{7}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Annual Evaluation and Score Evolution}{7}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Ranking Evolution and Stability}{8}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Interpretation and Robustness}{8}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Summary}{8}{subsection.7.5}%
+\contentsline {section}{\numberline {8}Task 4: Optimization of AI Development Investment Strategy}{8}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Model Formulation and Constraints}{8}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Optimal Allocation Results and Insights}{10}{subsection.8.2}%
+\contentsline {section}{\numberline {9}Conclusions and Implications}{10}{section.9}%
