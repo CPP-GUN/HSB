@@ -24,30 +24,30 @@ plt.rcParams['axes.unicode_minus'] = False
 
 # 翻译映射
 translation_map = {
-    "AI研究人员数量": "No. AI Researchers",
+    "AI研究人员数量": "No. of AI Researchers",
     "顶尖AI学者数量": "Top AI Scholars",
-    "AI毕业生数量": "No. AI Graduates",
-    "AI企业数量": "No. AI Enterprises",
+    "AI毕业生数量": "No. of AI Graduates",
+    "AI企业数量": "No. of AI Enterprises",
     "AI市场规模": "AI Market Size",
     "AI应用渗透率": "AI Penetration Rate",
-    "大模型数量": "No. LLMs",
-    "AI社会信任度": "Social Trust in AI",
-    "AI政策数量": "No. AI Policies",
+    "大模型数量": "No. of LLMs",
+    "AI社会信任度": "Public Trust in AI",
+    "AI政策数量": "No. of AI Policies",
     "AI补贴金额": "AI Subsidies",
-    "企业研发支出": "Corp. R&D Exp.",
-    "政府AI投资": "Govt. AI Invest.",
+    "企业研发支出": "Corporate R&D Expenditure",
+    "政府AI投资": "Government AI Investment",
     "5G覆盖率": "5G Coverage",
     "GPU集群规模": "GPU Cluster Scale",
     "互联网带宽": "Internet Bandwidth",
     "互联网普及率": "Internet Penetration",
     "电能生产": "Power Generation",
-    "AI算力平台": "AI Comp. Platforms",
-    "数据中心数量": "No. Data Centers",
-    "TOP500上榜数": "TOP500 Systems",
-    "AI_Book数量": "No. AI Books",
-    "AI_Dataset数量": "No. AI Datasets",
-    "GitHub项目数": "GitHub Projects",
-    "国际AI投资": "Intl. AI Invest."
+    "AI算力平台": "AI Computing Platforms",
+    "数据中心数量": "No. of Data Centers",
+    "TOP500上榜数": "No. of TOP500 Systems",
+    "AI_Book数量": "No. of AI Books",
+    "AI_Dataset数量": "No. of AI Datasets",
+    "GitHub项目数": "GitHub Repositories",
+    "国际AI投资": "International AI Investment"
 }
 
 # 原始数据
