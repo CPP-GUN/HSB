@@ -401,14 +401,14 @@ def fig3_stability_heatmap(outputs_dir: Path, out_dir: Path) -> Path:
     return _save_pdf(fig, "fig3_en_Rank_Stability_Heatmap_2026_2035.pdf")
 
 
-# ==================== Fig4: 2025 vs 2035 桑基图 ====================
+# ==================== Fig4: 2025 vs 2035 坡度图 ====================
 
-def fig4_baseline_forecast_sankey(outputs_dir: Path, task2_dir: Path, out_dir: Path) -> Path:
+def fig4_baseline_forecast_slope(outputs_dir: Path, task2_dir: Path, out_dir: Path) -> Path:
     """
-    Fig4: 桑基图 - 2025基线 vs 2035预测对比
+    Fig4: 坡度图（Slope Chart）- 2025基线 vs 2035预测对比
     数据源: task2/result_final_ranking.csv + rankings_2026_2035_wide.csv
     """
-    print("\n绘制Fig4: 2025 vs 2035桑基图...")
+    print("\n绘制Fig4: 2025 vs 2035坡度图...")
     
     # 读取2025排名（Task2）
     rank_2025 = pd.read_csv(task2_dir / "result_final_ranking.csv")
@@ -424,76 +424,120 @@ def fig4_baseline_forecast_sankey(outputs_dir: Path, task2_dir: Path, out_dir: P
     
     # 合并
     compare_df = rank_2025.merge(rank_2035, on="country_en")
-    compare_df = compare_df.sort_values("rank_2035")
+    compare_df["change"] = compare_df["rank_2025"] - compare_df["rank_2035"]
+    compare_df = compare_df.sort_values("rank_2025")
     
-    countries = compare_df["country_en"].tolist()
-    ranks_2025 = compare_df["rank_2025"].tolist()
-    ranks_2035 = compare_df["rank_2035"].tolist()
+    fig, ax = plt.subplots(figsize=(12, 9))
     
-    fig, ax = plt.subplots(figsize=(12, 8))
-    
-    # 连续色谱
-    cmap = plt.cm.RdYlGn_r
-    
-    # 绘制流带
-    for i, country in enumerate(countries):
-        r1, r2 = ranks_2025[i], ranks_2035[i]
-        color = cmap(r2 / 10)
-        alpha = 0.6 if r1 == r2 else 0.8  # 变化的国家更显眼
+    # 绘制坡度线
+    for _, row in compare_df.iterrows():
+        country = row["country_en"]
+        r1, r2 = row["rank_2025"], row["rank_2035"]
+        change = row["change"]
         
-        linewidth = 6 if r1 != r2 else 4
+        # 颜色逻辑：上升绿色，下降红色，不变灰色
+        if change > 0:  # 排名上升（数字变小）
+            color = "#27ae60"
+            linewidth = 3.5
+            alpha = 0.85
+            linestyle = "-"
+        elif change < 0:  # 排名下降（数字变大）
+            color = "#e74c3c"
+            linewidth = 3.5
+            alpha = 0.85
+            linestyle = "-"
+        else:  # 排名不变
+            color = "#7f8c8d"
+            linewidth = 2.5
+            alpha = 0.5
+            linestyle = "--"
         
-        ax.plot([0, 1], [r1, r2], color=color, alpha=alpha, 
-                linewidth=linewidth, solid_capstyle="round", zorder=2)
-    
-    # 绘制节点卡片
-    for x, ranks in zip([0, 1], [ranks_2025, ranks_2035]):
-        for rank in set(ranks):
-            rect = mpatches.FancyBboxPatch((x-0.08, rank-0.35), 0.16, 0.7,
-                                           boxstyle="round,pad=0.02",
-                                           facecolor="white", edgecolor="#2c3e50",
-                                           linewidth=2, zorder=3)
-            ax.add_patch(rect)
-            ax.text(x, rank, f"{rank}", ha="center", va="center",
-                    fontsize=10, fontweight="bold", color="#2c3e50", zorder=4)
-    
-    # 国家标注
-    for i, country in enumerate(countries):
-        # 左侧
-        ax.text(-0.22, ranks_2025[i], country, va="center", ha="right",
-                fontsize=9, color="#2c3e50")
+        # 绘制连接线
+        ax.plot([0, 1], [r1, r2], color=color, linewidth=linewidth, 
+                alpha=alpha, linestyle=linestyle, zorder=2, 
+                solid_capstyle="round")
         
-        # 排名变化箭头
-        change = ranks_2025[i] - ranks_2035[i]
+        # 起点和终点标记
+        ax.scatter(0, r1, s=120, color=color, alpha=0.9, 
+                   edgecolors="white", linewidths=2, zorder=5)
+        ax.scatter(1, r2, s=120, color=color, alpha=0.9, 
+                   edgecolors="white", linewidths=2, zorder=5)
+    
+    # 左侧国家标注（2025）
+    for _, row in compare_df.iterrows():
+        country = row["country_en"]
+        r1 = row["rank_2025"]
+        
+        # 左侧：排名 + 国家名
+        ax.text(-0.08, r1, f"#{int(r1)}", ha="right", va="center",
+                fontsize=10, fontweight="bold", color="#2c3e50")
+        ax.text(-0.12, r1, country, ha="right", va="center",
+                fontsize=9, color="#34495e")
+    
+    # 右侧国家标注（2035）
+    for _, row in compare_df.iterrows():
+        country = row["country_en"]
+        r2 = row["rank_2035"]
+        change = row["change"]
+        
+        # 右侧：排名 + 变化箭头
+        ax.text(1.08, r2, f"#{int(r2)}", ha="left", va="center",
+                fontsize=10, fontweight="bold", color="#2c3e50")
+        
+        # 变化标注
         if change > 0:
-            arrow = f"↑{abs(change)}"
-            color_arrow = "#27ae60"
+            change_text = f"↑{abs(int(change))}"
+            change_color = "#27ae60"
         elif change < 0:
-            arrow = f"↓{abs(change)}"
-            color_arrow = "#e74c3c"
+            change_text = f"↓{abs(int(change))}"
+            change_color = "#e74c3c"
         else:
-            arrow = "—"
-            color_arrow = "#95a5a6"
+            change_text = "="
+            change_color = "#95a5a6"
         
-        ax.text(1.22, ranks_2035[i], arrow, va="center", ha="left",
-                fontsize=8, color=color_arrow, fontweight="bold")
+        ax.text(1.16, r2, change_text, ha="left", va="center",
+                fontsize=9, color=change_color, fontweight="bold")
     
+    # 轴设置
+    ax.set_xlim(-0.35, 1.3)
+    ax.set_ylim(10.5, 0.5)  # 反转Y轴，排名1在上
     ax.set_xticks([0, 1])
     ax.set_xticklabels(["2025\nBaseline", "2035\nForecast"],
-                       fontsize=12, fontweight="bold", color="#2c3e50")
-    ax.set_ylabel("Rank", fontsize=12, fontweight="bold", color="#2c3e50")
-    ax.set_ylim(0.5, 10.5)
-    ax.invert_yaxis()
-    ax.set_xlim(-0.3, 1.4)
+                       fontsize=13, fontweight="bold", color="#2c3e50")
+    ax.set_yticks(range(1, 11))
+    ax.set_yticklabels([f"Rank {i}" for i in range(1, 11)], 
+                        fontsize=10, color="#2c3e50")
     
+    # 网格和边框
+    _set_grid(ax, "y")
     _clean_spines(ax)
     ax.spines["left"].set_visible(False)
     ax.spines["bottom"].set_visible(False)
-    ax.tick_params(axis="y", labelsize=9, width=0, colors="#2c3e50")
-    ax.tick_params(axis="x", width=0, pad=10)
+    
+    # 图例
+    legend_elements = [
+        plt.Line2D([0], [0], color="#27ae60", linewidth=3, label="Rank Improved"),
+        plt.Line2D([0], [0], color="#e74c3c", linewidth=3, label="Rank Declined"),
+        plt.Line2D([0], [0], color="#7f8c8d", linewidth=2.5, 
+                   linestyle="--", label="Rank Unchanged")
+    ]
+    ax.legend(handles=legend_elements, loc="lower right", 
+              frameon=True, facecolor="white", edgecolor="#bdc3c7",
+              fontsize=10, title="Change Type", title_fontsize=11)
+    
+    # 关键洞察标注框
+    n_improved = (compare_df["change"] > 0).sum()
+    n_declined = (compare_df["change"] < 0).sum()
+    n_unchanged = (compare_df["change"] == 0).sum()
+    
+    insight_text = f"Rank Changes:\n  Improved: {n_improved}\n  Declined: {n_declined}\n  Unchanged: {n_unchanged}"
+    ax.text(0.02, 0.98, insight_text, transform=ax.transAxes,
+            fontsize=10, va="top", ha="left",
+            bbox=dict(boxstyle="round,pad=0.6", facecolor="white",
+                      edgecolor="#2c3e50", linewidth=1.5, alpha=0.95))
     
     plt.tight_layout()
-    return _save_pdf(fig, "fig4_en_Baseline_vs_Forecast_Sankey_2025_2035.pdf")
+    return _save_pdf(fig, "fig4_en_Baseline_vs_Forecast_Slope_Chart_2025_2035.pdf")
 
 
 # ==================== Fig5: 预测诊断2×2仪表盘 ====================
@@ -622,9 +666,9 @@ def main() -> None:
     # Fig3: 稳定性热力图
     paths.append(fig3_stability_heatmap(outputs_dir, out_dir))
     
-    # Fig4: 桑基图（需要Task2数据）
+    # Fig4: 坡度图（需要Task2数据）
     if task2_dir.exists():
-        paths.append(fig4_baseline_forecast_sankey(outputs_dir, task2_dir, out_dir))
+        paths.append(fig4_baseline_forecast_slope(outputs_dir, task2_dir, out_dir))
     
     # Fig5: 诊断仪表盘
     paths.append(fig5_forecast_diagnostics(outputs_dir, out_dir))
